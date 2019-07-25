@@ -140,7 +140,7 @@
 }
 
 .sb-container div:last-child h5 {
-	font-size: 35px;
+	font-size: 200%;
 	white-space: nowrap;
 	text-align: left;
 	margin: 0;
@@ -271,3 +271,33 @@ span.sb-icon:before {
 }
 
 /* '3' */
+
+.sb-icon-a {
+	/* width: 100px;
+	height: 100px; */
+	/* float: left; */
+	/* opacity: 1.0;
+	position: relative; */
+	position: absolute;
+	height: 25%;
+	line-height: 50px;
+	width: 100%;
+	top: 0;
+	left: 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	color: #ffffff;
+	opacity: 0;
+	/* visibility: hidden; */
+	-webkit-transition: opacity 0.2s,
+		background-color 0.2s;
+	-moz-transition: opacity 0.2s,
+		background-color 0.2s;
+	transition: opacity 0.2s,
+		background-color 0.2s;
+}
+
+.sb-icon-a:hover {
+	background-color: rgb(73, 73, 73);
+	opacity: 0.5;
+}

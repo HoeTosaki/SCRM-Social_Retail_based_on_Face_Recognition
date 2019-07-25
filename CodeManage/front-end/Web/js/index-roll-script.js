@@ -5,12 +5,14 @@ const viewportHeight = $window.height();
 let ui = {
   promo: ele + ' .promotion',
   promoText: ele + ' .promo-text',
-  navigationItems: '.navigation a' };
+  navigationItems: '.navigation a'
+};
 
 
 function isOnScreen(el) {
   const viewport = {
-    top: $window.scrollTop() };
+    top: $window.scrollTop()
+  };
 
 
   viewport.bottom = viewport.top + viewportHeight;
@@ -28,7 +30,9 @@ class ScrollEvents {
     const $promoText = $('.promo-text');
 
     function smoothScroll(target) {
-      $('body, html').animate({ 'scrollTop': target.offset().top }, 600);
+      $('body, html').animate({
+        'scrollTop': target.offset().top
+      }, 600);
     }
 
     $(ui.navigationItems).on('click', e => {
@@ -87,9 +91,20 @@ class ScrollEvents {
         $(ui.navigationItems).eq(activeSection).removeClass('active');
       }
     });
-  }}
-;
+  }
+};
 
 const scrollEvents = new ScrollEvents();
 
 scrollEvents.run();
+
+// // failed scroll code
+// $(document).ready(function () {
+//   $("has-dropdown gallery").click(function () {
+//     var scroll_offset = $("p").offset();
+//     var scroll = scroll_offset.top - 100;
+//     $("body,html").animate({
+//       scrollTop: scroll
+//     });
+//   })
+// })
