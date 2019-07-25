@@ -1,21 +1,47 @@
 package com.scrm.why1139.web;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import javax.servlet.http.HttpServletResponse;
+
 
 @RestController
 public class IndexWeb
 {
-    @RequestMapping("/")
-    public String index()
+    @RequestMapping(
+            value = {"/","/index","/index.html"}
+    )
+    public ModelAndView index()
     {
-        return "index";
+        return new ModelAndView("Web/html/index.html");
     }
+
+    @RequestMapping(
+            value = {"/login"}
+    )
+    public ModelAndView login()
+    {
+        return new ModelAndView("Web/html/login.html");
+    }
+
+    @RequestMapping(
+            value = {"/rcmd"}
+    )
+    public ModelAndView rcmd()
+    {
+        return new ModelAndView("Web/html/rcmd.html");
+    }
+
+    @RequestMapping(
+            value = {"/accnt"}
+    )
+    public ModelAndView accnt()
+    {
+        return new ModelAndView("Web/html/accnt.html");
+    }
+
 
 }
