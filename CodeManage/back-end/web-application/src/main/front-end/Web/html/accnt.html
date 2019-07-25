@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收银员操作平台</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="../css/accnt-box-component.css" />
+    <script src="../js/modernizr.custom.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="bl-main" class="bl-main">
+            <section>
+                <div class="bl-box">
+                    <h2 class="bl-icon bl-icon-about">客户识别</h2>
+                </div>
+                <div class="bl-content">
+                    <h2 id="recog-title">正在识别当前顾客身份...请稍等</h2>
+                    <p id="recog-text">
+                        【此处加载个人认证信息】
+                    </p>
+                </div>
+                <span class="bl-icon bl-icon-close"></span>
+            </section>
+
+            <section id="bl-work-section">
+                <div class="bl-box">
+                    <h2 class="bl-icon bl-icon-works">收银台</h2>
+                </div>
+                <div class="bl-content">
+                    <div class="content-head">
+                        <h2>当前客户认证身份：Undefined</h2>
+                    </div>
+                    <div class="content-interval"> </div>
+                    <div class="content-left">
+                        <input type="text" placeholder="请输入您要查询的商品ID：">
+                        <p>
+                            <ul id="bl-work-items">
+                                <li data-panel="panel-1"><a href="#"><img src="../img/accnt-2.jpg" />商品1</a>
+                                </li>
+                                <li data-panel="panel-2"><a href="#"><img src="../img/accnt-2.jpg" />商品2</a>
+                                </li>
+                                <li data-panel="panel-3"><a href="#"><img src="../img/accnt-2.jpg" />商品3</a>
+                                </li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="content-right">
+                        <p>请扫描二维码付款：</p>
+                        <img src="../img/qrcode.jpg" alt="此处加载收款二维码">
+                    </div>
+
+                </div>
+                <span class="bl-icon bl-icon-close"></span>
+            </section>
+            <section>
+                <div class="bl-box">
+                    <h2 class="bl-icon bl-icon-blog">商品推荐</h2>
+                </div>
+                <div class="bl-content">
+                    <div class="content-title">
+                        <h2>当前客户认证身份：Undefined</h2>
+                    </div>
+                    <div class=" content-interval"> </div>
+                    <div class="content-text">
+                        <p>下面是为您推荐的商品：</p>
+                        <p>
+                            <ul id="bl-work-items">
+                                <li data-panel="panel-1"><a href="#"><img src="../img/accnt-2.jpg" />商品1</a>
+                                </li>
+                                <li data-panel="panel-2"><a href="#"><img src="../img/accnt-2.jpg" />商品2</a>
+                                </li>
+                                <li data-panel="panel-3"><a href="#"><img src="../img/accnt-2.jpg" />商品3</a>
+                                </li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+                <span class="bl-icon bl-icon-close"></span>
+            </section>
+            <section>
+                <div class="bl-box">
+                    <h2 class="bl-icon bl-icon-contact">故障上报</h2>
+                </div>
+                <div class="bl-content">
+                    <h2>敬请期待（滑稽）</h2>
+                    <p>敬请期待（滑稽）</p>
+                </div>
+                <span class="bl-icon bl-icon-close"></span>
+            </section>
+            <!-- Panel items for the works -->
+            <div class="bl-panel-items" id="bl-panel-work-items">
+                <div data-panel="panel-1">
+                    <div>
+                        <img src="../img/accnt-1.jpg" />
+                        <h3>商品1</h3>
+                        <p>商品介绍</p>
+                    </div>
+                </div>
+                <div data-panel="panel-2">
+                    <div>
+                        <img src="../img/accnt-1.jpg" />
+                        <h3>商品2</h3>
+                        <p>商品介绍</p>
+                    </div>
+                </div>
+                <div data-panel="panel-3">
+                    <div>
+                        <img src="../img/accnt-1.jpg" />
+                        <h3>商品3</h3>
+                        <p>商品介绍</p>
+                    </div>
+                </div>
+                <nav>
+                    <span class="bl-next-work">&gt;下一件商品</span>
+                    <span class="bl-icon bl-icon-close"></span>
+                </nav>
+            </div>
+        </div>
+    </div><!-- /container -->
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/accnt-box-boxlayout.js"></script>
+    <script>
+        $(function () {
+            Boxlayout.init();
+        });
+    </script>
+</body>
+
+</html>
