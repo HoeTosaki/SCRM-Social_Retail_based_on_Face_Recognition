@@ -43,4 +43,11 @@ public class MngrDao
         m_jdbcTemp.update("UPDATE t_mngr SET mngr_type = ? , password = ? WHERE mngr_id = ? ",
                 new Object[]{_mngr.getMngrType(),_mngr.getPassword(),_mngr.getMngrID()});
     }
+
+    public void insertMngr(Mngr _mngr)
+    {
+        m_jdbcTemp.update("INSERT INTO t_mngr(mngr_type,mngr_id,password) VALUES(?,?,?)",
+                new Object[]{_mngr.getMngrType(),_mngr.getMngrID(),_mngr.getPassword()});
+    }
+
 }

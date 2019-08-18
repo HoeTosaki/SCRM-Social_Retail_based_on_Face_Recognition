@@ -36,7 +36,7 @@ public class BuyDao
                         buy.setUserID(rs.getString("user_id"));
                         buy.setMngrID(rs.getString("mngr_id"));
                         buy.setGoodsID(rs.getInt("goods_id"));
-                        buy.setBuyDate(rs.getDate("buy_date"));
+                        buy.setBuyDate(rs.getString("buy_date"));
                         buy.setBuyCnt(rs.getInt("buy_cnt"));
                         lstBuy.add(buy);
                         ++nHits;
@@ -60,7 +60,7 @@ public class BuyDao
                         buy.setUserID(rs.getString("user_id"));
                         buy.setMngrID(rs.getString("mngr_id"));
                         buy.setGoodsID(rs.getInt("goods_id"));
-                        buy.setBuyDate(rs.getDate("buy_date"));
+                        buy.setBuyDate(rs.getString("buy_date"));
                         buy.setBuyCnt(rs.getInt("buy_cnt"));
                         lstBuy.add(buy);
                         ++nHits;
@@ -75,5 +75,8 @@ public class BuyDao
         m_jdbcTemp.update("INSERT INTO t_buy(user_id,mngr_id,goods_id,buy_date,buy_cnt) VALUES(?,?,?,?,?)",
                 new Object[]{_buy.getUserID(),_buy.getMngrID(),_buy.getGoodsID(),_buy.getBuyDate(),_buy.getBuyCnt()});
     }
+
+
+
 }
 

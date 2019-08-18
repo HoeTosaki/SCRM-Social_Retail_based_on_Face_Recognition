@@ -1,4 +1,4 @@
-var isGithubDemo = isGithubDemo || false; // This is for GitHub demo only. Remove it in your project
+// var isGithubDemo = isGithubDemo || false; // This is for GitHub demo only. Remove it in your project
 
 void
 
@@ -112,36 +112,70 @@ function (window, document, undefined) {
   };
 
   // Fetch JSON string via Ajax, parse to HTML and append to the container.
+  // var appendCells = function (num) {
+  //   if (loading) {
+  //     // Avoid sending too many requests to get new cells.
+  //     return;
+  //   }
+  //   var xhrRequest = new XMLHttpRequest();
+  //   var fragment = document.createDocumentFragment();
+  //   var cells = [];
+  //   var images;
+  //   xhrRequest.open('GET', 'json.php?n=' + num, true);
+  //   xhrRequest.onreadystatechange = function () {
+  //     if (xhrRequest.readyState == 4 && xhrRequest.status == 200) {
+  //       images = JSON.parse(xhrRequest.responseText);
+  //       for (var j = 0, k = images.length; j < k; j++) {
+  //         var cell = document.createElement('div');
+  //         cell.className = 'cell pending';
+  //         cell.tagLine = images[j].title;
+  //         cells.push(cell);
+  //         console.log(images[j])
+  //         front(cellTemplate, images[j], cell);
+  //         fragment.appendChild(cell);
+  //       }
+  //       cellsContainer.appendChild(fragment);
+  //       loading = false;
+  //       adjustCells(cells);
+  //     }
+  //   };
+  //   loading = true;
+  //   xhrRequest.send(null);
+  // };
+
+  // my append cells via JQuery.
   var appendCells = function (num) {
     if (loading) {
       // Avoid sending too many requests to get new cells.
       return;
     }
-    var xhrRequest = new XMLHttpRequest();
     var fragment = document.createDocumentFragment();
     var cells = [];
     var images;
-    xhrRequest.open('GET', 'json.php?n=' + num, true);
-    xhrRequest.onreadystatechange = function () {
-      if (xhrRequest.readyState == 4 && xhrRequest.status == 200) {
-        images = JSON.parse(xhrRequest.responseText);
-        for (var j = 0, k = images.length; j < k; j++) {
-          var cell = document.createElement('div');
-          cell.className = 'cell pending';
-          cell.tagLine = images[j].title;
-          cells.push(cell);
-          console.log(images[j])
-          front(cellTemplate, images[j], cell);
-          fragment.appendChild(cell);
-        }
-        cellsContainer.appendChild(fragment);
-        loading = false;
-        adjustCells(cells);
+
+    $.get("rcmdPull", {
+      userid: document.userid,
+      pointer: cells.length
+    }, function (result) {
+      alert(result);
+      images = JSON.parse(result);
+      for (var j = 0, k = images.length; j < k; j++) {
+        var cell = document.createElement('div');
+        cell.className = 'cell pending';
+        cell.tagLine = images[j].title;
+        cells.push(cell);
+        console.log(images[j])
+        front(cellTemplate, images[j], cell);
+        fragment.appendChild(cell);
       }
-    };
+      cellsContainer.appendChild(fragment);
+      loading = false;
+      adjustCells(cells);
+    });
     loading = true;
     xhrRequest.send(null);
   };
+
 
   // Fake mode, only for GitHub demo. Delete this function in your project.
   var appendCellsDemo = function (num) {
@@ -238,11 +272,12 @@ function (window, document, undefined) {
     // If there's space in viewport for a cell, request new cells.
     if (viewportBottom > getMinVal(columnHeights)) {
       // Remove the if/else statement in your project, just call the appendCells function.
-      if (isGithubDemo) {
-        appendCellsDemo(columnCount);
-      } else {
-        appendCells(columnCount);
-      }
+      // if (isGithubDemo) {
+      //   appendCellsDemo(columnCount);
+      // } else {
+      //   appendCells(columnCount);
+      // }
+      appendCells(columnCount);
     }
 
     // Unlock managing state.

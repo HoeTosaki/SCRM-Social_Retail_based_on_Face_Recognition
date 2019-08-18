@@ -1,0 +1,10 @@
+<!--pages/loginMan/loginMan.wxml-->
+<view class="container">
+    <text>欢迎使用SCRM！{{userid}}</text>
+    <input bindinput="OnUserIDInput" placeholder="请输入用户名（id）"></input>
+    <input bindinput="OnPasswdInput" type="password" placeholder="请输入密码"></input>
+    <button bindtap="OnLogin" type="primary">登录</button>
+</view>
+
+
+

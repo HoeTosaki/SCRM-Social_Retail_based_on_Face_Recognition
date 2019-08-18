@@ -1,6 +1,11 @@
 package com.scrm.why1139.domain;
 
-import java.io.Serializable;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Optional;
 
 public class Goods implements Serializable
@@ -11,11 +16,27 @@ public class Goods implements Serializable
     private double m_dbPrice;
     private int m_nGoodsCnt;
     private String m_strGoodsDesc;
+    private String m_pthPic;
+
+    private Resource m_resPic;
+
+    public static final String RES_PATH="src/main/resources/static/res/gdspic/";
+
+    public static void main(String s[])
+    {
+        Goods g = new Goods();
+        g.setPic("1.jpg");
+        byte[] bt = g.loadPic();
+        System.out.println(bt.length);
+        g.setPic("2.jpg");
+        g.savePic(bt);
+    }
+
 
     public Goods()
     {}
 
-    public Goods(int _nGoodsID, String _strGoodsType, String _strGoodsName, double _dbPrice, int _nGoodsCnt, String _strGoodsDesc)
+    public Goods(int _nGoodsID, String _strGoodsType, String _strGoodsName, double _dbPrice, int _nGoodsCnt, String _strGoodsDesc,String _pthPic)
     {
         setGoodsCnt(_nGoodsCnt);
         setGoodsDesc(_strGoodsDesc);
@@ -23,6 +44,7 @@ public class Goods implements Serializable
         setGoodsName(_strGoodsName);
         setGoodsType(_strGoodsType);
         setPrice(_dbPrice);
+        setPic(_pthPic);
     }
 
     public int getGoodsID()
@@ -90,4 +112,80 @@ public class Goods implements Serializable
         this.m_strGoodsDesc = _strGoodsDesc;
 //        this.m_strGoodsDesc = Optional.ofNullable(_strGoodsDesc).orElse("undefined.");
     }
+
+    public String getPic()
+    {
+        return m_pthPic;
+    }
+
+    public void setPic(String _pthPic)
+    {
+        this.m_pthPic = _pthPic;
+    }
+
+    public boolean isPicExists()
+    {
+        return new FileSystemResource(RES_PATH+m_pthPic).exists();
+    }
+
+    public byte[] loadPic()
+    {
+        byte[] ret = null;
+        ByteArrayOutputStream baos = null;
+        try
+        {
+            baos = new ByteArrayOutputStream();
+            BufferedInputStream bos = new BufferedInputStream(new FileInputStream(RES_PATH+m_pthPic));
+            int b = bos.read();
+            while(b != -1)
+            {
+                baos.write(b);
+                b = bos.read();
+            }
+//            baos.write(bos.readAllBytes());
+           ret = baos.toByteArray();
+        } catch (IOException e)
+        { }
+        finally
+        {
+            try
+            {
+                if(baos!=null)
+                    baos.close();
+            }
+            catch (IOException e)
+            { }
+        }
+        return ret;
+    }
+
+    public boolean savePic(byte[] _btPic)
+    {
+        boolean ret = false;
+//        PrintWriter pw = null;
+        BufferedOutputStream bos = null;
+        try
+        {
+            bos = new BufferedOutputStream(new FileOutputStream(RES_PATH+m_pthPic));
+            for(int i = 0;i<_btPic.length;++i)
+                bos.write(_btPic[i]);
+//            pw = new PrintWriter("res/"+m_pthPic);
+//            Arrays.asList(_btPic).forEach(System.out::print);
+//            pw.flush();
+            ret = true;
+        }
+        catch (IOException e)
+        {}
+        finally
+        {
+            try
+            {
+                if(bos!=null)
+                    bos.close();
+            } catch (IOException e)
+            {}
+        }
+        return ret;
+    }
+
 }

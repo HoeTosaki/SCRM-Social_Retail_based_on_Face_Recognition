@@ -19,6 +19,7 @@
     <div id="cells"></div>
     <div id="loader"><span>loading</span></div>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/template" id="template">
         <p><a href="#"><img src="{{src}}.jpg" height="{{height}}" width="{{width}}" /></a>
         </p>
@@ -31,7 +32,11 @@
         </li> -->
     </script>
     <script>
-        var isGithubDemo = true;
+        // var isGithubDemo = true;
+    </script>
+    <script>
+        document.userid = window.location.search.split('?')[1];
+        alert(document.userid);
     </script>
     <script src="../js/rcmd-front.min.js"></script>
     <script src="../js/rcmd-script.js"></script>

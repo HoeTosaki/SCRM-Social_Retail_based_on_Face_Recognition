@@ -24,9 +24,9 @@
 <body>
 
     <div class="container" id="container">
-        <div class="form-container sign-up-container">
+        <div id="signup-model" class="form-container sign-up-container">
             <form action="#">
-                <h1>欢迎注册SCRM！</h1>
+                <h1>欢迎注册SCRM！{{userid}}</h1>
                 <!-- <div class="social-container"> <a href="#" class="social">
                         <ion-icon name="logo-facebook"></ion-icon>
                     </a> <a href="#" class="social">
@@ -35,12 +35,12 @@
                         <ion-icon name="logo-linkedin"></ion-icon>
                     </a> </div> -->
                 <span>请输入：</span>
-                <input type="text" placeholder="真实姓名">
-                <input type="userid" placeholder="用户名">
-                <input type="password" placeholder="密码">
+                <input type="text" v-model="username" placeholder="真实姓名">
+                <input type="userid" v-model="userid" placeholder="用户名">
+                <input type="password" v-model="passwd" placeholder="密码">
                 <!-- <button>注册</button> -->
                 <div class="progress-button">
-                    <button><span>注册</span></button>
+                    <button id="btnSignup"><span>注册</span></button>
                     <svg class="progress-circle" width="70" height="70">
                         <path
                             d="m35,2.5c17.955803,0 32.5,14.544199 32.5,32.5c0,17.955803 -14.544197,32.5 -32.5,32.5c-17.955803,0 -32.5,-14.544197 -32.5,-32.5c0,-17.955801 14.544197,-32.5 32.5,-32.5z" />
@@ -56,9 +56,9 @@
                 </div>
             </form>
         </div>
-        <div class="form-container sign-in-container">
+        <div id="login-model" class="form-container sign-in-container">
             <form action="#">
-                <h1>欢迎登录SCRM！</h1>
+                <h1>欢迎登录SCRM！{{userid}}</h1>
                 <!-- <div class="social-container"> <a href="#" class="social">
                         <ion-icon name="logo-facebook"></ion-icon>
                     </a> <a href="#" class="social">
@@ -67,11 +67,11 @@
                         <ion-icon name="logo-linkedin"></ion-icon>
                     </a> </div> -->
                 <span>请输入：</span>
-                <input type="userid" placeholder="用户名">
-                <input type="password" placeholder="密码">
+                <input type="userid" v-model="userid" placeholder="用户名">
+                <input type="password" v-model="passwd" placeholder="密码">
                 <!-- <button>登录</button> -->
                 <div class="progress-button">
-                    <button><span>登录</span></button>
+                    <button id="btnLogin"><span>登录</span></button>
                     <svg class="progress-circle" width="70" height="70">
                         <path
                             d="m35,2.5c17.955803,0 32.5,14.544199 32.5,32.5c0,17.955803 -14.544197,32.5 -32.5,32.5c-17.955803,0 -32.5,-14.544197 -32.5,-32.5c0,-17.955801 14.544197,-32.5 32.5,-32.5z" />
@@ -102,32 +102,151 @@
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script>
+        var login = new Vue({
+            el: '#login-model',
+            data: {
+                userid: '',
+                passwd: ''
+            },
+            mounted: function () {
+                // alert("login-model is mounted.");
+                document.loginReq = 1;
+            }
+        });
 
+        var signup = new Vue({
+            el: '#signup-model',
+            data: {
+                username: '',
+                userid: '',
+                passwd: ''
+            },
+            mounted: function () {
+                // alert("signup-model is mounted.")
+                document.signupReq = 0;
+            }
+        });
+
+
+        function postLogin(userid, passwd) {
+            alert("dawda");
+            // $.post("loginCheck", {
+            //     userid: userid,
+            //     passwd: passwd
+            // }, function (result) {
+            //     alert(result);
+            //     var obj = JSON.parse(result);
+            //     document.loginStat = obj["stat"];
+            //     if (document.loginStat == "user") {
+            //         window.localStorage.setItem("userid", obj["userid"]);
+            //         window.jumpTarget = "../html/rcmd.html";
+            //         document.loginReq = 1;
+            //     } else if (document.loginStat == "accnt") {
+            //         window.localStorage.setItem("mngrid", obj["mngrid"]);
+            //         window.jumpTarget = "../html/accnt.html";
+            //         document.loginReq = 1;
+            //     } else if (document.loginStat == "admin") {
+            //         window.localStorage.setItem("mngrid", obj["mngrid"]);
+            //         window.jumpTarget = "../html/admin.html";
+            //         document.loginReq = 1;
+            //     } else if (document.loginStat == "invalid") {
+            //         document.loginReq = -1;
+            //     } else {
+            //         window.jumpTarget = "../html/index.html"; //error ret-type
+            //     }
+            // });
+            alert("end.");
+            document.loginReq = 1;
+            // window.localStorage.setItem("userid", obj["userid"]);-->fail in block!
+
+            //  //  can be used for convey complex data
+            // var obj = {
+            //     "stat": "user",
+            //     "userid": "why"
+            // };
+            // window.jumpTarget = "../html/rcmd.html?" + JSON.stringify(obj);
+            window.jumpTarget = "../html/accnt.html?why";
+            alert("set target:$" + window.jumpTarget + "$");
+        }
+
+        function postSignup(username, userid, passwd) {
+            $.post("SignupCheck", {
+                username: username,
+                userid: userid,
+                passwd: passwd
+            }, function (result) {
+                alert(result);
+                var obj = JSON.parse(result);
+                document.signupStat = obj["stat"];
+                if (document.signupStat == "success") {
+                    document.signupReq = 1;
+                } else {
+                    document.signupReq = -1;
+                }
+            });
+        }
+    </script>
     <script src="../js/login-script.js"></script>
     <!--图标库-->
     <script src="../js/ionicons.js"></script>
 
     <!-- submit -->
     <script type="text/javascript" src="../js/classie.js"></script>
-    <script type="text/javascript" src="../js/classie.js"></script>
-    <script type="text/javascript" src="../js/classie.js"></script>
     <script type="text/javascript" src="../js/login-btn-uiProgressButton.js"></script>
     <script type="text/javascript">
         [].slice.call(document.querySelectorAll('.progress-button')).forEach(function (bttn, pos) {
-            new UIProgressButton(bttn, {
-                callback: function (instance) {
-                    var progress = 0;
-                    // instance.setProgress(1);
-                    var interval = setInterval(function () {
-                        progress = Math.min(progress + Math.random() * 0.3, 1);
-                        instance.setProgress(progress);
-                        if (progress === 1) {
-                            instance.stop(pos === 1 ? -1 : 1);
-                            clearInterval(interval);
-                        }
-                    }, 50);
-                }
-            });
+            if (pos === 1) {
+                /*login*/
+                new UIProgressButton(bttn, {
+                    callback: function (instance) {
+                        setTimeout(() => {
+                            postLogin(login.userid, login.passwd);
+                        }, 100);
+                        var progress = 0;
+                        var interval = setInterval(() => {
+                            if (document.loginReq == 0) {
+                                progress = Math.min(progress + Math.random() * 0.1, 0.5);
+                                instance.setProgress(progress);
+                            } else {
+                                progress = 1;
+                                instance.setProgress(progress);
+                                instance.stop(document.loginReq);
+                                document.loginReq = 0;
+                                var timeout = setTimeout(() => {
+                                    if (document.loginStat != "invalid")
+                                        alert("html target:$" + window
+                                            .jumpTarget + "$");
+                                    window.location.href = window.jumpTarget;
+                                }, 2000);
+                                clearInterval(interval);
+                            }
+                        }, 1000);
+                    }
+                });
+            }
+            if (pos === 0) {
+                /*signup*/
+                new UIProgressButton(bttn, {
+                    callback: function (instance) {
+                        var progress = 0;
+                        var interval = setInterval(() => {
+                            if (document.signupReq == 0) {
+                                progress = Math.min(progress + Math.random() * 0.1, 0.5);
+                                instance.setProgress(progress);
+                            } else {
+                                progress = 1;
+                                instance.setProgress(progress);
+                                instance.stop(document.signupReq);
+                                document.signupReq = 0;
+                                clearInterval(interval);
+                            }
+                        }, 1000);
+                    }
+                });
+            }
+
         });
     </script>
 

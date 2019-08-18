@@ -10,13 +10,13 @@ public class Buy implements Serializable
     private String m_strUserID;
     private String m_strMngrID;
     private int m_nGoodsID;
-    private Date m_dtBuyDate;
+    private String m_dtBuyDate;
     private int m_nBuyCnt;
 
     public Buy()
     {}
 
-    public Buy(String _strUserID, String _strMngrID, int _nGoodsID, Date _dtBuyDate, int _nBuyCnt)
+    public Buy(String _strUserID, String _strMngrID, int _nGoodsID, String _dtBuyDate, int _nBuyCnt)
     {
         setBuyCnt(_nBuyCnt);
         setBuyDate(_dtBuyDate);
@@ -58,13 +58,14 @@ public class Buy implements Serializable
 //        this.m_nGoodsID = Optional.ofNullable(_nGoodsID).filter(id->id>=0).orElseThrow();
     }
 
-    public Date getBuyDate()
+    public String getBuyDate()
     {
         return m_dtBuyDate;
     }
 
-    public void setBuyDate(Date _dtBuyDate)
+    public void setBuyDate(String _dtBuyDate)
     {
+
         this.m_dtBuyDate = _dtBuyDate;
 //        this.m_dtBuyDate = Optional.ofNullable(_dtBuyDate).orElseThrow();
     }
