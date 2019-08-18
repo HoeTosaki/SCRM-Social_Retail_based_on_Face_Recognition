@@ -15,19 +15,32 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
+/**
+ * 用户登录的Controller类。同时支持User、Mngr的登录处理
+ * @author why
+ */
 @RestController
 public class LoginWeb
 {
     private UserService m_userService;
     private MngrService m_mngrService;
 
+    /**
+     * setter注入
+     * @param _userService in
+     * @author why
+     */
     @Autowired
     public void setUserService(UserService _userService)
     {
         this.m_userService=_userService;
     }
 
+    /**
+     * setter注入
+     * @param _mngrService in
+     * @author why
+     */
     @Autowired
     public void setMngrService(MngrService _mngrService)
     {
@@ -35,6 +48,11 @@ public class LoginWeb
     }
 
 
+    /**
+     * 映射到login界面的Controller方法
+     * @return 页面模型
+     * @author why
+     */
     @RequestMapping(
             value = {"/login"}
     )
@@ -43,6 +61,11 @@ public class LoginWeb
         return new ModelAndView("Web/html/login.html");
     }
 
+    /**
+     * 映射到loginCheck的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @ResponseBody
     @RequestMapping(
             value = {"/loginCheck"}/*,

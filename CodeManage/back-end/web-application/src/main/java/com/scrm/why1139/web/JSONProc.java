@@ -8,13 +8,29 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Map;
 
+/**
+ * Json转义处理类。
+ * @author why
+ */
 public class JSONProc
 {
+    /**
+     * 解析Http协议请求数据段，获取Json对象
+     * @param _req in httpReq
+     * @return Json对象
+     * @author why
+     */
     public static JSONObject parseReq(HttpServletRequest _req)
     {
         return JSONObject.parseObject(JSON.toJSONString(_req.getParameterMap()));
     }
 
+    /**
+     * 解析登录请求，获取User对象
+     * @param _req in httpReq
+     * @return User对象
+     * @author why
+     */
     public static User parseLoginReq(HttpServletRequest _req)
     {
         User user = new User();

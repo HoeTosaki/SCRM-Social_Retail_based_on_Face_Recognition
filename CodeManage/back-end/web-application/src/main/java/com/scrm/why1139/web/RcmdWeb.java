@@ -14,17 +14,31 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * 用户推荐的Controller类。
+ * @author why
+ */
 @RestController
 public class RcmdWeb
 {
     private UserService m_userService;
 
+    /**
+     * setter注入
+     * @param _userService in
+     * @author why
+     */
     @Autowired
     private void setUserService(UserService _userService)
     {
         m_userService = _userService;
     }
 
+    /**
+     * 映射到rcmd界面的Controller方法
+     * @return 页面模型
+     * @author why
+     */
     @RequestMapping(
             value = {"/rcmd"}
     )
@@ -33,6 +47,11 @@ public class RcmdWeb
         return new ModelAndView("Web/html/rcmd.html");
     }
 
+    /**
+     * 映射到rcmdPull的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @ResponseBody
     @RequestMapping(
             value = {"/rcmdPull"}

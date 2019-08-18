@@ -1,7 +1,3 @@
-// var isGithubDemo = isGithubDemo || false; // This is for GitHub demo only. Remove it in your project
-
-void
-
 function (window, document, undefined) {
 
   // ES5 strict mode

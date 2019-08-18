@@ -7,6 +7,10 @@ import org.springframework.core.io.Resource;
 import java.io.*;
 import java.util.Optional;
 
+/**
+ * 用于描述User信息的Domain类。
+ * @author why
+ */
 public class User implements Serializable
 {
     private String m_strUserName;
@@ -18,7 +22,10 @@ public class User implements Serializable
 
     public static final String RES_PATH="src/main/resources/static/res/bioref/";
 
-
+    /**
+     * User存储的简易测试类。
+     * @author why
+     */
     public static void main(String s[])
     {
         User u = new User();
@@ -29,10 +36,21 @@ public class User implements Serializable
         u.saveBioRef(bt);
     }
 
-
+    /**
+     * User的默认构造函数
+     * @author why
+     */
     public User()
     {}
 
+    /**
+     * 根据完整的User信息构造User对象
+     * @param _strUserName in UserName
+     * @param _strUserID in UserID
+     * @param _strPassword in User密码
+     * @param _pthBioRef in User生物特征信息的存储路径
+     * @author why
+     */
     public User(String _strUserName, String _strUserID, String _strPassword, String _pthBioRef)
     {
         setUserName(_strUserName);
@@ -41,55 +59,105 @@ public class User implements Serializable
         setBioRef(_pthBioRef);
     }
 
+    /**
+     * 获取UserName
+     * @return UserName
+     * @author why
+     */
     public String getUserName()
     {
         return m_strUserName;
     }
 
+    /**
+     * 设置UserName
+     * @param _strUserName in UserName
+     * @author why
+     */
     public void setUserName(String _strUserName)
     {
 //        this.m_strUserName = Optional.ofNullable(_strUserName).orElseThrow();
         this.m_strUserName = _strUserName;
     }
 
+    /**
+     * 获取UserID
+     * @return UserID
+     * @author why
+     */
     public String getUserID()
     {
         return m_strUserID;
     }
 
+    /**
+     * 设置UserID
+     * @param _strUserID in UserID
+     * @author why
+     */
     public void setUserID(String _strUserID)
     {
 //        this.m_strUserID = Optional.ofNullable(_strUserID).orElseThrow();
         this.m_strUserID = _strUserID;
     }
 
+    /**
+     * 获取User密码
+     * @return User密码
+     * @author why
+     */
     public String getPassword()
     {
         return m_strPassword;
     }
 
+    /**
+     * 设置User密码
+     * @param _strPassword in User密码
+     * @author why
+     */
     public void setPassword(String _strPassword)
     {
 //        this.m_strPassword = Optional.ofNullable(_strPassword).orElseThrow();
         this.m_strPassword = _strPassword;
     }
 
+    /**
+     * 获取User生物信息存储路径
+     * @return 存储路径的字符串
+     * @author why
+     */
     public String getBioRef()
     {
         return m_pthBioRef;
     }
 
+    /**
+     * 设置User的生物信息路径
+     * @param _pthBioRef in 生物信息路径
+     * @author why
+     */
     public void setBioRef(String _pthBioRef)
     {
         this.m_pthBioRef = _pthBioRef;
 //        this.m_strBioRef = Optional.ofNullable(_strBioRef).orElse("undefined.");
     }
 
+    /**
+     * 判断当前指定路径的生物信息文件是否存在。
+     * @return 文件存在性的boolean值
+     * @author why
+     */
     public boolean isBioRefExists()
     {
         return new FileSystemResource(RES_PATH+m_pthBioRef).exists();
     }
 
+    /**
+     * 加载User生物信息内容到内存
+     * @return 生物信息二进制流
+     * @author why
+     */
     public byte[] loadBioRef()
     {
         byte[] ret = null;
@@ -120,6 +188,12 @@ public class User implements Serializable
         return ret;
     }
 
+    /**
+     * 存储内存中的生物信息流到硬盘
+     * @param _btBioRef in 二进制流
+     * @return 存储通告结果的boolean值
+     * @author why
+     */
     public boolean saveBioRef(byte[] _btBioRef)
     {
         boolean ret = false;

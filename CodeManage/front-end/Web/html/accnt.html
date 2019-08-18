@@ -95,6 +95,9 @@
                     </div>
                     <div class=" content-interval"> </div>
                     <div class="content-text">
+                        <button id="recommend-btn" class="btn-confirm">
+                            <h2>刷新以获取最新推荐</h2>
+                        </button>
                         <p>下面是为您推荐的商品：</p>
                         <p>
                             <ul id="bl-work-items">
@@ -193,9 +196,8 @@
             alert("post recgBio");
             var videoEle = document.querySelector('video');
             canvas.getContext('2d').drawImage(videoEle, 0, 0, canvas.width, canvas.height);
-            alert(canvas.toDataURL("image/png"));
-            recgImgData = canvas.toDataURL("image/png");
-
+            recg.recgImgData = canvas.toDataURL("image/png");
+            alert(recg.recgImgData);
             $.post("accntRecgBio", {
                 imgrecg: recg.recgImgData
             }, function (result) {
@@ -207,8 +209,10 @@
                     recg.hints = "用户识别完成,请核对是否正确";
                     recg.userid = obj["userid"];
                     recg.username = obj["username"];
-                    recg.username = obj["stat"];
+                    recg.stat = obj["stat"];
                 }
+                refreshCnter();
+                refreshRcmd();
             });
             recg.hints = "人脸信息识别中，请稍候...";
         });
@@ -227,8 +231,10 @@
                         recg.hints = "用户识别完成,请核对是否正确";
                         recg.userid = obj["userid"];
                         recg.username = obj["username"];
-                        recg.username = obj["stat"];
+                        recg.stat = obj["stat"];
                     }
+                    refreshCnter();
+                    refreshRcmd();
                 });
                 recg.hints = "用户id信息识别中，请稍候...";
             }
@@ -249,10 +255,10 @@
             methods: {
                 countSumPrc: function () {
                     var sum = 0;
-                    for (var buy in buylist) {
-                        sum += buy.prc * buy.cnt;
+                    for (var i = 0; i < this.buylist.length; ++i) {
+                        sum += this.buylist[i].prc * this.buylist[i].cnt;
                     }
-                    sumprc = sum;
+                    this.sumprc = sum;
                 }
             }
         });
@@ -261,31 +267,37 @@
         $("#counter-btnPay").click(function (e) {
             alert("post counterPay");
 
-            var lstUserID = [];
-            var lstAccntID = [];
-            var lstGoodsID = [];
-            var lstGoodsCnt = [];
+            // var lstUserID = [];
+            // var lstAccntID = [];
+            // var lstGoodsID = [];
+            // var lstGoodsCnt = [];
 
-            for (var buy in counter.buylist) {
-                lstUserID.push(counter.userid);
-                lstGoodsID.push(buy.id);
-                lstAccntID.push(document.mngrid);
-                lstGoodsCnt.push(buy.cnt);
+            // var arrObj = JSON.stringify(counter.buylist);
+            // alert(arrObj);
+
+            // for (var buy in counter.buylist) {
+            //     lstUserID.push(counter.userid);
+            //     lstGoodsID.push(buy.id);
+            //     lstAccntID.push(document.mngrid);
+            //     lstGoodsCnt.push(buy.cnt);
+            // }
+            for (var i = 0; i < counter.buylist.length; ++i) {
+                $.post("accntPay", {
+                    userid: counter.userid,
+                    accntid: document.mngrid,
+                    goodsid: counter.buylist[i].id,
+                    goodscnt: counter.buylist[i].cnt
+                }, function (result) {
+                    alert(result);
+                    var obj = JSON.parse(result);
+                    if (obj["stat"] == "success") {
+                        counter.hints = "支付信息提交成功！";
+                    } else {
+                        counter.hints = "支付信息提交失败，请重试";
+                    }
+                });
             }
-            $.post("accntPay", {
-                userid: lstUserID,
-                accntid: lstAccntID,
-                goodsid: lstGoodsID,
-                goodscnt: lstGoodsCnt
-            }, function (result) {
-                alert(result);
-                var obj = JSON.parse(result);
-                if (obj["stat"] == "success") {
-                    counter.hints = "支付信息提交成功！";
-                } else {
-                    counter.hints = "支付信息提交失败，请重试";
-                }
-            });
+
             counter.hints = "支付信息提交中，请稍候...";
         });
 
@@ -306,7 +318,7 @@
                             pnl: "panel-" + ind,
                             name: obj["name"],
                             id: obj["id"],
-                            img: obj["img"],
+                            img: "res/gdspic/" + obj["img"],
                             cnt: obj["cnt"],
                             prc: obj["prc"],
                             desc: obj["desc"]
@@ -369,27 +381,20 @@
                 if (obj["stat"] == "invalid") {
                     alert("当前用户不存在或无可推荐，请重试。");
                 } else {
-                    var lstID = obj["id"];
-                    var lstName = obj["name"];
-                    var lstPrc = obj["prc"];
-                    var lstImg = obj["img"];
-                    var lstDesc = obj["desc"];
-
-                    for (var i = 0; i < lstID.length; ++i) {
+                    for (var i = 0; i < obj.length; ++i) {
                         var newRcmd = {
-                            pnl: "panel-" + i + 1,
-                            name: lstName[i],
-                            id: lstID[i],
-                            img: lstImg[i],
-                            prc: lstPrc[i],
-                            desc: lstDesc[i]
+                            pnl: "panel-" + (i + 1),
+                            name: obj[i].name,
+                            id: obj[i].id,
+                            img: "res/gdspic/" + obj[i].img,
+                            prc: obj[i].prc,
+                            desc: obj[i].desc
                         };
                         recommend.rcmdlist.push(newRcmd);
                     };
                 }
             });
         });
-
 
         var refreshRcmd = function () {
             recommend.userid = recg.userid;

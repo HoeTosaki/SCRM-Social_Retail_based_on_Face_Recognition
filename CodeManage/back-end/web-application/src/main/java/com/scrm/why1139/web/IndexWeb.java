@@ -29,11 +29,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * 首页的Controller类。
+ * @author why
+ */
 @RestController
 public class IndexWeb
 {
 
+    /**
+     * 映射到index的Controller方法
+     * @return 页面模型
+     * @author why
+     */
     @RequestMapping(
             value = {"/","/index","/index.html"}
     )
@@ -43,6 +51,18 @@ public class IndexWeb
         return new ModelAndView("Web/html/index.html");
     }
 
+    /**
+     * 映射到测试页面的Controller方法
+     * @return 页面模型
+     * @author why
+     */
+    @RequestMapping(
+            value = {"/test"}
+    )
+    public ModelAndView test(HttpServletRequest _req)
+    {
+        return new ModelAndView("Web/html/test.html");
+    }
 
 //    @RequestMapping(
 //            value = "/loginCheck"
@@ -65,18 +85,6 @@ public class IndexWeb
 ////            return new ModelAndView("Web/html/rcmd.html");
 ////        }
 //    }
-
-
-
-
-    @RequestMapping(
-            value = {"/test"}
-    )
-    public ModelAndView test(HttpServletRequest _req)
-    {
-        return new ModelAndView("Web/html/test.html");
-    }
-
 
 //    @ResponseBody
 //    @RequestMapping(
@@ -133,17 +141,6 @@ public class IndexWeb
         }
         return jsonParam;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     //    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

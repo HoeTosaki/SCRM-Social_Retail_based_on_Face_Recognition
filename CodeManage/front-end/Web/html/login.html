@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width-device-width,initial-scale=1.0">
+    <!--    <meta name="viewport" content="width-device-width,initial-scale=1.0">-->
     <meta http-equiv="X-UA-Compatible" content="sie-edge" />
     <link rel="stylesheet" type="text/css" href="../css/login-style.css">
     <title>登录注册页面</title>
@@ -112,7 +112,7 @@
             },
             mounted: function () {
                 // alert("login-model is mounted.");
-                document.loginReq = 1;
+                document.loginReq = 0;
             }
         });
 
@@ -128,37 +128,32 @@
                 document.signupReq = 0;
             }
         });
-
-
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
         function postLogin(userid, passwd) {
-            alert("dawda");
-            // $.post("loginCheck", {
-            //     userid: userid,
-            //     passwd: passwd
-            // }, function (result) {
-            //     alert(result);
-            //     var obj = JSON.parse(result);
-            //     document.loginStat = obj["stat"];
-            //     if (document.loginStat == "user") {
-            //         window.localStorage.setItem("userid", obj["userid"]);
-            //         window.jumpTarget = "../html/rcmd.html";
-            //         document.loginReq = 1;
-            //     } else if (document.loginStat == "accnt") {
-            //         window.localStorage.setItem("mngrid", obj["mngrid"]);
-            //         window.jumpTarget = "../html/accnt.html";
-            //         document.loginReq = 1;
-            //     } else if (document.loginStat == "admin") {
-            //         window.localStorage.setItem("mngrid", obj["mngrid"]);
-            //         window.jumpTarget = "../html/admin.html";
-            //         document.loginReq = 1;
-            //     } else if (document.loginStat == "invalid") {
-            //         document.loginReq = -1;
-            //     } else {
-            //         window.jumpTarget = "../html/index.html"; //error ret-type
-            //     }
-            // });
-            alert("end.");
-            document.loginReq = 1;
+            alert("postLogin start");
+            $.post("loginCheck", {
+                userid: userid,
+                passwd: passwd
+            }, function (result) {
+                alert(result);
+                document.loginReq = 1;
+                var obj = JSON.parse(result);
+                document.loginStat = obj["stat"];
+                if (document.loginStat == "user") {
+                    window.jumpTarget = "rcmd?" + obj["userid"];
+                } else if (document.loginStat == "accnt") {
+                    window.jumpTarget = "accnt?" + obj["mngrid"];
+                } else if (document.loginStat == "admin") {
+                    window.jumpTarget = "admin?" + obj["mngrid"];
+                } else {
+                    document.loginReq = -1;
+                    window.jumpTarget = "login";
+                }
+            });
+            document.loginReq = 0;
+            alert("postLogin end.");
             // window.localStorage.setItem("userid", obj["userid"]);-->fail in block!
 
             //  //  can be used for convey complex data
@@ -167,8 +162,6 @@
             //     "userid": "why"
             // };
             // window.jumpTarget = "../html/rcmd.html?" + JSON.stringify(obj);
-            window.jumpTarget = "../html/accnt.html?why";
-            alert("set target:$" + window.jumpTarget + "$");
         }
 
         function postSignup(username, userid, passwd) {
@@ -189,8 +182,8 @@
         }
     </script>
     <script src="../js/login-script.js"></script>
-    <!--图标库-->
-    <script src="../js/ionicons.js"></script>
+    <!--    图标库-->
+    <!--    <script src="../js/ionicons.js"></script>-->
 
     <!-- submit -->
     <script type="text/javascript" src="../js/classie.js"></script>

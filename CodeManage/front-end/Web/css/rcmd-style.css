@@ -167,3 +167,10 @@ h1 {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDElEQVQ4y5WTzwoBURjFp+QVhA0loigvMlupKSkpSlaUN1DWQkQTFv7kRWy8iI2dP2Wcq6M+4840Fr/mu+f7zpl754/hOI6hwzTNMXDI2GvOyxyl8UlUHfknYE7THhxYzwIFYDBPwwNkQJa10nLaADQsMAEn3blRT4V+4qz1DhDb/XAFRxATAXFqN9fs3BCmBiiCsM+bCXOmQc/XA1uDkJdZhITAVu4gAS4URgECRpw9q6N9xII4V9vH3BFzha/XCKHFxjDA3Zs/3wHEAZtdn4AeZ/q6gB2bJa6TvONQ1dTKnNnoApZsVoAN7uK8ql6AKte2LqDu+kgUK+LWa9p/gSFLXlNCTysTd1aTnhej9TkzczH9aQAAAABJRU5ErkJggg==");
   right: 20px;
 }
+
+.cell-title{
+  position: absolute;
+  top: 15%;
+  left: 0%;
+  width: 100%;
+}

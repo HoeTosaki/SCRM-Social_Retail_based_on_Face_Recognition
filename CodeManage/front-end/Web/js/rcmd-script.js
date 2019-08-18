@@ -157,7 +157,7 @@ function (window, document, undefined) {
       userid: document.userid,
       pointer: cells.length
     }, function (result) {
-      alert(result);
+      //alert(result);
       images = JSON.parse(result);
       for (var j = 0, k = images.length; j < k; j++) {
         var cell = document.createElement('div');

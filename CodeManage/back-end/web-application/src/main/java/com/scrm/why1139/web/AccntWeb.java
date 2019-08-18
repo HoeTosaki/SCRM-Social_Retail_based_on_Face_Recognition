@@ -16,17 +16,31 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * 收银员界面的Controller类。
+ * @author why
+ */
 @RestController
 public class AccntWeb
 {
     private MngrService m_mngrService;
 
+    /**
+     * setter注入
+     * @param _mngrService in
+     * @author why
+     */
     @Autowired
     public void setMngrService(MngrService _mngrService)
     {
         this.m_mngrService = _mngrService;
     }
 
+    /**
+     * 映射到accnt界面的Controller方法
+     * @return 页面模型
+     * @author why
+     */
     @RequestMapping(
             value = {"/accnt"}
     )
@@ -35,7 +49,11 @@ public class AccntWeb
         return new ModelAndView("Web/html/accnt.html");
     }
 
-
+    /**
+     * 映射到accntRecgBio的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @ResponseBody
     @RequestMapping(
             value = {"/accntRecgBio"}
@@ -62,6 +80,11 @@ public class AccntWeb
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到accntRecgMan的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @ResponseBody
     @RequestMapping(
             value = {"/accntRecgMan"}
@@ -90,6 +113,11 @@ public class AccntWeb
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到accntPay的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @ResponseBody
     @RequestMapping(
             value = {"/accntPay"}
@@ -124,6 +152,11 @@ public class AccntWeb
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到accntGdsQuery的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @ResponseBody
     @RequestMapping(
             value = {"/accntGdsQuery"}
@@ -149,7 +182,7 @@ public class AccntWeb
             objRet.put("desc",goods.getGoodsDesc());
             objRet.put("cnt",nGoodsCnt);
 //            objRet.put("type",goods.getGoodsType());
-//                //Oach！！ i forgot to add this in html...su ma a
+//            //TODO:Oach！！ i forgot to add this in html...su ma a
         }
         System.out.println("recv:"+nGoodsID);
         System.out.println("recv:"+nGoodsCnt);
@@ -159,6 +192,11 @@ public class AccntWeb
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到accntRcmd的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @ResponseBody
     @RequestMapping(
             value = {"/accntRcmd"}
@@ -197,9 +235,5 @@ public class AccntWeb
         System.out.println("send:"+arrRet.toJSONString());
         return arrRet.toJSONString();
     }
-
-
-
-
 
 }

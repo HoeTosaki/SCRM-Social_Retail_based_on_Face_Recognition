@@ -8,6 +8,10 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * 用于描述Goods信息的Domain类。
+ * @author why
+ */
 public class Goods implements Serializable
 {
     private int m_nGoodsID;
@@ -22,6 +26,10 @@ public class Goods implements Serializable
 
     public static final String RES_PATH="src/main/resources/static/res/gdspic/";
 
+    /**
+     * Goods存储的简易测试类。
+     * @author why
+     */
     public static void main(String s[])
     {
         Goods g = new Goods();
@@ -32,10 +40,24 @@ public class Goods implements Serializable
         g.savePic(bt);
     }
 
-
+    /**
+     * Goods的默认构造函数
+     * @author why
+     */
     public Goods()
     {}
 
+    /**
+     * 根据完整的商品信息构造Goods对象
+     * @param _nGoodsID in GoodsID
+     * @param _strGoodsType in Goods类型
+     * @param _strGoodsName in Goods名称
+     * @param _dbPrice in Goods售价
+     * @param _nGoodsCnt in Goods库存数量
+     * @param _strGoodsDesc in Goods描述
+     * @param _pthPic in Goods图片展示
+     * @author why
+     */
     public Goods(int _nGoodsID, String _strGoodsType, String _strGoodsName, double _dbPrice, int _nGoodsCnt, String _strGoodsDesc,String _pthPic)
     {
         setGoodsCnt(_nGoodsCnt);
@@ -47,87 +69,167 @@ public class Goods implements Serializable
         setPic(_pthPic);
     }
 
+    /**
+     * 获取GoodsID
+     * @return GoodsID
+     * @author why
+     */
     public int getGoodsID()
     {
         return m_nGoodsID;
     }
 
+    /**
+     * 设置GoodsID
+     * @param _nGoodsID in GoodsID
+     * @author why
+     */
     public void setGoodsID(int _nGoodsID)
     {
         m_nGoodsID = _nGoodsID;
 //        this.m_nGoodsID = Optional.ofNullable(_nGoodsID).filter(id->id>=0).orElseThrow();
     }
 
+    /**
+     * 获取Goods类型
+     * @return Goods类型
+     * @author why
+     */
     public String getGoodsType()
     {
         return m_strGoodsType;
     }
 
+    /**
+     * 设置Goods类型
+     * @param _strGoodsType in Goods类型
+     * @author why
+     */
     public void setGoodsType(String _strGoodsType)
     {
         this.m_strGoodsType = _strGoodsType;
 //        this.m_strGoodsType = Optional.ofNullable(_strGoodsType).orElseThrow();
     }
 
+    /**
+     * 获取Goods名称
+     * @return Goods名称
+     * @author why
+     */
     public String getGoodsName()
     {
         return m_strGoodsName;
     }
 
+    /**
+     * 设置Goods名称
+     * @param _strGoodsName in Goods名称
+     * @author why
+     */
     public void setGoodsName(String _strGoodsName)
     {
         m_strGoodsName = _strGoodsName;
 //        this.m_strGoodsName = Optional.ofNullable(_strGoodsName).orElseThrow();
     }
 
+    /**
+     * 获取Goods价格
+     * @return Goods价格
+     * @author why
+     */
     public double getPrice()
     {
         return m_dbPrice;
     }
 
+    /**
+     * 设置Goods价格
+     * @param _dbPrice in Goods
+     * @author why
+     */
     public void setPrice(double _dbPrice)
     {
         m_dbPrice = _dbPrice;
 //        this.m_dbPrice = Optional.ofNullable(_dbPrice).filter(prc->prc>0).orElseThrow();
     }
 
+    /**
+     * 获取Goods库存数量
+     * @return Goods数量
+     * @author why
+     */
     public int getGoodsCnt()
     {
         return m_nGoodsCnt;
     }
 
+    /**
+     * 设置Goods库存数量
+     * @param _nGoodsCnt in Goods库存数量
+     * @author why
+     */
     public void setGoodsCnt(int _nGoodsCnt)
     {
         this.m_nGoodsCnt = _nGoodsCnt;
 //        this.m_nGoodsCnt = Optional.ofNullable(_nGoodsCnt).filter(cnt->cnt>=0).orElse(0);
     }
 
+    /**
+     * 获取Goods描述
+     * @return Goods描述
+     * @author why
+     */
     public String getGoodsDesc()
     {
         return m_strGoodsDesc;
     }
 
+    /**
+     * 设置Goods描述
+     * @param _strGoodsDesc in Goods描述
+     * @author why
+     */
     public void setGoodsDesc(String _strGoodsDesc)
     {
         this.m_strGoodsDesc = _strGoodsDesc;
 //        this.m_strGoodsDesc = Optional.ofNullable(_strGoodsDesc).orElse("undefined.");
     }
 
+    /**
+     * 获取Goods图片路径
+     * @return Goods图片路径
+     * @author why
+     */
     public String getPic()
     {
         return m_pthPic;
     }
 
+    /**
+     * 设置Goods图片路径
+     * @param _pthPic in Goods图片路径
+     * @author why
+     */
     public void setPic(String _pthPic)
     {
         this.m_pthPic = _pthPic;
     }
 
+    /**
+     * 判断当前指定路径的图片文件是否存在。
+     * @return 文件存在性的boolean值
+     * @author why
+     */
     public boolean isPicExists()
     {
         return new FileSystemResource(RES_PATH+m_pthPic).exists();
     }
 
+    /**
+     * 加载Goods图片内容到内存
+     * @return Goods图片的二进制流
+     * @author why
+     */
     public byte[] loadPic()
     {
         byte[] ret = null;
@@ -159,6 +261,12 @@ public class Goods implements Serializable
         return ret;
     }
 
+    /**
+     * 存储内存中的图片流到硬盘
+     * @param _btPic in 二进制图片流
+     * @return 存储通告结果的boolean值
+     * @author why
+     */
     public boolean savePic(byte[] _btPic)
     {
         boolean ret = false;
