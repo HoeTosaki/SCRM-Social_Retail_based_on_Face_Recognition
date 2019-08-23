@@ -82,4 +82,9 @@ public class MngrDao
                 new Object[]{_mngr.getMngrType(),_mngr.getMngrID(),_mngr.getPassword()});
     }
 
+    public void delMngr(Mngr _mngr)
+    {
+        m_jdbcTemp.update("DELETE FROM t_mngr WHERE mngr_id=?",new Object[]{_mngr.getMngrID()});
+    }
+
 }

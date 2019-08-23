@@ -21,6 +21,14 @@ h1 {
     color: beige;
 }
 
+h2 {
+    font-weight: bold;
+    margin: 0;
+    color: beige;
+}
+
+
+
 p {
     font-size: 14px;
     font-weight: bold;
@@ -259,4 +267,68 @@ button.ghost {
 
 .container.right-panel-active .overlay-right {
     transform: translateX(20%);
+}
+
+
+
+.token-caption-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    width: 250px;
+    height: 70px;
+    border: 2px solid #1ECD97;
+    border-radius: 40px;
+    background: transparent;
+    color: #1ECD97;
+    letter-spacing: 1px;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-transition: background-color 0.3s, color 0.3s, width 0.3s, border-width 0.3s, border-color 0.3s;
+    transition: background-color 0.3s, color 0.3s, width 0.3s, border-width 0.3s, border-color 0.3s;
+}
+
+.token-caption-btn:hover {
+    background-color: #1ECD97;
+    color: #fff;
+}
+
+.sign-up-token-caption-btn:focus {
+    outline: none;
+}
+
+
+#sign-up-token {
+    width: 80%;
+    left: 10%;
+    top: 20%;
+    position: absolute;
+    visibility: hidden;
+}
+
+#sign-up-token-active {
+    width: 80%;
+    left: 10%;
+    top: 20%;
+    position: absolute;
+    visibility: visible;
+}
+
+
+
+#login-token {
+    width: 80%;
+    left: 10%;
+    top: 20%;
+    position: absolute;
+    visibility: hidden;
+}
+
+#login-token-active {
+    width: 80%;
+    left: 10%;
+    top: 20%;
+    position: absolute;
+    visibility: visible;
 }

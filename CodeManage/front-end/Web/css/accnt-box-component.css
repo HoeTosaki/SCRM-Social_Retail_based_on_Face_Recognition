@@ -572,8 +572,9 @@ section.bl-expand .bl-icon-close {
 }
 
 .btn-confirm {
-	width: 100%;
+	width: 50%;
 	border-width: 1.5px;
+	float: left;
 	opacity: 0.3;
 	background: #f2ede3;
 	-webkit-transition: all 0.3s ease-in-out;

@@ -13,12 +13,16 @@ public class Mngr implements Serializable
     private String m_strMngrID;
     private String m_strPassword;
 
+    private boolean m_isEmpty;
+
     /**
      * Mngr的默认构造函数
      * @author why
      */
     public Mngr()
-    {}
+    {
+        m_isEmpty = true;
+    }
 
     /**
      * 根据完整的Mngr信息构造Mngr对象
@@ -29,6 +33,7 @@ public class Mngr implements Serializable
      */
     public Mngr(int _nMngrType, String _strMngrID, String _strPassword)
     {
+        m_isEmpty = false;
         setMngrType(_nMngrType);
         setMngrID(_strMngrID);
         setPassword(_strPassword);
@@ -59,6 +64,7 @@ public class Mngr implements Serializable
      */
     public void setMngrType(int _nMngrType)
     {
+        m_isEmpty = false;
 //        this.m_nMngrType = Optional.ofNullable(_nMngrType).filter(tp->tp>=0 && tp<=2).orElse(3);
         this.m_nMngrType = _nMngrType;
     }
@@ -80,6 +86,7 @@ public class Mngr implements Serializable
      */
     public void setMngrID(String _MngrID)
     {
+        m_isEmpty = false;
         this.m_strMngrID = _MngrID;
 //        this.m_strMngrID = Optional.ofNullable(_MngrID).orElseThrow();
     }
@@ -101,7 +108,13 @@ public class Mngr implements Serializable
      */
     public void setPassword(String _strPassword)
     {
+        m_isEmpty = false;
         this.m_strPassword = _strPassword;
 //        this.m_strPassword = Optional.ofNullable(_strPassword).orElseThrow();
+    }
+
+    public boolean isEmpty()
+    {
+        return m_isEmpty;
     }
 }

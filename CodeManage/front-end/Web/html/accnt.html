@@ -32,8 +32,11 @@
                     </div>
                     <div class="content-right">
                         <p>人脸信息识别指示：</p>
-                        <button id="recg-btn" class="btn-confirm">
-                            <p>点按以识别</p>
+                        <button id="recg-btn" class="btn-confirm" onclick="onClickRecg()">
+                            <p>识别</p>
+                        </button>
+                        <button class="btn-confirm" onclick="onClickSignUp()">
+                            <p>注册</p>
                         </button>
                         <video src="" width="230" height="230"></video>
                         <canvas id="canvas" width="230" height="230"></canvas>
@@ -192,7 +195,7 @@
             }
         });
 
-        $("#recg-btn").click(function (e) {
+        function onClickRecg() {
             alert("post recgBio");
             var videoEle = document.querySelector('video');
             canvas.getContext('2d').drawImage(videoEle, 0, 0, canvas.width, canvas.height);
@@ -215,7 +218,11 @@
                 refreshRcmd();
             });
             recg.hints = "人脸信息识别中，请稍候...";
-        });
+        }
+
+        function onClickSignUp() {
+            alert("sign up");
+        }
 
         $("#recg-input").keyup(function (e) {
             if (e.keyCode == 13) {

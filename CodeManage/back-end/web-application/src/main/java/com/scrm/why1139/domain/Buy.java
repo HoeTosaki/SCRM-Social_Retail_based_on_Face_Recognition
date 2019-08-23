@@ -17,12 +17,15 @@ public class Buy implements Serializable
     private String m_dtBuyDate;
     private int m_nBuyCnt;
 
+    private boolean m_isEmpty;
     /**
      * 默认构造函数
      * @author why
      */
     public Buy()
-    {}
+    {
+        m_isEmpty = true;
+    }
 
     /**
      * 完整购物记录初始化对象
@@ -35,6 +38,7 @@ public class Buy implements Serializable
      */
     public Buy(String _strUserID, String _strMngrID, int _nGoodsID, String _dtBuyDate, int _nBuyCnt)
     {
+        m_isEmpty = false;
         setBuyCnt(_nBuyCnt);
         setBuyDate(_dtBuyDate);
         setGoodsID(_nGoodsID);
@@ -59,6 +63,7 @@ public class Buy implements Serializable
      */
     public void setUserID(String _strUserID)
     {
+        m_isEmpty = false;
         this.m_strUserID = _strUserID;
 //        this.m_strUserID = Optional.ofNullable(_strUserID).orElseThrow();
     }
@@ -80,6 +85,7 @@ public class Buy implements Serializable
      */
     public void setMngrID(String _strMngrID)
     {
+        m_isEmpty = false;
         this.m_strMngrID = _strMngrID;
 //        this.m_strMngrID = Optional.ofNullable(_strMngrID).orElseThrow();
     }
@@ -101,6 +107,7 @@ public class Buy implements Serializable
      */
     public void setGoodsID(int _nGoodsID)
     {
+        m_isEmpty = false;
         this.m_nGoodsID = _nGoodsID;
 //        this.m_nGoodsID = Optional.ofNullable(_nGoodsID).filter(id->id>=0).orElseThrow();
     }
@@ -122,7 +129,7 @@ public class Buy implements Serializable
      */
     public void setBuyDate(String _dtBuyDate)
     {
-
+        m_isEmpty = false;
         this.m_dtBuyDate = _dtBuyDate;
 //        this.m_dtBuyDate = Optional.ofNullable(_dtBuyDate).orElseThrow();
     }
@@ -144,7 +151,13 @@ public class Buy implements Serializable
      */
     public void setBuyCnt(int _nBuyCnt)
     {
+        m_isEmpty = false;
         this.m_nBuyCnt = _nBuyCnt;
 //        this.m_nBuyCnt = Optional.ofNullable(m_nBuyCnt).orElseThrow();
+    }
+
+    public boolean isEmpty()
+    {
+        return m_isEmpty;
     }
 }

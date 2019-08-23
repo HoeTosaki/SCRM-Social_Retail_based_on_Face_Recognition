@@ -32,8 +32,11 @@
                     </div>
                     <div class="content-right">
                         <p>人脸信息识别指示：</p>
-                        <button id="recg-btn" class="btn-confirm">
-                            <p>点按以识别</p>
+                        <button id="recg-btn" class="btn-confirm" onclick="onClickRecg()">
+                            <p>识别</p>
+                        </button>
+                        <button class="btn-confirm" onclick="onClickSignUp()">
+                            <p>注册</p>
                         </button>
                         <video src="" width="230" height="230"></video>
                         <canvas id="canvas" width="230" height="230"></canvas>
@@ -192,18 +195,24 @@
             }
         });
 
-        $("#recg-btn").click(function (e) {
+        function onClickRecg() {
             alert("post recgBio");
             var videoEle = document.querySelector('video');
             canvas.getContext('2d').drawImage(videoEle, 0, 0, canvas.width, canvas.height);
-            recg.recgImgData = canvas.toDataURL("image/png");
+
+            var imgData=document.getElementById("canvas").toDataURL("image/png");
+            var data=imgData.substr(22);
+
+            recg.recgImgData = data;
+            // $.post('recorder/target/sc',{'sj':data});
+
             alert(recg.recgImgData);
-            $.post("accntRecgBio", {
+            $.post("loginRecgBio", {
                 imgrecg: recg.recgImgData
             }, function (result) {
                 alert(result);
                 var obj = JSON.parse(result);
-                if (obj["stat"] == "invalid") {
+                if (obj["stat"] != "success") {
                     recg.hints = "人脸信息识别失败，请重试。";
                 } else {
                     recg.hints = "用户识别完成,请核对是否正确";
@@ -215,7 +224,38 @@
                 refreshRcmd();
             });
             recg.hints = "人脸信息识别中，请稍候...";
-        });
+        }
+
+        function onClickSignUp() {
+            alert("sign up");
+
+            var videoEle = document.querySelector('video');
+            canvas.getContext('2d').drawImage(videoEle, 0, 0, canvas.width, canvas.height);
+
+            var imgData=document.getElementById("canvas").toDataURL("image/png");
+            var data=imgData.substr(22);
+
+            recg.recgImgData = data;
+
+            $.post("signUpRecgBio", {
+                imgrecg: recg.recgImgData
+            }, function (result) {
+                alert(result);
+                var obj = JSON.parse(result);
+                if (obj["stat"] == "invalid") {
+                    recg.hints = "注册失败！请重新录入人脸";
+                } else {
+                    recg.hints = "用户注册完成,请核对您的信息";
+                    recg.userid = obj["userid"];
+                    recg.username = obj["username"];
+                    recg.stat = obj["stat"];
+                }
+                refreshCnter();
+                refreshRcmd();
+            });
+            recg.hints = "正在根据您的人脸信息注册用户，请稍候...";
+        }
+
 
         $("#recg-input").keyup(function (e) {
             if (e.keyCode == 13) {

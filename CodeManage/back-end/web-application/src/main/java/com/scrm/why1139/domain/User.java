@@ -22,6 +22,8 @@ public class User implements Serializable
 
     public static final String RES_PATH="src/main/resources/static/res/bioref/";
 
+    private boolean m_isEmpty;
+
     /**
      * User存储的简易测试类。
      * @author why
@@ -41,7 +43,9 @@ public class User implements Serializable
      * @author why
      */
     public User()
-    {}
+    {
+        m_isEmpty = true;
+    }
 
     /**
      * 根据完整的User信息构造User对象
@@ -53,6 +57,7 @@ public class User implements Serializable
      */
     public User(String _strUserName, String _strUserID, String _strPassword, String _pthBioRef)
     {
+        m_isEmpty = false;
         setUserName(_strUserName);
         setUserID(_strUserID);
         setPassword(_strPassword);
@@ -76,6 +81,7 @@ public class User implements Serializable
      */
     public void setUserName(String _strUserName)
     {
+        m_isEmpty = false;
 //        this.m_strUserName = Optional.ofNullable(_strUserName).orElseThrow();
         this.m_strUserName = _strUserName;
     }
@@ -97,6 +103,7 @@ public class User implements Serializable
      */
     public void setUserID(String _strUserID)
     {
+        m_isEmpty = false;
 //        this.m_strUserID = Optional.ofNullable(_strUserID).orElseThrow();
         this.m_strUserID = _strUserID;
     }
@@ -118,6 +125,7 @@ public class User implements Serializable
      */
     public void setPassword(String _strPassword)
     {
+        m_isEmpty = false;
 //        this.m_strPassword = Optional.ofNullable(_strPassword).orElseThrow();
         this.m_strPassword = _strPassword;
     }
@@ -139,6 +147,7 @@ public class User implements Serializable
      */
     public void setBioRef(String _pthBioRef)
     {
+        m_isEmpty = false;
         this.m_pthBioRef = _pthBioRef;
 //        this.m_strBioRef = Optional.ofNullable(_strBioRef).orElse("undefined.");
     }
@@ -160,6 +169,7 @@ public class User implements Serializable
      */
     public byte[] loadBioRef()
     {
+
         byte[] ret = null;
         ByteArrayOutputStream baos = null;
         try
@@ -196,6 +206,7 @@ public class User implements Serializable
      */
     public boolean saveBioRef(byte[] _btBioRef)
     {
+        m_isEmpty = false;
         boolean ret = false;
         BufferedOutputStream bos = null;
         try
@@ -217,5 +228,10 @@ public class User implements Serializable
             {}
         }
         return ret;
+    }
+
+    public boolean isEmpty()
+    {
+        return m_isEmpty;
     }
 }

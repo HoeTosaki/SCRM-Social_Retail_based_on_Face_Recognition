@@ -27,6 +27,7 @@
         <div id="signup-model" class="form-container sign-up-container">
             <form action="#">
                 <h1>欢迎注册SCRM！{{userid}}</h1>
+                <span>{{hints}}</span>
                 <!-- <div class="social-container"> <a href="#" class="social">
                         <ion-icon name="logo-facebook"></ion-icon>
                     </a> <a href="#" class="social">
@@ -36,8 +37,14 @@
                     </a> </div> -->
                 <span>请输入：</span>
                 <input type="text" v-model="username" placeholder="真实姓名">
-                <input type="userid" v-model="userid" placeholder="用户名">
+                <input type="userid" v-model="userid" onblur="postSignUpPre()" placeholder="用户名">
                 <input type="password" v-model="passwd" placeholder="密码">
+                <button class="token-caption-btn" onclick="showSignUpToken()">
+                    <span>验证</span>
+                </button>
+                <div id="sign-up-token">
+                    ...
+                </div>
                 <!-- <button>注册</button> -->
                 <div class="progress-button">
                     <button id="btnSignup"><span>注册</span></button>
@@ -69,6 +76,12 @@
                 <span>请输入：</span>
                 <input type="userid" v-model="userid" placeholder="用户名">
                 <input type="password" v-model="passwd" placeholder="密码">
+                <button class="token-caption-btn" onclick="showLoginToken()">
+                    <span>验证</span>
+                </button>
+                <div id="login-token">
+                    ...
+                </div>
                 <!-- <button>登录</button> -->
                 <div class="progress-button">
                     <button id="btnLogin"><span>登录</span></button>
@@ -102,6 +115,11 @@
             </div>
         </div>
     </div>
+    <script>
+        isSignUpShowToken = false;
+        isLoginShowToken = false;
+        isTokenOK = false;
+    </script>
     <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <script>
         var login = new Vue({
@@ -121,7 +139,8 @@
             data: {
                 username: '',
                 userid: '',
-                passwd: ''
+                passwd: '',
+                hints: ''
             },
             mounted: function () {
                 // alert("signup-model is mounted.")
@@ -164,19 +183,70 @@
             // window.jumpTarget = "../html/rcmd.html?" + JSON.stringify(obj);
         }
 
-        function postSignup(username, userid, passwd) {
-            $.post("SignupCheck", {
+        function postSignUp(username, userid, passwd) {
+            $.post("signUpCheck", {
                 username: username,
                 userid: userid,
                 passwd: passwd
             }, function (result) {
-                alert(result);
+                // alert(result);
                 var obj = JSON.parse(result);
                 document.signupStat = obj["stat"];
                 if (document.signupStat == "success") {
                     document.signupReq = 1;
                 } else {
                     document.signupReq = -1;
+                }
+                signup.userid = "";
+                signup.username = "";
+                signup.passwd = "";
+            });
+        }
+
+        function postSignUpPre() {
+            if (signup.userid == "")
+                return;
+            $.post("signUpCheckPre", {
+                userid: signup.userid,
+            }, function (result) {
+                // alert(result+"$"+signup.userid);
+                var obj = JSON.parse(result);
+                document.signupStatPre = obj["stat"];
+                if (document.signupStatPre == "success") {
+                    signup.hints = "\n当前用户名可正常使用。";
+                } else {
+                    signup.hints = "\n当前用户名已被占用。";
+                    signup.userid = "";
+                }
+            });
+        }
+
+        function postSignUpToken(signuptoken) {
+            $.post("signUpCheckToken", {
+                token: signuptoken
+            }, function (result) {
+                alert(result);
+                var obj = JSON.parse(result);
+                document.signupStat = obj["stat"];
+                if (document.signupStat == "success") {
+                    isTokenOK = true;
+                } else {
+                    isTokenOK = false;
+                }
+            });
+        }
+
+        function postLoginToken(logintoken) {
+            $.post("loginCheckToken", {
+                token: logintoken
+            }, function (result) {
+                alert(result);
+                var obj = JSON.parse(result);
+                document.signupStat = obj["stat"];
+                if (document.signupStat == "success") {
+                    isTokenOK = true;
+                } else {
+                    isTokenOK = false;
                 }
             });
         }
@@ -194,10 +264,18 @@
                 /*login*/
                 new UIProgressButton(bttn, {
                     callback: function (instance) {
+                        var progress = 0;
+                        if (isTokenOK == false) {
+                            instance.setProgress(1);
+                            instance.stop(-1);
+                            setTimeout(() => {
+                                alert("请完成验证操作，以表明您不是机器人。");
+                            }, 1000);
+                            return;
+                        }
                         setTimeout(() => {
                             postLogin(login.userid, login.passwd);
                         }, 100);
-                        var progress = 0;
                         var interval = setInterval(() => {
                             if (document.loginReq == 0) {
                                 progress = Math.min(progress + Math.random() * 0.1, 0.5);
@@ -224,6 +302,18 @@
                 new UIProgressButton(bttn, {
                     callback: function (instance) {
                         var progress = 0;
+                        if (isTokenOK == false) {
+                            instance.setProgress(1);
+                            instance.stop(-1);
+                            setTimeout(() => {
+                                alert("请完成验证操作，以表明您不是机器人。");
+                            }, 1000);
+                            return;
+                        }
+                        setTimeout(() => {
+                            postSignUp(signup.username, signup.userid, signup.passwd);
+                        }, 100);
+                        var progress = 0;
                         var interval = setInterval(() => {
                             if (document.signupReq == 0) {
                                 progress = Math.min(progress + Math.random() * 0.1, 0.5);
@@ -242,7 +332,69 @@
 
         });
     </script>
+    <script src="https://cdn.dingxiang-inc.com/ctu-group/captcha-ui/index.js"></script>
+    <script>
+        var myCaptchaSignUp = _dx.Captcha(document.getElementById('sign-up-token'), {
+            appId: 'dfbcdad62304cb024d8a02efcc126200', //appId，在控制台中“应用管理”或“应用配置”模块获取
+            success: function (token) {
+                alert('token\t' + token);
+                postSignUpToken(token);
+            }
+        })
 
+        var myCaptchaLogin = _dx.Captcha(document.getElementById('login-token'), {
+            appId: 'dfbcdad62304cb024d8a02efcc126200', //appId，在控制台中“应用管理”或“应用配置”模块获取
+            success: function (token) {
+                alert('token\t' + token);
+                postLoginToken(token);
+            }
+        })
+    </script>
+    <script>
+        function showSignUpToken() {
+            if (!isSignUpShowToken) {
+                $("#sign-up-token").css({
+                    "width": "80%",
+                    "left": "10%",
+                    "top": "20%",
+                    "position": "absolute",
+                    "visibility": "visible"
+                });
+                isSignUpShowToken = true;
+            } else {
+                $("#sign-up-token").css({
+                    "width": "80%",
+                    "left": "10%",
+                    "top": "20%",
+                    "position": "absolute",
+                    "visibility": "hidden"
+                });
+                isSignUpShowToken = false;
+            }
+        }
+
+        function showLoginToken() {
+            if (!isLoginShowToken) {
+                $("#login-token").css({
+                    "width": "80%",
+                    "left": "10%",
+                    "top": "20%",
+                    "position": "absolute",
+                    "visibility": "visible"
+                });
+                isLoginShowToken = true;
+            } else {
+                $("#login-token").css({
+                    "width": "80%",
+                    "left": "10%",
+                    "top": "20%",
+                    "position": "absolute",
+                    "visibility": "hidden"
+                });
+                isLoginShowToken = false;
+            }
+        }
+    </script>
 </body>
 
 </html>

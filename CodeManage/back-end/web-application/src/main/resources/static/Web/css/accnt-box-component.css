@@ -2,9 +2,9 @@
 	font-family: 'icomoon';
 	src: url("../css/icomoon.eot");
 	src: url("../css/icomoon.eot-#iefix") format('embedded-opentype'),
-		url("../css/icomoon.woff") format('woff'),
-		url("../css/icomoon.ttf") format('truetype'),
-		url("../css/icomoon.svg#icomoon") format('svg');
+	url("../css/icomoon.woff") format('woff'),
+	url("../css/icomoon.ttf") format('truetype'),
+	url("../css/icomoon.svg#icomoon") format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -572,8 +572,9 @@ section.bl-expand .bl-icon-close {
 }
 
 .btn-confirm {
-	width: 100%;
+	width: 50%;
 	border-width: 1.5px;
+	float: left;
 	opacity: 0.3;
 	background: #f2ede3;
 	-webkit-transition: all 0.3s ease-in-out;

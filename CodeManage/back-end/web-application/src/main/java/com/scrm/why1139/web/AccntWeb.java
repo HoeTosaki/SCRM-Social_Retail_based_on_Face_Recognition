@@ -1,19 +1,23 @@
 package com.scrm.why1139.web;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mysql.cj.xdevapi.JsonArray;
 import com.scrm.why1139.domain.Goods;
 import com.scrm.why1139.domain.User;
-import com.scrm.why1139.service.MngrService;
+import com.scrm.why1139.service.AccntService;
+import com.sun.xml.messaging.saaj.packaging.mime.util.BASE64DecoderStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -23,17 +27,17 @@ import java.util.List;
 @RestController
 public class AccntWeb
 {
-    private MngrService m_mngrService;
+    private AccntService m_accntService;
 
     /**
      * setter注入
-     * @param _mngrService in
+     * @param _accntService in
      * @author why
      */
     @Autowired
-    public void setMngrService(MngrService _mngrService)
+    public void setMngrService(AccntService _accntService)
     {
-        this.m_mngrService = _mngrService;
+        this.m_accntService = _accntService;
     }
 
     /**
@@ -49,36 +53,38 @@ public class AccntWeb
         return new ModelAndView("Web/html/accnt.html");
     }
 
-    /**
-     * 映射到accntRecgBio的Controller方法
-     * @return 请求响应String
-     * @author why
-     */
-    @ResponseBody
-    @RequestMapping(
-            value = {"/accntRecgBio"}
-    )
-    public String recgBio(HttpServletRequest _req)
-    {
-        JSONObject objReq = JSONProc.parseReq(_req);
-        String bs64RefBio = objReq.getString("imgrecg");
-        User user = m_mngrService.findUserByBioRef(bs64RefBio);
-        JSONObject objRet = new JSONObject();
-        if(user == null || user.getUserID() == null || user.getUserID().trim().equals(""))
-        {
-            objRet.put("stat","invalid");
-        }
-        else
-        {
-            objRet.put("stat","completed");
-            objRet.put("userid",user.getUserID());
-            objRet.put("username",user.getUserName());
-        }
-        System.out.println("obj:"+objReq.toJSONString());
-        System.out.println("recv:"+bs64RefBio);
-        System.out.println("send:"+objRet.toJSONString());
-        return objRet.toJSONString();
-    }
+//    /**
+//     * 映射到accntRecgBio的Controller方法
+//     * @return 请求响应String
+//     * @author why
+//     */
+//    @ResponseBody
+//    @RequestMapping(value = {"/accntRecgBio"}, method = RequestMethod.POST)
+//    public String recgBio(HttpServletRequest _req,StringBuffer imgrecg)
+//    {
+//        JSONObject objReq = JSONProc.parseReq(_req);
+//        String bs64RefBio = objReq.getString("imgrecg");
+//        StringBuffer bs64RefBioBuffer = new StringBuffer(objReq.getString("imgrecg"));
+//        System.out.println(bs64RefBio);
+//        System.out.println(objReq.toJSONString());
+//        System.out.println(imgrecg.toString());
+//        User user = m_accntService.findUserByBioRef(bs64RefBio);
+//        JSONObject objRet = new JSONObject();
+//        if(user == null || user.isEmpty() || user.getUserID() == null || user.getUserID().trim().equals(""))
+//        {
+//            objRet.put("stat","invalid");
+//        }
+//        else
+//        {
+//            objRet.put("stat","completed");
+//            objRet.put("userid",user.getUserID());
+//            objRet.put("username",user.getUserName());
+//        }
+//        System.out.println("obj:"+objReq.toJSONString());
+//        System.out.println("recv:"+bs64RefBio);
+//        System.out.println("send:"+objRet.toJSONString());
+//        return objRet.toJSONString();
+//    }
 
     /**
      * 映射到accntRecgMan的Controller方法
@@ -89,11 +95,11 @@ public class AccntWeb
     @RequestMapping(
             value = {"/accntRecgMan"}
     )
-    public String recgMan(HttpServletRequest _req)
+    public String accntRecgMan(HttpServletRequest _req)
     {
         JSONObject objReq = JSONProc.parseReq(_req);
         String strUserID = (String)(objReq.getJSONArray("userid").get(0));
-        User user = m_mngrService.findUserByUserID(strUserID);
+        User user = m_accntService.findUserByUserID(strUserID);
         JSONObject objRet = new JSONObject();
         if(user == null || user.getUserID() == null || user.getUserID().trim().equals(""))
         {
@@ -107,8 +113,8 @@ public class AccntWeb
         }
         System.out.println("recv:"+strUserID);
         System.out.println("recv:"+user);
-        System.out.println("find:"+m_mngrService.findUserByUserID("why"));
-        System.out.println("match:"+m_mngrService.findMngrByMngrID("Tosaki"));
+        System.out.println("find:"+ m_accntService.findUserByUserID("why"));
+        System.out.println("match:"+ m_accntService.findMngrByMngrID("Tosaki"));
         System.out.println("send:"+objRet.toJSONString());
         return objRet.toJSONString();
     }
@@ -146,7 +152,7 @@ public class AccntWeb
         System.out.println(nGoodsID);
         System.out.println(nGoodsCnt);
 
-        m_mngrService.addBuyLog(strAccntID,strUserID,nGoodsID,nGoodsCnt);
+        m_accntService.addBuyLog(strAccntID,strUserID,nGoodsID,nGoodsCnt);
         JSONObject objRet = new JSONObject();
         objRet.put("stat","success");
         return objRet.toJSONString();
@@ -166,7 +172,7 @@ public class AccntWeb
         JSONObject objReq = JSONProc.parseReq(_req);
         int nGoodsID = Integer.parseInt((String)(objReq.getJSONArray("goodsid").get(0)));
         int nGoodsCnt = Integer.parseInt((String)(objReq.getJSONArray("goodscnt").get(0)));
-        Goods goods = m_mngrService.findGoodsByGoodsID(nGoodsID);
+        Goods goods = m_accntService.findGoodsByGoodsID(nGoodsID);
         JSONObject objRet = new JSONObject();
         if(goods == null ||goods.getGoodsID() == 0)
         {
@@ -206,14 +212,14 @@ public class AccntWeb
         JSONObject objReq = JSONProc.parseReq(_req);
         String strUserID = (String)(objReq.getJSONArray("userid").get(0));
 //        int nPointer = (String)(objReq.getJSONArray("pointer").get(0));
-        User user = m_mngrService.findUserByUserID(strUserID);
+        User user = m_accntService.findUserByUserID(strUserID);
         if(user == null || user.getUserID() == null || user.getUserID().trim().equals(""))
         {
             JSONObject objRet = new JSONObject();
             objRet.put("stat","invalid");
             return objRet.toJSONString();
         }
-        List<Goods> lstRcmd = m_mngrService.getGoodsRcmd(user);
+        List<Goods> lstRcmd = m_accntService.getGoodsRcmd(user);
         if(lstRcmd == null || lstRcmd.size() == 0)
         {
             JSONObject objRet = new JSONObject();

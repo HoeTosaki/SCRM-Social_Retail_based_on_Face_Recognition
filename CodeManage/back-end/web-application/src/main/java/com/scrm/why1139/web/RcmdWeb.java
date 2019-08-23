@@ -59,6 +59,8 @@ public class RcmdWeb
     public String rcmdPull(HttpServletRequest _req)
     {
         JSONObject objReq = JSONProc.parseReq(_req);
+
+
         String strUserID = (String)(objReq.getJSONArray("userid").get(0));
 //        int nPointer = (String)(objReq.getJSONArray("pointer").get(0));
         User user = m_userService.findUserByUserID(strUserID);
@@ -73,6 +75,9 @@ public class RcmdWeb
 
             return objRet;
         }).map(obj->(Object)obj).forEach(arrRet::add);
+        System.out.println();
+        System.out.println(arrRet.toJSONString());
+        System.out.println();
         return arrRet.toJSONString();
     }
 

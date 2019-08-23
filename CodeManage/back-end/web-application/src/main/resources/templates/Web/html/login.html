@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8" />
-<!--    <meta name="viewport" content="width-device-width,initial-scale=1.0">-->
+    <!--    <meta name="viewport" content="width-device-width,initial-scale=1.0">-->
     <meta http-equiv="X-UA-Compatible" content="sie-edge" />
     <link rel="stylesheet" type="text/css" href="Web/css/login-style.css">
-    <title>登录注册页面</title>
+    <title>用户登录注册页面</title>
 
 
     <!-- submit -->
@@ -23,226 +23,374 @@
 
 <body>
 
-    <div class="container" id="container">
-        <div id="signup-model" class="form-container sign-up-container">
-            <form action="#">
-                <h1>欢迎注册SCRM！{{userid}}</h1>
-                <!-- <div class="social-container"> <a href="#" class="social">
-                        <ion-icon name="logo-facebook"></ion-icon>
-                    </a> <a href="#" class="social">
-                        <ion-icon name="logo-googleplus"></ion-icon>
-                    </a> <a href="#" class="social">
-                        <ion-icon name="logo-linkedin"></ion-icon>
-                    </a> </div> -->
-                <span>请输入：</span>
-                <input type="text" v-model="username" placeholder="真实姓名">
-                <input type="userid" v-model="userid" placeholder="用户名">
-                <input type="password" v-model="passwd" placeholder="密码">
-                <!-- <button>注册</button> -->
-                <div class="progress-button">
-                    <button id="btnSignup"><span>注册</span></button>
-                    <svg class="progress-circle" width="70" height="70">
-                        <path
+<div class="container" id="container">
+    <div id="signup-model" class="form-container sign-up-container">
+        <form action="#">
+            <h1>欢迎注册SCRM！{{userid}}</h1>
+            <span>{{hints}}</span>
+            <!-- <div class="social-container"> <a href="#" class="social">
+                    <ion-icon name="logo-facebook"></ion-icon>
+                </a> <a href="#" class="social">
+                    <ion-icon name="logo-googleplus"></ion-icon>
+                </a> <a href="#" class="social">
+                    <ion-icon name="logo-linkedin"></ion-icon>
+                </a> </div> -->
+            <span>请输入：</span>
+            <input type="text" v-model="username" placeholder="真实姓名">
+            <input type="userid" v-model="userid" onblur="postSignUpPre()" placeholder="用户名">
+            <input type="password" v-model="passwd" placeholder="密码">
+            <button class="token-caption-btn" onclick="showSignUpToken()">
+                <span>验证</span>
+            </button>
+            <div id="sign-up-token">
+                ...
+            </div>
+            <!-- <button>注册</button> -->
+            <div class="progress-button">
+                <button id="btnSignup"><span>注册</span></button>
+                <svg class="progress-circle" width="70" height="70">
+                    <path
                             d="m35,2.5c17.955803,0 32.5,14.544199 32.5,32.5c0,17.955803 -14.544197,32.5 -32.5,32.5c-17.955803,0 -32.5,-14.544197 -32.5,-32.5c0,-17.955801 14.544197,-32.5 32.5,-32.5z" />
-                    </svg>
-                    <svg class="checkmark" width="70" height="70">
-                        <path d="m31.5,46.5l15.3,-23.2" />
-                        <path d="m31.5,46.5l-8.5,-7.1" /></svg>
-                    <svg class="cross" width="70" height="70">
-                        <path d="m35,35l-9.3,-9.3" />
-                        <path d="m35,35l9.3,9.3" />
-                        <path d="m35,35l-9.3,9.3" />
-                        <path d="m35,35l9.3,-9.3" /></svg>
-                </div>
-            </form>
-        </div>
-        <div id="login-model" class="form-container sign-in-container">
-            <form action="#">
-                <h1>欢迎登录SCRM！{{userid}}</h1>
-                <!-- <div class="social-container"> <a href="#" class="social">
-                        <ion-icon name="logo-facebook"></ion-icon>
-                    </a> <a href="#" class="social">
-                        <ion-icon name="logo-googleplus"></ion-icon>
-                    </a> <a href="#" class="social">
-                        <ion-icon name="logo-linkedin"></ion-icon>
-                    </a> </div> -->
-                <span>请输入：</span>
-                <input type="userid" v-model="userid" placeholder="用户名">
-                <input type="password" v-model="passwd" placeholder="密码">
-                <!-- <button>登录</button> -->
-                <div class="progress-button">
-                    <button id="btnLogin"><span>登录</span></button>
-                    <svg class="progress-circle" width="70" height="70">
-                        <path
+                </svg>
+                <svg class="checkmark" width="70" height="70">
+                    <path d="m31.5,46.5l15.3,-23.2" />
+                    <path d="m31.5,46.5l-8.5,-7.1" /></svg>
+                <svg class="cross" width="70" height="70">
+                    <path d="m35,35l-9.3,-9.3" />
+                    <path d="m35,35l9.3,9.3" />
+                    <path d="m35,35l-9.3,9.3" />
+                    <path d="m35,35l9.3,-9.3" /></svg>
+            </div>
+        </form>
+    </div>
+    <div id="login-model" class="form-container sign-in-container">
+        <form action="#">
+            <h1>欢迎登录SCRM！{{userid}}</h1>
+            <!-- <div class="social-container"> <a href="#" class="social">
+                    <ion-icon name="logo-facebook"></ion-icon>
+                </a> <a href="#" class="social">
+                    <ion-icon name="logo-googleplus"></ion-icon>
+                </a> <a href="#" class="social">
+                    <ion-icon name="logo-linkedin"></ion-icon>
+                </a> </div> -->
+            <span>请输入：</span>
+            <input type="userid" v-model="userid" placeholder="用户名">
+            <input type="password" v-model="passwd" placeholder="密码">
+            <button class="token-caption-btn" onclick="showLoginToken()">
+                <span>验证</span>
+            </button>
+            <div id="login-token">
+                ...
+            </div>
+            <!-- <button>登录</button> -->
+            <div class="progress-button">
+                <button id="btnLogin"><span>登录</span></button>
+                <svg class="progress-circle" width="70" height="70">
+                    <path
                             d="m35,2.5c17.955803,0 32.5,14.544199 32.5,32.5c0,17.955803 -14.544197,32.5 -32.5,32.5c-17.955803,0 -32.5,-14.544197 -32.5,-32.5c0,-17.955801 14.544197,-32.5 32.5,-32.5z" />
-                    </svg>
-                    <svg class="checkmark" width="70" height="70">
-                        <path d="m31.5,46.5l15.3,-23.2" />
-                        <path d="m31.5,46.5l-8.5,-7.1" /></svg>
-                    <svg class="cross" width="70" height="70">
-                        <path d="m35,35l-9.3,-9.3" />
-                        <path d="m35,35l9.3,9.3" />
-                        <path d="m35,35l-9.3,9.3" />
-                        <path d="m35,35l9.3,-9.3" /></svg>
-                </div>
-            </form>
-        </div>
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>欢迎回来</h1>
-                    <p>与我们保持联系请登录您的个人信息</p>
-                    <button class="ghost" id="signIn">登录</button>
-                </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>欢迎光临</h1>
-                    <p>输入您的个人资料，并与我们一起开始旅程</p>
-                    <button class="ghost" id="signUp">注册</button>
-                </div>
+                </svg>
+                <svg class="checkmark" width="70" height="70">
+                    <path d="m31.5,46.5l15.3,-23.2" />
+                    <path d="m31.5,46.5l-8.5,-7.1" /></svg>
+                <svg class="cross" width="70" height="70">
+                    <path d="m35,35l-9.3,-9.3" />
+                    <path d="m35,35l9.3,9.3" />
+                    <path d="m35,35l-9.3,9.3" />
+                    <path d="m35,35l9.3,-9.3" /></svg>
+            </div>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>欢迎回来</h1>
+                <p>与我们保持联系请登录您的个人信息</p>
+                <button class="ghost" id="signIn">登录</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>欢迎光临</h1>
+                <p>输入您的个人资料，并与我们一起开始旅程</p>
+                <button class="ghost" id="signUp">注册</button>
             </div>
         </div>
     </div>
-    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-    <script>
-        var login = new Vue({
-            el: '#login-model',
-            data: {
-                userid: '',
-                passwd: ''
-            },
-            mounted: function () {
-                // alert("login-model is mounted.");
-                document.loginReq = 0;
-            }
-        });
-
-        var signup = new Vue({
-            el: '#signup-model',
-            data: {
-                username: '',
-                userid: '',
-                passwd: ''
-            },
-            mounted: function () {
-                // alert("signup-model is mounted.")
-                document.signupReq = 0;
-            }
-        });
-    </script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-        function postLogin(userid, passwd) {
-            alert("postLogin start");
-            $.post("loginCheck", {
-                userid: userid,
-                passwd: passwd
-            }, function (result) {
-                alert(result);
-                document.loginReq = 1;
-                var obj = JSON.parse(result);
-                document.loginStat = obj["stat"];
-                if (document.loginStat == "user") {
-                    window.jumpTarget = "rcmd?"+obj["userid"];
-                } else if (document.loginStat == "accnt") {
-                    window.jumpTarget = "accnt?"+obj["mngrid"];
-                } else if (document.loginStat == "admin") {
-                    window.jumpTarget = "admin?"+obj["mngrid"];
-                } else{
-                    document.loginReq = -1;
-                    window.jumpTarget = "login";
-                }
-            });
+</div>
+<script>
+    isSignUpShowToken = false;
+    isLoginShowToken = false;
+    isTokenOK = false;
+</script>
+<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+<script>
+    var login = new Vue({
+        el: '#login-model',
+        data: {
+            userid: '',
+            passwd: ''
+        },
+        mounted: function () {
+            // alert("login-model is mounted.");
             document.loginReq = 0;
-            alert("postLogin end.");
-            // window.localStorage.setItem("userid", obj["userid"]);-->fail in block!
-
-            //  //  can be used for convey complex data
-            // var obj = {
-            //     "stat": "user",
-            //     "userid": "why"
-            // };
-            // window.jumpTarget = "Web/html/rcmd.html?" + JSON.stringify(obj);
         }
+    });
 
-        function postSignup(username, userid, passwd) {
-            $.post("SignupCheck", {
-                username: username,
-                userid: userid,
-                passwd: passwd
-            }, function (result) {
-                alert(result);
-                var obj = JSON.parse(result);
-                document.signupStat = obj["stat"];
-                if (document.signupStat == "success") {
-                    document.signupReq = 1;
-                } else {
-                    document.signupReq = -1;
-                }
-            });
+    var signup = new Vue({
+        el: '#signup-model',
+        data: {
+            username: '',
+            userid: '',
+            passwd: '',
+            hints: ''
+        },
+        mounted: function () {
+            // alert("signup-model is mounted.")
+            document.signupReq = 0;
         }
-    </script>
-    <script src="Web/js/login-script.js"></script>
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    function postLogin(userid, passwd) {
+        alert("postLogin start");
+        $.post("loginCheck", {
+            userid: userid,
+            passwd: passwd
+        }, function (result) {
+            alert(result);
+            var obj = JSON.parse(result);
+            if (obj.stat != "success") {
+                document.loginReq = -1;
+                window.jumpTarget = "login";
+                return;
+            } else {
+                document.loginReq = 1;
+                window.jumpTarget = "rcmd?"+obj.userid;
+            }
+        });
+        document.loginReq = 0;
+        alert("postLogin end.");
+        // window.localStorage.setItem("userid", obj["userid"]);-->fail in block!
+
+        //  //  can be used for convey complex data
+        // var obj = {
+        //     "stat": "user",
+        //     "userid": "why"
+        // };
+        // window.jumpTarget = "Web/html/rcmd.html?" + JSON.stringify(obj);
+    }
+
+    function postSignUp(username, userid, passwd) {
+        $.post("signUpCheck", {
+            username: username,
+            userid: userid,
+            passwd: passwd
+        }, function (result) {
+            // alert(result);
+            var obj = JSON.parse(result);
+            document.signupStat = obj["stat"];
+            if (document.signupStat == "success") {
+                document.signupReq = 1;
+            } else {
+                document.signupReq = -1;
+            }
+            signup.userid = "";
+            signup.username = "";
+            signup.passwd = "";
+        });
+    }
+
+    function postSignUpPre() {
+        if (signup.userid == "")
+            return;
+        $.post("signUpCheckPre", {
+            userid: signup.userid,
+        }, function (result) {
+            // alert(result+"$"+signup.userid);
+            var obj = JSON.parse(result);
+            document.signupStatPre = obj["stat"];
+            if (document.signupStatPre == "success") {
+                signup.hints = "\n当前用户名可正常使用。";
+            } else {
+                signup.hints = "\n当前用户名已被占用。";
+                signup.userid = "";
+            }
+        });
+    }
+
+    function postSignUpToken(signuptoken) {
+        $.post("signUpCheckToken", {
+            token: signuptoken
+        }, function (result) {
+            alert(result);
+            var obj = JSON.parse(result);
+            document.signupStat = obj["stat"];
+            if (document.signupStat == "success") {
+                isTokenOK = true;
+            } else {
+                isTokenOK = false;
+            }
+        });
+    }
+
+    function postLoginToken(logintoken) {
+        $.post("loginCheckToken", {
+            token: logintoken
+        }, function (result) {
+            alert(result);
+            var obj = JSON.parse(result);
+            document.signupStat = obj["stat"];
+            if (document.signupStat == "success") {
+                isTokenOK = true;
+            } else {
+                isTokenOK = false;
+            }
+        });
+    }
+</script>
+<script src="Web/js/login-script.js"></script>
 <!--    图标库-->
 <!--    <script src="Web/js/ionicons.js"></script>-->
 
-    <!-- submit -->
-    <script type="text/javascript" src="Web/js/classie.js"></script>
-    <script type="text/javascript" src="Web/js/login-btn-uiProgressButton.js"></script>
-    <script type="text/javascript">
-        [].slice.call(document.querySelectorAll('.progress-button')).forEach(function (bttn, pos) {
-            if (pos === 1) {
-                /*login*/
-                new UIProgressButton(bttn, {
-                    callback: function (instance) {
+<!-- submit -->
+<script type="text/javascript" src="Web/js/classie.js"></script>
+<script type="text/javascript" src="Web/js/login-btn-uiProgressButton.js"></script>
+<script type="text/javascript">
+    [].slice.call(document.querySelectorAll('.progress-button')).forEach(function (bttn, pos) {
+        if (pos === 1) {
+            /*login*/
+            new UIProgressButton(bttn, {
+                callback: function (instance) {
+                    var progress = 0;
+                    if (isTokenOK == false) {
+                        instance.setProgress(1);
+                        instance.stop(-1);
                         setTimeout(() => {
-                            postLogin(login.userid, login.passwd);
-                        }, 100);
-                        var progress = 0;
-                        var interval = setInterval(() => {
-                            if (document.loginReq == 0) {
-                                progress = Math.min(progress + Math.random() * 0.1, 0.5);
-                                instance.setProgress(progress);
-                            } else {
-                                progress = 1;
-                                instance.setProgress(progress);
-                                instance.stop(document.loginReq);
-                                document.loginReq = 0;
-                                var timeout = setTimeout(() => {
-                                    if (document.loginStat != "invalid")
-                                        alert("html target:$" + window
-                                            .jumpTarget + "$");
-                                    window.location.href = window.jumpTarget;
-                                }, 2000);
-                                clearInterval(interval);
-                            }
-                        }, 1000);
+                            alert("请完成验证操作，以表明您不是机器人。");
+                    }, 1000);
+                        return;
                     }
-                });
-            }
-            if (pos === 0) {
-                /*signup*/
-                new UIProgressButton(bttn, {
-                    callback: function (instance) {
-                        var progress = 0;
-                        var interval = setInterval(() => {
-                            if (document.signupReq == 0) {
-                                progress = Math.min(progress + Math.random() * 0.1, 0.5);
-                                instance.setProgress(progress);
-                            } else {
-                                progress = 1;
-                                instance.setProgress(progress);
-                                instance.stop(document.signupReq);
-                                document.signupReq = 0;
-                                clearInterval(interval);
-                            }
-                        }, 1000);
+                    setTimeout(() => {
+                        postLogin(login.userid, login.passwd);
+                }, 100);
+                    var interval = setInterval(() => {
+                        if (document.loginReq == 0) {
+                        progress = Math.min(progress + Math.random() * 0.1, 0.5);
+                        instance.setProgress(progress);
+                    } else {
+                        progress = 1;
+                        instance.setProgress(progress);
+                        instance.stop(document.loginReq);
+                        document.loginReq = 0;
+                        var timeout = setTimeout(() => {
+                            if (document.loginStat != "invalid")
+                        alert("html target:$" + window
+                            .jumpTarget + "$");
+                        window.location.href = window.jumpTarget;
+                    }, 2000);
+                        clearInterval(interval);
                     }
-                });
-            }
+                }, 1000);
+                }
+            });
+        }
+        if (pos === 0) {
+            /*signup*/
+            new UIProgressButton(bttn, {
+                callback: function (instance) {
+                    var progress = 0;
+                    if (isTokenOK == false) {
+                        instance.setProgress(1);
+                        instance.stop(-1);
+                        setTimeout(() => {
+                            alert("请完成验证操作，以表明您不是机器人。");
+                    }, 1000);
+                        return;
+                    }
+                    setTimeout(() => {
+                        postSignUp(signup.username, signup.userid, signup.passwd);
+                }, 100);
+                    var progress = 0;
+                    var interval = setInterval(() => {
+                        if (document.signupReq == 0) {
+                        progress = Math.min(progress + Math.random() * 0.1, 0.5);
+                        instance.setProgress(progress);
+                    } else {
+                        progress = 1;
+                        instance.setProgress(progress);
+                        instance.stop(document.signupReq);
+                        document.signupReq = 0;
+                        clearInterval(interval);
+                    }
+                }, 1000);
+                }
+            });
+        }
 
-        });
-    </script>
+    });
+</script>
+<script src="https://cdn.dingxiang-inc.com/ctu-group/captcha-ui/index.js"></script>
+<script>
+    var myCaptchaSignUp = _dx.Captcha(document.getElementById('sign-up-token'), {
+        appId: 'dfbcdad62304cb024d8a02efcc126200', //appId，在控制台中“应用管理”或“应用配置”模块获取
+        success: function (token) {
+            alert('token\t' + token);
+            postSignUpToken(token);
+        }
+    })
 
+    var myCaptchaLogin = _dx.Captcha(document.getElementById('login-token'), {
+        appId: 'dfbcdad62304cb024d8a02efcc126200', //appId，在控制台中“应用管理”或“应用配置”模块获取
+        success: function (token) {
+            alert('token\t' + token);
+            postLoginToken(token);
+        }
+    })
+</script>
+<script>
+    function showSignUpToken() {
+        if (!isSignUpShowToken) {
+            $("#sign-up-token").css({
+                "width": "80%",
+                "left": "10%",
+                "top": "20%",
+                "position": "absolute",
+                "visibility": "visible"
+            });
+            isSignUpShowToken = true;
+        } else {
+            $("#sign-up-token").css({
+                "width": "80%",
+                "left": "10%",
+                "top": "20%",
+                "position": "absolute",
+                "visibility": "hidden"
+            });
+            isSignUpShowToken = false;
+        }
+    }
+
+    function showLoginToken() {
+        if (!isLoginShowToken) {
+            $("#login-token").css({
+                "width": "80%",
+                "left": "10%",
+                "top": "20%",
+                "position": "absolute",
+                "visibility": "visible"
+            });
+            isLoginShowToken = true;
+        } else {
+            $("#login-token").css({
+                "width": "80%",
+                "left": "10%",
+                "top": "20%",
+                "position": "absolute",
+                "visibility": "hidden"
+            });
+            isLoginShowToken = false;
+        }
+    }
+</script>
 </body>
 
 </html>

@@ -2,7 +2,6 @@ package com.scrm.why1139.service;
 
 import com.scrm.why1139.dao.BuyDao;
 import com.scrm.why1139.dao.GoodsDao;
-import com.scrm.why1139.dao.UserDao;
 import com.scrm.why1139.domain.Buy;
 import com.scrm.why1139.domain.Goods;
 import com.scrm.why1139.domain.User;
@@ -10,30 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 面向User的Service类。
  * @author why
  */
 @Service
-public class UserService
+public class UserService extends GeneralService
 {
-    private UserDao m_userDao;
     private GoodsDao m_goodsDao;
     private BuyDao m_buyDao;
 
-    /**
-     * setter注入
-     * @param _userDao in
-     * @author why
-     */
-    @Autowired
-    public void setUserDao(UserDao _userDao)
-    {
-        this.m_userDao = _userDao;
-//        this.m_userDao = Optional.ofNullable(_userDao).orElseThrow();
-    }
 
     /**
      * setter注入
@@ -59,30 +45,7 @@ public class UserService
 //        this.m_buyDao = Optional.ofNullable(_buyDao).orElseThrow();
     }
 
-    /**
-     * 通过User的个人信息，获取在数据库中的匹配结果
-     * @param _strUserID in UserID
-     * @param _strPassword in User密码
-     * @return 标志匹配结果的boolean值
-     * @author why
-     */
-    public boolean hasMatchUser(String _strUserID,String _strPassword)
-    {
-        int nMatchCnt = m_userDao.getMatchCount(_strUserID,_strPassword);
-        return nMatchCnt > 0;
-    }
 
-    /**
-     * 通过UserID获取User对象
-     * used for some bad circumstances where customers failed to provide bio info.
-     * @param _strUserID in 表示UserID的字符串 userid,primary key in table t_user, which can deduce a unique user.
-     * @return User对象
-     * @author why
-     */
-    public User findUserByUserID(String _strUserID)
-    {
-        return m_userDao.findUserByUserID(_strUserID);
-    }
 
     /**
      * 获取商品推荐
@@ -130,9 +93,9 @@ public class UserService
      * @return 创建通告结果的boolean值
      * @author why
      */
-    public boolean creatNewUser(String _strUserName, String _strUserID,String _strPassword)
+    public boolean creatNewUserByPasswd(String _strUserName, String _strUserID, String _strPassword)
     {
-        if(!checkString(_strUserName) || !checkString(_strUserID) || checkString(_strPassword))
+        if(!checkString(_strUserName) || !checkString(_strUserID) || !checkString(_strPassword))
             return false;
         User newUser = new User();
         newUser.setUserName(_strUserName);
@@ -141,6 +104,19 @@ public class UserService
         m_userDao.insertUser(newUser);
         return true;
     }
+
+    public boolean creatNewUserByRecgBio(String _strUserID)
+    {
+        if(!checkString(_strUserID))
+            return false;
+        User newUser = new User();
+        newUser.setUserName("");
+        newUser.setUserID(_strUserID);
+        newUser.setPassword("");
+        m_userDao.insertUser(newUser);
+        return true;
+    }
+
 
     /**
      * 存储用户的生物信息
@@ -157,13 +133,14 @@ public class UserService
         return ret;
     }
 
-    /**
-     * 用于检查字符串是否合法。
-     * @author why
-     */
-    private boolean checkString(String _strSrc)
-    {
-        return !(_strSrc == null || _strSrc.trim().equals(""));
-    }
 
+
+//    public static void main(String s[])
+//    {
+//        UserService us = new UserService();
+//        System.out.println(us.checkString("uname"));
+//        System.out.println(us.checkString("100"));
+//        System.out.println(us.checkString("1000"));
+//
+//    }
 }

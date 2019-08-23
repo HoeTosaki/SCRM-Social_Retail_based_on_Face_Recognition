@@ -1,6 +1,6 @@
-const signUpButton = document.getElementById('signUp');
-const signInButton = document.getElementById('signIn');
-const container = document.getElementById('container');
+// const signUpButton = document.getElementById('signUp');
+// const signInButton = document.getElementById('signIn');
+// const container = document.getElementById('container');
 
 signUpButton.onmouseover = function () {
     container.classList.add("right-panel-active");

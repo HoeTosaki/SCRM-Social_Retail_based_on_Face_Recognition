@@ -26,6 +26,8 @@ public class Goods implements Serializable
 
     public static final String RES_PATH="src/main/resources/static/res/gdspic/";
 
+    private boolean m_isEmpty;
+
     /**
      * Goods存储的简易测试类。
      * @author why
@@ -45,7 +47,9 @@ public class Goods implements Serializable
      * @author why
      */
     public Goods()
-    {}
+    {
+        m_isEmpty = true;
+    }
 
     /**
      * 根据完整的商品信息构造Goods对象
@@ -60,6 +64,7 @@ public class Goods implements Serializable
      */
     public Goods(int _nGoodsID, String _strGoodsType, String _strGoodsName, double _dbPrice, int _nGoodsCnt, String _strGoodsDesc,String _pthPic)
     {
+        m_isEmpty = false;
         setGoodsCnt(_nGoodsCnt);
         setGoodsDesc(_strGoodsDesc);
         setGoodsID(_nGoodsID);
@@ -86,6 +91,7 @@ public class Goods implements Serializable
      */
     public void setGoodsID(int _nGoodsID)
     {
+        m_isEmpty = false;
         m_nGoodsID = _nGoodsID;
 //        this.m_nGoodsID = Optional.ofNullable(_nGoodsID).filter(id->id>=0).orElseThrow();
     }
@@ -107,6 +113,7 @@ public class Goods implements Serializable
      */
     public void setGoodsType(String _strGoodsType)
     {
+        m_isEmpty = false;
         this.m_strGoodsType = _strGoodsType;
 //        this.m_strGoodsType = Optional.ofNullable(_strGoodsType).orElseThrow();
     }
@@ -128,6 +135,7 @@ public class Goods implements Serializable
      */
     public void setGoodsName(String _strGoodsName)
     {
+        m_isEmpty = false;
         m_strGoodsName = _strGoodsName;
 //        this.m_strGoodsName = Optional.ofNullable(_strGoodsName).orElseThrow();
     }
@@ -149,6 +157,7 @@ public class Goods implements Serializable
      */
     public void setPrice(double _dbPrice)
     {
+        m_isEmpty = false;
         m_dbPrice = _dbPrice;
 //        this.m_dbPrice = Optional.ofNullable(_dbPrice).filter(prc->prc>0).orElseThrow();
     }
@@ -170,6 +179,7 @@ public class Goods implements Serializable
      */
     public void setGoodsCnt(int _nGoodsCnt)
     {
+        m_isEmpty = false;
         this.m_nGoodsCnt = _nGoodsCnt;
 //        this.m_nGoodsCnt = Optional.ofNullable(_nGoodsCnt).filter(cnt->cnt>=0).orElse(0);
     }
@@ -191,6 +201,7 @@ public class Goods implements Serializable
      */
     public void setGoodsDesc(String _strGoodsDesc)
     {
+        m_isEmpty = false;
         this.m_strGoodsDesc = _strGoodsDesc;
 //        this.m_strGoodsDesc = Optional.ofNullable(_strGoodsDesc).orElse("undefined.");
     }
@@ -212,6 +223,7 @@ public class Goods implements Serializable
      */
     public void setPic(String _pthPic)
     {
+        m_isEmpty = false;
         this.m_pthPic = _pthPic;
     }
 
@@ -269,6 +281,7 @@ public class Goods implements Serializable
      */
     public boolean savePic(byte[] _btPic)
     {
+        m_isEmpty = false;
         boolean ret = false;
 //        PrintWriter pw = null;
         BufferedOutputStream bos = null;
@@ -294,6 +307,11 @@ public class Goods implements Serializable
             {}
         }
         return ret;
+    }
+
+    public boolean isEmpty()
+    {
+        return m_isEmpty;
     }
 
 }

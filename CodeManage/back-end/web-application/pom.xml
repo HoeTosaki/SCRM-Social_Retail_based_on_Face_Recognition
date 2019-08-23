@@ -112,6 +112,31 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.49</version>
         </dependency>
+        <dependency>
+            <groupId>com.dingxiang-inc</groupId>
+            <artifactId>ctu-client-sdk</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baidu.aip</groupId>
+            <artifactId>java-sdk</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.messaging.saaj</groupId>
+            <artifactId>saaj-impl</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec</artifactId>
+            <version>4.1.36.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.synchronoss.cloud</groupId>
+            <artifactId>nio-multipart-parser</artifactId>
+            <version>1.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
