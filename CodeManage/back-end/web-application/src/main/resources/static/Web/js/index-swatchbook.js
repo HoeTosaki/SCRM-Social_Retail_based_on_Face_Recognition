@@ -1,5 +1,5 @@
 /**
- * jquery.swatchbook.js v1.1.0
+ * index-swatchbook.js v1.1.0
  * http://www.codrops.com
  *
  * Licensed under the MIT license.
@@ -9,7 +9,6 @@
  * http://www.codrops.com
  */
 
-;
 (function ($, window, undefined) {
 
 	'use strict';

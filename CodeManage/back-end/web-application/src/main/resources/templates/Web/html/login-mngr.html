@@ -8,17 +8,14 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
     <meta charset="UTF-8" />
     <!--    <meta name="viewport" content="width-device-width,initial-scale=1.0">-->
     <meta http-equiv="X-UA-Compatible" content="sie-edge" />
-    <link rel="stylesheet" type="text/css" href="Web/css/login-mngr-style.css">
     <title>业务员登录页面</title>
 
-
-    <!-- submit -->
+    <!-- CSS样式 -->
+    <link rel="stylesheet" type="text/css" href="Web/css/login-mngr-style.css">
     <link rel="stylesheet" type="text/css" href="Web/css/login-btn-normalize.css" />
-    <!-- <link rel="stylesheet" type="text/css" href="Web/css/login-btn-demo.css" /> -->
     <link rel="stylesheet" type="text/css" href="Web/css/login-btn-component.css" />
-    <script src="Web/js/modernizr.custom.js"></script>
-
-
+<!--    前置JS-->
+    <script src="Web/js-ref/modernizr.custom.js"></script>
 </head>
 
 <body>
@@ -61,162 +58,14 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
         </form>
     </div>
 </div>
-<script>
-    isLoginShowToken = false;
-    isTokenOK = false;
-</script>
+<!--后置JS-->
 <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-<script>
-    var login = new Vue({
-        el: '#login-model',
-        data: {
-            mngrid: '',
-            passwd: '',
-            mngrtype: 3
-        },
-        mounted: function () {
-            // alert("login-model is mounted.");
-            document.loginReq = 0;
-        }
-    });
-</script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-    function postLogin(mngrid, passwd) {
-        alert("postLogin start");
-        $.post("mngrVerify", {
-            mngrid: mngrid,
-            passwd: passwd
-        }, function (result) {
-            alert(result);
-            var obj = JSON.parse(result);
-            if (obj.stat != "success") {
-                document.loginReq = -1;
-                window.jumpTarget = "loginMngr";
-                return;
-            } else if (obj.mngrtype == "2") {
-                document.loginReq = 1;
-                window.jumpTarget = "accnt?" + obj.mngrid;
-            } else if (obj.mngrtype == "1") {
-                document.loginReq = 1;
-                window.jumpTarget = "admin?" + obj.mngrid;
-            } else if (obj.mngrtype == "0") {
-                document.loginReq = 1;
-                window.jumpTarget = "superadmin";
-            } else {
-                document.loginReq = -1;
-                alert("当前网络状况不佳，请稍后再试。");
-                window.jumpTarget = "index";
-            }
-        });
-        document.loginReq = 0;
-        alert("postLogin end.");
-        // window.localStorage.setItem("userid", obj["userid"]);-->fail in block!
-
-        //  //  can be used for convey complex data
-        // var obj = {
-        //     "stat": "user",
-        //     "userid": "why"
-        // };
-        // window.jumpTarget = "Web/html/rcmd.html?" + JSON.stringify(obj);
-    }
-
-    function postLoginToken(logintoken) {
-        $.post("loginCheckToken", {
-            token: logintoken
-        }, function (result) {
-            alert(result);
-            var obj = JSON.parse(result);
-            document.signupStat = obj["stat"];
-            if (document.signupStat == "success") {
-                isTokenOK = true;
-            } else {
-                isTokenOK = false;
-            }
-        });
-    }
-</script>
 <!--    图标库-->
 <!--    <script src="Web/js/ionicons.js"></script>-->
-
-<!-- submit -->
-<script type="text/javascript" src="Web/js/classie.js"></script>
+<script type="text/javascript" src="Web/js-ref/classie.js"></script>
 <script type="text/javascript" src="Web/js/login-btn-uiProgressButton.js"></script>
-<script type="text/javascript">
-    [].slice.call(document.querySelectorAll('.progress-button')).forEach(function (bttn, pos) {
-        if (pos === 0) {
-            /*login*/
-            new UIProgressButton(bttn, {
-                callback: function (instance) {
-                    var progress = 0;
-                    if (isTokenOK == false) {
-                        instance.setProgress(1);
-                        instance.stop(-1);
-                        setTimeout(() => {
-                            alert("请完成验证操作，以表明您不是机器人。");
-                    }, 1000);
-                        return;
-                    }
-                    setTimeout(() => {
-                        postLogin(login.mngrid, login.passwd);
-                        alert(login.mngrid+"\t"+login.passwd);
-                }, 100);
-                    var interval = setInterval(() => {
-                        if (document.loginReq == 0) {
-                        progress = Math.min(progress + Math.random() * 0.1, 0.5);
-                        instance.setProgress(progress);
-                    } else {
-                        progress = 1;
-                        instance.setProgress(progress);
-                        instance.stop(document.loginReq);
-                        document.loginReq = 0;
-                        var timeout = setTimeout(() => {
-                            if (document.loginStat != "invalid")
-                        alert("html target:$" + window
-                            .jumpTarget + "$");
-                        window.location.href = window.jumpTarget;
-                    }, 2000);
-                        clearInterval(interval);
-                    }
-                }, 1000);
-                }
-            });
-        }
-    });
-</script>
 <script src="https://cdn.dingxiang-inc.com/ctu-group/captcha-ui/index.js"></script>
-<script>
-    var myCaptchaLogin = _dx.Captcha(document.getElementById('login-token'), {
-        appId: 'dfbcdad62304cb024d8a02efcc126200', //appId，在控制台中“应用管理”或“应用配置”模块获取
-        success: function (token) {
-            alert('token\t' + token);
-            postLoginToken(token);
-        }
-    })
-</script>
-<script>
-    function showLoginToken() {
-        if (!isLoginShowToken) {
-            $("#login-token").css({
-                "width": "80%",
-                "left": "10%",
-                "top": "20%",
-                "position": "absolute",
-                "visibility": "visible"
-            });
-            isLoginShowToken = true;
-        } else {
-            $("#login-token").css({
-                "width": "80%",
-                "left": "10%",
-                "top": "20%",
-                "position": "absolute",
-                "visibility": "hidden"
-            });
-            isLoginShowToken = false;
-        }
-    }
-</script>
+<script type="text/javascript" src="Web/js/login-mngr-core.js"></script>
 </body>
-
 </html>
