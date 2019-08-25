@@ -20,7 +20,6 @@ public class UserService extends GeneralService
     private GoodsDao m_goodsDao;
     private BuyDao m_buyDao;
 
-
     /**
      * setter注入
      * @param _goodsDao in
@@ -44,8 +43,6 @@ public class UserService extends GeneralService
         this.m_buyDao = _buyDao;
 //        this.m_buyDao = Optional.ofNullable(_buyDao).orElseThrow();
     }
-
-
 
     /**
      * 获取商品推荐
@@ -86,7 +83,7 @@ public class UserService extends GeneralService
 
 
     /**
-     * 创建新用户，该操作将导致数据库中User记录的更新
+     * 通过密码方式创建新用户，该操作将导致数据库中User记录的更新。
      * @param _strUserName in UserName
      * @param _strUserID in UserID
      * @param _strPassword in User密码
@@ -105,6 +102,13 @@ public class UserService extends GeneralService
         return true;
     }
 
+    /**
+     * 通过人脸识别方式创建新用户，该操作将导致数据库中User记录的更新。
+     * TODO:目前由于密码和人脸信息的地位不等价，人脸信息的存储被放置在该方法的外侧
+     * @param _strUserID in 用户ID
+     * @return 创建成功与否的boolean值
+     * @author why
+     */
     public boolean creatNewUserByRecgBio(String _strUserID)
     {
         if(!checkString(_strUserID))
@@ -116,7 +120,6 @@ public class UserService extends GeneralService
         m_userDao.insertUser(newUser);
         return true;
     }
-
 
     /**
      * 存储用户的生物信息
@@ -132,8 +135,6 @@ public class UserService extends GeneralService
         ret = _user.saveBioRef(_btBioRef);
         return ret;
     }
-
-
 
 //    public static void main(String s[])
 //    {

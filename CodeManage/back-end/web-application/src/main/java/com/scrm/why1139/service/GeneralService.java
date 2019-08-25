@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.swing.*;
 import java.util.Random;
 
+/**
+ * 提供人员管理基础的Service类。
+ * @author why
+ */
 public class GeneralService
 {
     protected UserDao m_userDao;
@@ -87,18 +91,32 @@ public class GeneralService
         return m_mngrDao.findMngrByMngrID(_strMngrID);
     }
 
-
+    /**
+     * 更新Mngr信息
+     * @param _mngr in Mngr对象
+     * @author why
+     */
     public void updateMngr(Mngr _mngr)
     {
         m_mngrDao.updateMngr(_mngr);
     }
 
+    /**
+     * 删除当前Mngr信息
+     * @param _mngr in Mngr对象
+     * @author why
+     */
     public void delMngr(Mngr _mngr)
     {
         m_mngrDao.delMngr(_mngr);
     }
 
-
+    /**
+     * 获取一个可用的新的UserID
+     * @param _nTryLimit in 在获取失败情况下的最大可能尝试次数。
+     * @return UserID
+     * @author why
+     */
     public String createNewUserID(int _nTryLimit)
     {
         String strUserid = null;

@@ -22,7 +22,7 @@ public class User implements Serializable
 
     public static final String RES_PATH="src/main/resources/static/res/bioref/";
 
-    private boolean m_isEmpty;
+    private boolean m_isEmpty;//描述当前对象是否被修改过。
 
     /**
      * User存储的简易测试类。

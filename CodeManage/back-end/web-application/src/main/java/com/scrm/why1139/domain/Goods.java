@@ -26,7 +26,7 @@ public class Goods implements Serializable
 
     public static final String RES_PATH="src/main/resources/static/res/gdspic/";
 
-    private boolean m_isEmpty;
+    private boolean m_isEmpty;//描述当前对象是否被修改过。
 
     /**
      * Goods存储的简易测试类。

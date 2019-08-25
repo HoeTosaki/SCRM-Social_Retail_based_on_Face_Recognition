@@ -73,9 +73,9 @@ public class JSONProc
     }
 
     /**
-     * 解析登录请求，获取Mngr对象
+     * 解析Mngr登录请求，获取Mngr对象
      * @param _req in httpReq
-     * @return User对象
+     * @return Mngr对象
      * @author why
      */
     public static Mngr parseMngrVerifyReq(HttpServletRequest _req)
@@ -88,6 +88,11 @@ public class JSONProc
         return mngr;
     }
 
+    /**
+     * 处理新增Mngr的请求，获取Mngr对象
+     * @param _req in httpReq
+     * @return Mngr对象
+     */
     public static Mngr parseMngrAddReq(HttpServletRequest _req)
     {
         return parseMngrVerifyReq(_req);

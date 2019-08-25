@@ -179,38 +179,52 @@ public class AccntService extends GeneralService
         }
     }
 
+    /**
+     * 将Base64格式存储到图片中
+     * @deprecated 当前版本无效。
+     * @param _strSrcBase64 in Base64格式的用户人脸信息
+     * @return 存储是否成功的boolean值
+     * @author why
+     */
     private static boolean genBase64(String _strSrcBase64)
     {
-//        String name = "why";
-//        if(!generateImage(_strSrcBase64,"why"))
-//            return false;
-//        ByteArrayOutputStream baos = null;
-//        try
-//        {
-//            baos = new ByteArrayOutputStream();
-//            BufferedInputStream bos = new BufferedInputStream(new FileInputStream("why.png"));
-//            int b = bos.read();
-//            while(b != -1)
-//            {
-//                baos.write(b);
-//                b = bos.read();
-//            }
+        String name = "why";
+        if(!generateImage(_strSrcBase64,"why"))
+            return false;
+        ByteArrayOutputStream baos = null;
+        try
+        {
+            baos = new ByteArrayOutputStream();
+            BufferedInputStream bos = new BufferedInputStream(new FileInputStream("why.png"));
+            int b = bos.read();
+            while(b != -1)
+            {
+                baos.write(b);
+                b = bos.read();
+            }
 //            ret = baos.toByteArray();
-//        } catch (IOException e)
-//        { }
-//        finally
-//        {
-//            try
-//            {
-//                if(baos!=null)
-//                    baos.close();
-//            }
-//            catch (IOException e)
-//            { }
-//        }
+        } catch (IOException e)
+        { }
+        finally
+        {
+            try
+            {
+                if(baos!=null)
+                    baos.close();
+            }
+            catch (IOException e)
+            { }
+        }
         return false;
     }
 
+    /**
+     * 创建新的Accnt对象
+     * @param _strAccntID in AccntID
+     * @param _strPassword in 密码
+     * @return 创建是否成功的boolean值
+     * @author why
+     */
     public boolean creatNewAccnt(String _strAccntID,String _strPassword)
     {
         if(!checkString(_strAccntID) || !checkString(_strPassword))

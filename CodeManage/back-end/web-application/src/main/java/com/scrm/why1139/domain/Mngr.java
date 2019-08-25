@@ -13,7 +13,7 @@ public class Mngr implements Serializable
     private String m_strMngrID;
     private String m_strPassword;
 
-    private boolean m_isEmpty;
+    private boolean m_isEmpty;//描述当前对象是否被修改过。
 
     /**
      * Mngr的默认构造函数

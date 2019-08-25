@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 对人脸识别内容的响应controller
+ * 对人脸识别内容的响应controller类
  * 同时向小程序、收银平台提供服务。
  * @author why
  */
@@ -45,7 +45,7 @@ public class RecgBioWeb
     }
 
     /**
-     * 映射到login界面的Controller方法
+     * 映射到login-face界面的Controller方法
      * @return 页面模型
      * @author why
      */
@@ -59,7 +59,7 @@ public class RecgBioWeb
 
 
     /**
-     * 映射到accntRecgBio的Controller方法
+     * 映射到loginRecgBio的Controller方法
      * @return 请求响应String
      * @author why
      */
@@ -67,6 +67,7 @@ public class RecgBioWeb
     @ResponseBody
     public String loginRecgBio(HttpServletResponse response, HttpServletRequest request, String imgrecg) throws Exception
     {
+        System.out.println(imgrecg);
         List<String > lstUserID = BioCertificater.certificateUser(imgrecg);
         Map<String,Object> mp = new ConcurrentHashMap<>();
         if(lstUserID.size() == 0)
@@ -93,6 +94,11 @@ public class RecgBioWeb
         return obj.toJSONString();
     }
 
+    /**
+     * 映射到signUpRecgBio的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @RequestMapping(
             value = {"/signUpRecgBio"}, method = RequestMethod.POST
     )
@@ -136,6 +142,11 @@ public class RecgBioWeb
         return obj.toJSONString();
     }
 
+    /**
+     * 映射到delRecgBio的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @RequestMapping(
             value = {"/delRecgBio"}
     )
@@ -146,7 +157,12 @@ public class RecgBioWeb
     }
 
 
-
+    /**
+     * 根据Base64编码的人脸信息生成图片
+     * @param imgStr in Base格式人脸信息
+     * @return 生成是否成功的boolean值
+     * @author why
+     */
     public static boolean GenerateImage(String imgStr)
     {
         // 对字节数组字符串进行Base64解码并生成图片

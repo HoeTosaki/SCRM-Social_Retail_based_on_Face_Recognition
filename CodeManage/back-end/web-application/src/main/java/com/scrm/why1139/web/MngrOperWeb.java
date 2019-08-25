@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Mngr操作的的Controller类。
+ * @author why
+ */
 @RestController
 public class MngrOperWeb
 {
@@ -31,7 +35,7 @@ public class MngrOperWeb
     }
 
     /**
-     * 映射到login界面的Controller方法
+     * 映射到login-mngr界面的Controller方法
      * @return 页面模型
      * @author why
      */
@@ -44,7 +48,7 @@ public class MngrOperWeb
     }
 
     /**
-     * 映射到loginCheck的Controller方法
+     * 映射到mngrVerify的Controller方法
      * @return 请求响应String
      * @author why
      */
@@ -100,7 +104,7 @@ public class MngrOperWeb
     }
 
     /**
-     * 映射到loginCheck的Controller方法
+     * 映射到mngrUpdate的Controller方法
      * @return 请求响应String
      * @author why
      */
@@ -143,7 +147,7 @@ public class MngrOperWeb
     }
 
     /**
-     * 映射到loginCheck的Controller方法
+     * 映射到mngrDel的Controller方法
      * @return 请求响应String
      * @author why
      */
@@ -180,7 +184,7 @@ public class MngrOperWeb
     }
 
     /**
-     * 映射到loginCheck的Controller方法
+     * 映射到mngrAdd的Controller方法
      * @return 请求响应String
      * @author why
      */

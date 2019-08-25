@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+
+/**
+ * 用于向百度API请求人脸识别功能的类
+ * @author why
+ */
 public class AIBound
 {
     //设置APPID/AK/SK
@@ -18,6 +23,10 @@ public class AIBound
 
     private static AipFace s_FaceClient = null;
 
+    /**
+     * 服务初始化函数
+     * @author why
+     */
     public static void initService()
     {
         if(s_FaceClient != null)
@@ -46,6 +55,12 @@ public class AIBound
 //        System.out.println(res.toString(2));
     }
 
+    /**
+     * 获取人脸识别客户端对象，如果当前没有初始化，则自动进行初始化。
+     * 该方法始终保持Client的单例性。
+     * @return AipFace
+     * @author why
+     */
     private static AipFace getFaceClient()
     {
         if(s_FaceClient != null)
@@ -57,6 +72,12 @@ public class AIBound
         }
     }
 
+    /**
+     * 验证当前用户组是否可用，如果用户组不存在，则新建一个用户组
+     * @param _strGroupID in 用户组ID
+     * @return 可用性boolean值
+     * @author why
+     */
     public static boolean verifyUserGroup(String _strGroupID)
     {
         AipFace client = getFaceClient();
@@ -95,14 +116,22 @@ public class AIBound
 
     }
 
+    /**
+     * 更新用户人脸信息，如果当前用户不存在，则自动调用用户的创建方法。
+     * @param _strUserID in 用户ID
+     * @param _strBase64 in 用户人脸信息
+     * @return boolean
+     * @author why
+     */
     public static boolean updateUserFace(String _strUserID,String _strBase64)
     {
         // 传入可选参数调用接口
         HashMap<String, String> options = new HashMap<String, String>();
         options.put("user_info", _strUserID);
         options.put("quality_control", "NORMAL");
-        options.put("liveness_control", "NONE");
-        options.put("action_type", "REPLACE");// 后期请用APPEND。
+        options.put("liveness_control", "NONE");//TODO:当前人脸信息不支持活体检测
+        options.put("action_type", "REPLACE");// 该方法保证只存一张人脸
+        //TODO: 后期请用APPEND，以实现多张人脸存储。
 
         String image = _strBase64;
         String imageType = "BASE64";
@@ -130,6 +159,13 @@ public class AIBound
 //        }
     }
 
+    /**
+     * 增加新的用户人脸信息，适用于当前用户不存在的情形。
+     * @param _strUserID in 用户ID
+     * @param _strBase64 in 用户人脸信息
+     * @return boolean
+     * @author why
+     */
     public static boolean addUserFace(String _strUserID,String _strBase64)
     {
         System.out.println("添加新用户的人脸！");
@@ -151,6 +187,13 @@ public class AIBound
         return res.getInt("error_code") == 0;
     }
 
+    /**
+     * 根据人脸信息查询匹配的用户ID列表。
+     * TODO:后期应对score进行限定。
+     * @param _strBase64 in 用户人脸信息
+     * @return 用户ID的list
+     * @author why
+     */
     public static List<String> FaceQuery(String _strBase64)
     {
         // 传入可选参数调用接口
@@ -170,12 +213,12 @@ public class AIBound
         // 人脸搜索
         JSONObject res = getFaceClient().search(image, imageType, groupIdList, options);
 
+
         List<String> lstUserID = new CopyOnWriteArrayList<>();
 
         System.out.println("人脸搜索");
         System.out.println(res.toString(2));
 //        System.out.println(res.getString("result"));
-
 //        System.out.println(res.getJSONObject("result").toString(2));
 
         if(res.getInt("error_code") != 0)
@@ -209,6 +252,12 @@ public class AIBound
 //        }
     }
 
+    /**
+     * 删除用户，包括其前期更新的全部人脸信息。
+     * @param _strUserID in 用户ID
+     * @return 删除成功性的boolean值
+     * @author why
+     */
     public static boolean delUser(String _strUserID)
     {
         // 传入可选参数调用接口
@@ -228,7 +277,6 @@ public class AIBound
 //
     public static void main(String s[])
     {
-
     }
 }
 

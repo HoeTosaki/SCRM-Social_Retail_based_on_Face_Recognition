@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 用户登录的Controller类。支持User的登录处理
+ * 用户注册的Controller类，支持User的登录处理
  * @author why
  */
 @RestController

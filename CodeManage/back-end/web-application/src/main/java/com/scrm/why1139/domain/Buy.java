@@ -17,7 +17,8 @@ public class Buy implements Serializable
     private String m_dtBuyDate;
     private int m_nBuyCnt;
 
-    private boolean m_isEmpty;
+    private boolean m_isEmpty;//描述当前的对象是否被修改过。
+
     /**
      * 默认构造函数
      * @author why

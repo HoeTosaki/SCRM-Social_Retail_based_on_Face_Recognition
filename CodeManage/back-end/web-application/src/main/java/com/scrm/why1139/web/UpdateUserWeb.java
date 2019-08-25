@@ -4,8 +4,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 管理并更新用户信息的Controller类
+ * @author why
+ */
 public class UpdateUserWeb
 {
+    /**
+     * 映射到updateRecgBio的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @RequestMapping(
             value = {"/updateRecgBio"}
     )
@@ -15,6 +24,11 @@ public class UpdateUserWeb
         return "undefined";
     }
 
+    /**
+     * 映射到updateRecgBio的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @RequestMapping(
             value = {"/updatePasswd"}
     )
@@ -23,6 +37,11 @@ public class UpdateUserWeb
         return "undefined";
     }
 
+    /**
+     * 映射到updatePasswdByRecgBio的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @RequestMapping(
             value = {"/updatePasswdByRecgBio"}
     )
@@ -31,6 +50,11 @@ public class UpdateUserWeb
         return "undefined";
     }
 
+    /**
+     * 映射到updateRecgBioByPasswd的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
     @RequestMapping(
             value = {"/updateRecgBioByPasswd"}
     )
