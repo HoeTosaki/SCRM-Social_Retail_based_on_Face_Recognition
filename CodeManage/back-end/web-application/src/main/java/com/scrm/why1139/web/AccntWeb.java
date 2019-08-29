@@ -219,7 +219,7 @@ public class AccntWeb
             objRet.put("stat","invalid");
             return objRet.toJSONString();
         }
-        List<Goods> lstRcmd = m_accntService.getGoodsRcmd(user);
+        List<Goods> lstRcmd = m_accntService.getGoodsRcmdForUser(user);
         if(lstRcmd == null || lstRcmd.size() == 0)
         {
             JSONObject objRet = new JSONObject();

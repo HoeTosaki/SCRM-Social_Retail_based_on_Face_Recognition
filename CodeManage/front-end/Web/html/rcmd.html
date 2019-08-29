@@ -7,10 +7,12 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
     <title>热门商品推荐</title>
+    <!--    CSS样式-->
     <link rel="stylesheet" href="../css/rcmd-reset.css"> <!-- CSS reset -->
     <link rel="stylesheet" href="../css/rcmd-style.css" />
     <link rel="stylesheet" href="../css/rcmd-detail-style.css"> <!-- Resource style -->
-    <script src="../js/modernizr.js"></script> <!-- Modernizr -->
+    <!--    前置JS-->
+    <script src="../js-ref/modernizr.js"></script> <!-- Modernizr -->
 </head>
 
 <body>
@@ -18,8 +20,6 @@
     <div id="notice" class="off"></div>
     <div id="cells"></div>
     <div id="loader"><span>loading</span></div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/template" id="template">
         <p><a href="#"><img src="res/gdspic/{{src}}" height="{{height}}" width="{{width}}" /></a>
         </p>
@@ -31,15 +31,11 @@
             <a href="#0" class="cd-trigger"></a>
         </li> -->
     </script>
-    <script>
-        // var isGithubDemo = true;
-    </script>
-    <script>
-        document.userid = window.location.search.split('?')[1];
-        alert(document.userid);
-    </script>
-    <script src="../js/rcmd-front.min.js"></script>
-    <script src="../js/rcmd-script.js"></script>
+    <!--后置JS-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../js-ref/rcmd-front.min.js"></script>
+    <script src="../js/rcmd-core.js"></script>
+
 </body>
 
 </html>

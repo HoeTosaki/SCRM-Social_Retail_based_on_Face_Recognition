@@ -1,6 +1,7 @@
 package com.scrm.why1139.service;
 
 import com.scrm.why1139.BioReferenceModule.BioCertificater;
+import com.scrm.why1139.dao.AnalDao;
 import com.scrm.why1139.dao.BuyDao;
 import com.scrm.why1139.dao.GoodsDao;
 import com.scrm.why1139.dao.UserDao;
@@ -25,6 +26,9 @@ public class AccntService extends GeneralService
 {
     private GoodsDao m_goodsDao;
     private BuyDao m_buyDao;
+
+    @Autowired
+    private AnalDao m_analDao;
 
     /**
      * setter注入
@@ -124,17 +128,7 @@ public class AccntService extends GeneralService
         m_buyDao.updateBuy(newBuy);
     }
 
-    /**
-     * 获取商品推荐
-     * @param _user in 当前User对象
-     * @return Goods的list对象
-     * @author why
-     */
-    public List<Goods> getGoodsRcmd(User _user)
-    {
-        List<Goods> ret = m_goodsDao.getGoodsByRcmd(_user);
-        return ret;
-    }
+
 
     /**
      * 根据指定Goods类型查询商品
@@ -235,5 +229,17 @@ public class AccntService extends GeneralService
         accnt.setMngrType(2);
         m_mngrDao.insertMngr(accnt);
         return true;
+    }
+
+    /**
+     * 获取商品推荐
+     * @param _user in 当前User对象
+     * @return Goods的list对象
+     * @author why
+     */
+    public List<Goods> getGoodsRcmdForUser(User _user)
+    {
+        List<Goods> ret = m_analDao.getRcmdByUser(_user,0,ConfigConst.ACCNT_RCMD_LIMIT);
+        return ret;
     }
 }

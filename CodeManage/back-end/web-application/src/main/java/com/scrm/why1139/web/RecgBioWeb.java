@@ -72,14 +72,14 @@ public class RecgBioWeb
         Map<String,Object> mp = new ConcurrentHashMap<>();
         if(lstUserID.size() == 0)
         {
-            mp.put("stat","invalid");
+            mp.put("stat","invalid1");
         }
         else
         {
             User user = m_userService.findUserByUserID(lstUserID.get(0));
             if(user == null || user.isEmpty())
             {
-                mp.put("stat","invalid");
+                mp.put("stat","invalid2");
             }
             else
             {

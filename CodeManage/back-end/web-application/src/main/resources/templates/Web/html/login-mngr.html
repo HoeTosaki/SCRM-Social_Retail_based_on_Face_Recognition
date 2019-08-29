@@ -33,7 +33,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
             <span>请输入：</span>
             <input type="userid" v-model="mngrid" placeholder="用户名">
             <input type="password" v-model="passwd" placeholder="密码">
-            <button class="token-caption-btn" onclick="showLoginToken()">
+            <button type="button" class="token-caption-btn" onclick="showLoginToken()">
                 <span>验证</span>
             </button>
             <div id="login-token">
@@ -41,7 +41,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
             </div>
             <!-- <button>登录</button> -->
             <div class="progress-button">
-                <button id="btnLogin"><span>登录</span></button>
+                <button type="button" id="btnLogin"><span>登录</span></button>
                 <svg class="progress-circle" width="70" height="70">
                     <path
                             d="m35,2.5c17.955803,0 32.5,14.544199 32.5,32.5c0,17.955803 -14.544197,32.5 -32.5,32.5c-17.955803,0 -32.5,-14.544197 -32.5,-32.5c0,-17.955801 14.544197,-32.5 32.5,-32.5z" />

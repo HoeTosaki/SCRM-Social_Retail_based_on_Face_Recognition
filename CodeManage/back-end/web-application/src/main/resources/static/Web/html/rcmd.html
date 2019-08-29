@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <title>热门商品推荐</title>
+<!--    CSS样式-->
+    <link rel="stylesheet" href="Web/css/rcmd-reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" href="Web/css/rcmd-style.css" />
+    <link rel="stylesheet" href="Web/css/rcmd-detail-style.css"> <!-- Resource style -->
+<!--    前置JS-->
+    <script src="Web/js-ref/modernizr.js"></script> <!-- Modernizr -->
+</head>
+<body>
+    <!-- <h1>Waterfall Layout</h1> -->
+    <div id="notice" class="off"></div>
+    <div id="cells"></div>
+    <div id="loader"><span>loading</span></div>
+    <script type="text/template" id="template">
+        <p><a href="#"><img src="res/gdspic/{{src}}" height="{{height}}" width="{{width}}" /></a>
+        </p>
+        <div class="cell-title"><h2><a href="#">{{title}}</a></h2></div>
+        <!-- <span class="like">Like!</span>
+        <span class="mark">Mark!</span> -->
+        <!-- <li class="cd-item">
+            <img src="Web/img/celldemo-1.jpg" alt=" Item Preview">
+            <a href="#0" class="cd-trigger"></a>
+        </li> -->
+    </script>
+<!--后置JS-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="Web/js-ref/rcmd-front.min.js"></script>
+    <script src="Web/js/rcmd-core.js"></script>
+
+</body>
+
+</html>

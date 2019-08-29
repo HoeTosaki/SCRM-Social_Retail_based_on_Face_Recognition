@@ -54,27 +54,53 @@ public class RcmdWeb
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/rcmdPull"}
+            value = {"/userRcmd"}
     )
     public String rcmdPull(HttpServletRequest _req)
     {
         JSONObject objReq = JSONProc.parseReq(_req);
-
-
         String strUserID = (String)(objReq.getJSONArray("userid").get(0));
-//        int nPointer = (String)(objReq.getJSONArray("pointer").get(0));
-        User user = m_userService.findUserByUserID(strUserID);
-        List<Goods> lstRcmd = m_userService.getGoodsRcmd(user);
-        JSONArray arrRet = new JSONArray();
-        lstRcmd.parallelStream().map(gds->{
-            JSONObject objRet = new JSONObject();
-            objRet.put("title",gds.getGoodsName());
-            objRet.put("src",gds.getPic());
-            objRet.put("height", ""+(Math.random()*100 + 50));
-            objRet.put("width",122.5);
+        int cmd = Integer.parseInt((String)(objReq.getJSONArray("cmd").get(0)));
+        int offset = Integer.parseInt((String)(objReq.getJSONArray("offset").get(0)));
+        int limit = Integer.parseInt((String)(objReq.getJSONArray("limit").get(0)));
 
-            return objRet;
-        }).map(obj->(Object)obj).forEach(arrRet::add);
+        User user = m_userService.findUserByUserID(strUserID);
+
+        JSONArray arrRet = new JSONArray();
+
+        switch (cmd)
+        {
+            case 0:
+            {
+
+                List<Goods> lstRcmd = m_userService.getGoodsRcmdGeneral(user,offset,limit);
+                lstRcmd.stream().map(gds->{
+                    JSONObject objRet = new JSONObject();
+                    objRet.put("title",gds.getGoodsName());
+                    objRet.put("src",gds.getPic());
+                    objRet.put("height", ""+(Math.random()*100 + 50));
+                    objRet.put("width",122.5);
+                    return objRet;
+                }).map(obj->(Object)obj).forEach(arrRet::add);
+                break;
+            }
+            case 1:
+            {
+                String type = (String)(objReq.getJSONArray("args").get(0));
+
+                List<Goods> lstRcmd = m_userService.goodsQueryByType(user,type,offset,limit);
+                lstRcmd.stream().map(gds->{
+                    JSONObject objRet = new JSONObject();
+                    objRet.put("title",gds.getGoodsName());
+                    objRet.put("src",gds.getPic());
+                    objRet.put("height", ""+(Math.random()*100 + 50));
+                    objRet.put("width",122.5);
+                    return objRet;
+                }).map(obj->(Object)obj).forEach(arrRet::add);
+                break;
+            }
+        }
+
         System.out.println();
         System.out.println(arrRet.toJSONString());
         System.out.println();

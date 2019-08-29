@@ -3,6 +3,8 @@ package com.scrm.why1139.web;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.scrm.why1139.DataAnalysisModule.BatchLauncher;
+import com.scrm.why1139.DataAnalysisModule.DataBatchConfiguration;
 import com.scrm.why1139.dao.BuyDao;
 import com.scrm.why1139.dao.GoodsDao;
 import com.scrm.why1139.dao.MngrDao;
@@ -48,6 +50,7 @@ public class IndexWeb
     public ModelAndView index()
     {
         new DaoTest().printLog();
+//        BatchLauncher.testRun();
         return new ModelAndView("Web/html/index.html");
     }
 

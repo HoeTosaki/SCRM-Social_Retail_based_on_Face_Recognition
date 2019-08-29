@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: TestSuite
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 1, Time elapsed: 5.365 s <<< FAILURE! - in TestSuite
+springTestContextBeforeTestMethod(com.scrm.why1139.service.UserServiceTest)  Time elapsed: 4.658 s  <<< FAILURE!
+java.lang.IllegalStateException: Cannot start new transaction without ending existing transaction
+

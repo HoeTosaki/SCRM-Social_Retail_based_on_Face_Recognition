@@ -1,5 +1,6 @@
 package com.scrm.why1139;
 
+import com.scrm.why1139.SchedulerModule.SchedManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -23,7 +24,7 @@ public class WebApplication extends SpringBootServletInitializer
     public static void main(String[] args)
     {
         SpringApplication.run(WebApplication.class, args);
-
+        SchedManager.startETLJob();
     }
 
     /**

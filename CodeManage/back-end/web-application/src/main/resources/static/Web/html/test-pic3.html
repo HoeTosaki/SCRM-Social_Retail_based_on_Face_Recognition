@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div contenteditable="true" id="in-box" style="width:1000px;margin: 20px auto;"></div>
+    <div style="width:1000px;margin: 20px auto;">
+        <input type="file" name="" id="upload-ipt">
+        <div class="review" id="out-box"></div>
+    </div>
+    <script>
+        function getVideoImage() {
+            var obj_file = document.getElementById("upload-ipt");
+            var file = obj_file.files[0];
+            var blob = new Blob([file]), // 文件转化成二进制文件
+                url = URL.createObjectURL(blob); //转化成url
+            if (file && /video/g.test(file.type)) {
+                var $video = $('<div><video controls src="' + url + '"></video></div> <div > < /div>');
+                //后面加一个空格div是为了解决在富文本中按Backspace时删除无反应的问题
+                $('#in-box').html($video);
+                var videoElement = $("video")[0];
+                videoElement.addEventListener("canplay", function (_event) {
+                    var canvas = document.createElement("canvas");
+                    canvas.width = videoElement.videoWidth;
+                    canvas.height = videoElement.videoHeight;
+                    console.log(videoElement.videoWidth)
+                    canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+                    var img = document.createElement("img");
+                    img.src = canvas.toDataURL("image/png");
+                    $("#out-box").html(img);
+                    URL.revokeObjectURL(this.src); // 释放createObjectURL创建的对象
+                    console.log("loadedmetadata")
+                });
+            } else {
+                alert("请上传一个视频文件！");
+                obj_file.value = ""
+            }
+        };
+    </script>
+</body>
+
+</html>

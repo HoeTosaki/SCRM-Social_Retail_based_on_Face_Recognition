@@ -1,5 +1,6 @@
 package com.scrm.why1139.service;
 
+import com.scrm.why1139.dao.AnalDao;
 import com.scrm.why1139.dao.BuyDao;
 import com.scrm.why1139.dao.GoodsDao;
 import com.scrm.why1139.domain.Buy;
@@ -19,6 +20,9 @@ public class UserService extends GeneralService
 {
     private GoodsDao m_goodsDao;
     private BuyDao m_buyDao;
+
+    @Autowired
+    private AnalDao m_analDao;
 
     /**
      * setter注入
@@ -50,11 +54,32 @@ public class UserService extends GeneralService
      * @return Goods的list对象
      * @author why
      */
-    public List<Goods> getGoodsRcmd(User _user)
+    public List<Goods> getGoodsRcmdGeneral(User _user,int _nOffSet,int _nLimit)
     {
-        List<Goods> ret = m_goodsDao.getGoodsByRcmd(_user);
+        List<Goods> ret = m_analDao.getRcmdByUser(_user,_nOffSet,_nLimit);
         return ret;
     }
+
+    public List<Goods> getGoodsRelated(Goods _gds,int _nOffSet,int _nLimit)
+    {
+        List<Goods> ret = m_analDao.getRcmdByGds(_gds,_nOffSet,_nLimit);
+        return ret;
+    }
+
+    /**
+     * 根据指定Goods类型查询商品
+     * @param _strType in Goods类型
+     * @return Goods的list对象
+     * @author why
+     */
+    public List<Goods> goodsQueryByType(User _user,String _strType,int _nOffset,int _nLimit)
+    {
+        //TODO:for XXS, need replacer strategy to do extra work here.
+        List<Goods> ret = m_analDao.getRcmdByQuery(_user,_strType,_nOffset,_nLimit);
+        return ret;
+    }
+
+
 
     /**
      * 获取购物记录的list
@@ -68,18 +93,6 @@ public class UserService extends GeneralService
         return ret;
     }
 
-    /**
-     * 根据指定Goods类型查询商品
-     * @param _strType in Goods类型
-     * @return Goods的list对象
-     * @author why
-     */
-    public List<Goods> goodsQuery(String _strType)
-    {
-        //TODO:for XXS, need replacer strategy to do extra work here.
-        List<Goods> ret = m_goodsDao.getGoodsByClass(_strType,ConfigConst.GOODS_LIMIT);
-        return ret;
-    }
 
 
     /**

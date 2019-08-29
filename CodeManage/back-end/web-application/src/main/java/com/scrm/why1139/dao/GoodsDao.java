@@ -87,18 +87,7 @@ public class GoodsDao
                 new Object[]{_goods.getGoodsName(), _goods.getGoodsType(), _goods.getPrice(), _goods.getGoodsDesc(), _goods.getGoodsCnt(), _goods.getGoodsID(),_goods.getPic()});
     }
 
-    /**
-     * 通过用户推荐获取Goods列表
-     * @param _user in 推荐参考的用户对象
-     * @return 推荐产生的Goods列表
-     * @author why
-     */
-    public List<Goods> getGoodsByRcmd(User _user)
-    {
-        //TODO: need to return real rcmd by analysisDao.
-        List<Goods> ret = getGoodsAll(100);
-        return ret;
-    }
+
 
     /**
      * 获取全部Goods的列表对象。
