@@ -54,7 +54,7 @@ public class RecgBioWeb
     )
     public ModelAndView loginFace()
     {
-        return new ModelAndView("Web/html/login-face.html");
+        return new ModelAndView("Web/login/html/login-face.html");
     }
 
 

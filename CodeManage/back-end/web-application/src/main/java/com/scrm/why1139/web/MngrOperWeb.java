@@ -44,7 +44,7 @@ public class MngrOperWeb
     )
     public ModelAndView loginMngr()
     {
-        return new ModelAndView("Web/html/login-mngr.html");
+        return new ModelAndView("Web/login/html/login-mngr.html");
     }
 
     /**

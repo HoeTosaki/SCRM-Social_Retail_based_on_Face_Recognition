@@ -1,14 +1,9 @@
 package com.scrm.why1139.SchedulerModule;
 
-import com.scrm.why1139.DataAnalysisModule.BatchLauncher;
-import com.scrm.why1139.DataAnalysisModule.DataBatchConfiguration;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 @Service
 public class ETLJob implements Job

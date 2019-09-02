@@ -44,7 +44,7 @@ public class RcmdWeb
     )
     public ModelAndView rcmd()
     {
-        return new ModelAndView("Web/html/rcmd.html");
+        return new ModelAndView("Web/rcmd/html/rcmd.html");
     }
 
     /**
@@ -59,52 +59,64 @@ public class RcmdWeb
     public String rcmdPull(HttpServletRequest _req)
     {
         JSONObject objReq = JSONProc.parseReq(_req);
+        System.out.println(objReq.toJSONString());
         String strUserID = (String)(objReq.getJSONArray("userid").get(0));
         int cmd = Integer.parseInt((String)(objReq.getJSONArray("cmd").get(0)));
         int offset = Integer.parseInt((String)(objReq.getJSONArray("offset").get(0)));
         int limit = Integer.parseInt((String)(objReq.getJSONArray("limit").get(0)));
 
         User user = m_userService.findUserByUserID(strUserID);
+        JSONObject objRet = new JSONObject();
 
-        JSONArray arrRet = new JSONArray();
-
-        switch (cmd)
+        if(user == null || user.isEmpty())
         {
-            case 0:
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            objRet.put("stat","success");
+            JSONArray arrRet = new JSONArray();
+            switch (cmd)
             {
-
-                List<Goods> lstRcmd = m_userService.getGoodsRcmdGeneral(user,offset,limit);
-                lstRcmd.stream().map(gds->{
-                    JSONObject objRet = new JSONObject();
-                    objRet.put("title",gds.getGoodsName());
-                    objRet.put("src",gds.getPic());
-                    objRet.put("height", ""+(Math.random()*100 + 50));
-                    objRet.put("width",122.5);
-                    return objRet;
-                }).map(obj->(Object)obj).forEach(arrRet::add);
-                break;
+                case 0:
+                {
+                    List<Goods> lstRcmd = m_userService.getGoodsRcmdGeneral(user,offset,limit);
+                    lstRcmd.stream().map(gds->{
+                        JSONObject objGds = new JSONObject();
+                        objGds.put("name",gds.getGoodsName());
+                        objGds.put("prc",gds.getPrice());
+                        objGds.put("cnt",gds.getGoodsCnt());
+                        objGds.put("pic",gds.getPic());
+                        objGds.put("desc",gds.getGoodsDesc());
+                        objGds.put("id",gds.getGoodsID());
+                        objGds.put("type",gds.getGoodsType());
+                        return objGds;
+                    }).forEach(arrRet::add);
+                    break;
+                }
+                case 1:
+                {
+                    String type = (String)(objReq.getJSONArray("args").get(0));
+                    List<Goods> lstRcmd = m_userService.goodsQueryByType(user,type,offset,limit);
+                    lstRcmd.stream().map(gds->{
+                        JSONObject objGds = new JSONObject();
+                        objGds.put("name",gds.getGoodsName());
+                        objGds.put("prc",gds.getPrice());
+                        objGds.put("cnt",gds.getGoodsCnt());
+                        objGds.put("pic",gds.getPic());
+                        objGds.put("desc",gds.getGoodsDesc());
+                        objGds.put("id",gds.getGoodsID());
+                        objGds.put("type",gds.getGoodsType());
+                        return objGds;
+                    }).forEach(arrRet::add);
+                    break;
+                }
             }
-            case 1:
-            {
-                String type = (String)(objReq.getJSONArray("args").get(0));
-
-                List<Goods> lstRcmd = m_userService.goodsQueryByType(user,type,offset,limit);
-                lstRcmd.stream().map(gds->{
-                    JSONObject objRet = new JSONObject();
-                    objRet.put("title",gds.getGoodsName());
-                    objRet.put("src",gds.getPic());
-                    objRet.put("height", ""+(Math.random()*100 + 50));
-                    objRet.put("width",122.5);
-                    return objRet;
-                }).map(obj->(Object)obj).forEach(arrRet::add);
-                break;
-            }
+            objRet.put("gds_lst",arrRet);
         }
 
-        System.out.println();
-        System.out.println(arrRet.toJSONString());
-        System.out.println();
-        return arrRet.toJSONString();
+        System.out.println(objRet.toJSONString());
+        return objRet.toJSONString();
     }
 
 }

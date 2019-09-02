@@ -56,7 +56,7 @@ public class DAMConfig
 
     }
 
-    Process execPy(String _strFilename,String... args)
+    public Process execPy(String _strFilename,String... args)
     {
         File curPathFile = new File("");
         String strCurPath = null;

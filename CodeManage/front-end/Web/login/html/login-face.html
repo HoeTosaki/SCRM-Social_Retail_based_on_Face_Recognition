@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <!--    <meta name="viewport" content="width-device-width,initial-scale=1.0">-->
+    <meta http-equiv="X-UA-Compatible" content="sie-edge" />
+    <title>用户人脸登录页面</title>
+
+
+    <!-- CSS样式 -->
+    <link rel="stylesheet" type="text/css" href="../css/login-btn-normalize.css" />
+    <link rel="stylesheet" type="text/css" href="../css/login-face-style.css">
+    <link rel="stylesheet" type="text/css" href="../css/login-btn-component.css" />
+    <!--    前置JS-->
+    <script src="../js-ref/modernizr.custom.js"></script>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div id="login-model" class="form-container sign-in-container">
+            <form action="#">
+                <h1>欢迎登录SCRM！</h1>
+                <span>{{hints}}</span>
+                <video class="face-video" src="" width="230" height="230"></video>
+                <canvas class="face-canvas" id="canvas" width="230" height="230"></canvas>
+                <button type="button" class="token-caption-btn" onclick="showLoginToken()">
+                    <span>验证</span>
+                </button>
+                <div id="login-token">
+                    ...
+                </div>
+                <!-- <button>登录</button> -->
+                <div class="progress-button">
+                    <button type="button" id="btnLogin"><span>登录</span></button>
+                    <svg class="progress-circle" width="70" height="70">
+                        <path
+                            d="m35,2.5c17.955803,0 32.5,14.544199 32.5,32.5c0,17.955803 -14.544197,32.5 -32.5,32.5c-17.955803,0 -32.5,-14.544197 -32.5,-32.5c0,-17.955801 14.544197,-32.5 32.5,-32.5z" />
+                    </svg>
+                    <svg class="checkmark" width="70" height="70">
+                        <path d="m31.5,46.5l15.3,-23.2" />
+                        <path d="m31.5,46.5l-8.5,-7.1" /></svg>
+                    <svg class="cross" width="70" height="70">
+                        <path d="m35,35l-9.3,-9.3" />
+                        <path d="m35,35l9.3,9.3" />
+                        <path d="m35,35l-9.3,9.3" />
+                        <path d="m35,35l9.3,-9.3" /></svg>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--后置js-->
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--    图标库-->
+    <!--    <script src="../js/ionicons.js"></script>-->
+    <script type="text/javascript" src="../js-ref/classie.js"></script>
+    <script type="text/javascript" src="../js/login-btn-uiProgressButton.js"></script>
+    <script src="https://cdn.dingxiang-inc.com/ctu-group/captcha-ui/index.js"></script>
+    <script type="text/javascript" src="../js/login-face-core.js"></script>
+</body>
+
+</html>

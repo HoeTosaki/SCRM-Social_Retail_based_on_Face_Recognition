@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Anal</title>
+</head>
+<body>
+    <button onclick="send1()"><h1>userFigQuery</h1></button>
+    <button onclick="send2()"><h1>userValQuery</h1></button>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script>
+        function send1()
+        {
+            alert('why send');
+            $.post("userFigQuery", {
+                userid: 'why',
+                cmd:0,
+                offset:0,
+                limit:15,
+                args:["week"]
+            }, function (result) {
+                alert(result);
+                var obj = JSON.parse(result);
+                if (obj["stat"] == "invalid") {
+                    alert('failed');
+                } else {
+                    alert('success');
+                }
+            });
+        }
+
+        function send2()
+        {
+            alert('why send');
+            $.post("userValQuery", {
+                userid: 'why',
+                cmd:6,
+                offset:0,
+                limit:15,
+                args:["week"]
+            }, function (result) {
+                alert(result);
+                var obj = JSON.parse(result);
+                if (obj["stat"] == "invalid") {
+                    alert('failed');
+                } else {
+                    alert('success');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<html lang="zh">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Social Retail based on Face Recognition</title>
+
+    <!-- 导航样式文件 -->
+    <link href="../css/css-family=Lato-400,700.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/index-reset.css" />
+    <link rel="stylesheet" href="../css/index-style.css">
+
+    <!-- swatchbook样式文件 -->
+    <link rel="stylesheet" type="text/css" href="../css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="../css/index-swatchbook-style3.css" />
+    <link href="../css/css-family=Open+Sans+Condensed-700,300,300italic.css" rel='stylesheet' type='text/css'>
+
+    <!-- roll -->
+    <link rel="stylesheet" href="../css/index-roll-style.css">
+</head>
+
+<body>
+    <!-- 导航 -->
+    <header class="cd-morph-dropdown">
+        <a href="#0" class="nav-trigger">Open Nav<span aria-hidden="true"></span></a>
+
+        <nav class="main-nav">
+            <ul>
+                <li class="has-dropdown gallery" data-content="product">
+                    <a href="#0">产品定位</a>
+                </li>
+
+                <li class="has-dropdown links" data-content="func">
+                    <a href="#0">功能特性</a>
+                </li>
+
+                <li class="has-dropdown links" data-content="service">
+                    <a href="#0">客户服务</a>
+                </li>
+
+                <li class="has-dropdown links" data-content="contact">
+                    <a href="#0">联系我们</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="morph-dropdown-wrapper">
+            <div class="dropdown-list">
+                <ul>
+                    <li id="product" class="dropdown gallery">
+                        <a href="#0" class="label">Product</a>
+
+                        <div class="content">
+                            <ul>
+                                <li>
+                                    <a href="#section1">
+                                        <em>产品定位1</em>
+                                        <span>产品定位1介绍</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#section2">
+                                        <em>产品定位2</em>
+                                        <span>产品定位2介绍</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#section3">
+                                        <em>产品定位3</em>
+                                        <span>产品定位3介绍</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#section4">
+                                        <em>产品定位4</em>
+                                        <span>产品定位4介绍</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li id="func" class="dropdown links">
+                        <a href="#0" class="label">Func</a>
+
+                        <div class="content">
+                            <ul class="links-list">
+                                <li><a href="#section5">功能特性1</a></li>
+                                <li><a href="#section6">功能特性2</a></li>
+                                <li><a href="#section7">功能特性3</a></li>
+                                <li><a href="#section8">功能特性4</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li id="service" class="dropdown links">
+                        <a href="#0" class="label">Service</a>
+
+                        <div class="content">
+                            <ul class="links-list">
+                                <li><a href="login">顾客入口</a></li>
+                                <li><a href="loginMngr">管理员入口</a></li>
+                                <li><a href="loginMngr">收银员入口</a></li>
+                                <li><a href="loginFace">人脸识别入口（Beta）</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li id="contact" class="dropdown links">
+                        <a href="#0" class="label">Contact</a>
+
+                        <div class="content">
+                            <ul class="links-list">
+                                <li><a href="#section12">反馈建议</a></li>
+                                <li><a href="#section9">使用帮助</a></li>
+                                <li><a href="login">在线咨询</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="bg-layer" aria-hidden="true"></div>
+            </div> <!-- dropdown-list -->
+        </div> <!-- morph-dropdown-wrapper -->
+    </header>
+    <main class="cd-main-content swatch">
+        <!-- swatchbook块元素 -->
+        <div id="sb-container" class="sb-container">
+
+            <div>
+                <span class="sb-icon icon-eye">
+                    <a class="sb-icon-a" href="#section1"></a>
+                </span>
+                <h4><span>产品定位</span></h4>
+            </div>
+            <div>
+                <span class="sb-icon icon-globe">
+                    <a class="sb-icon-a" href="#section5"></a>
+                </span>
+                <h4><span>功能特性</span></h4>
+            </div>
+            <div>
+                <span class="sb-icon icon-bag">
+                    <a class="sb-icon-a" href="login"></a>
+                </span>
+                <h4><span>客户入口</span></h4>
+            </div>
+            <div>
+                <span class="sb-icon icon-install">
+                    <a class="sb-icon-a" href="#section11"></a>
+                </span>
+                <h4><span>微信端加载</span></h4>
+            </div>
+            <div>
+                <span class="sb-icon icon-cog">
+                    <a class="sb-icon-a" href="#section9"></a>
+                </span>
+                <h4><span>使用帮助</span></h4>
+            </div>
+            <div>
+                <span class="sb-icon icon-mobile">
+                    <a class="sb-icon-a" href="#section12"></a>
+                </span>
+                <h4><span>联系我们</span></h4>
+            </div>
+            <!--
+                icon值配置： 
+                icon-   cog
+                    flight
+                    eye
+                    install
+                    bag
+                    globe
+                    picture
+                    video
+                    download
+                    mobile
+                    camera -->
+            <div>
+                <span class="sb-icon icon-flight">
+                    <a class="sb-icon-a"></a>
+                </span>
+                <h4><span>没想好(泣)</span></h4>
+            </div>
+            <div>
+                <span class="sb-icon icon-picture">
+                    <a class="sb-icon-a"></a>
+                </span>
+                <h4><span>没想好(泣)</span></h4>
+            </div>
+            <div>
+                <span class="sb-icon icon-video">
+                    <a class="sb-icon-a"></a>
+                </span>
+                <h4><span>没想好(泣)</span></h4>
+            </div>
+            <div>
+                <span class="sb-icon icon-download">
+                    <a class="sb-icon-a"></a>
+                </span>
+                <h4><span>没想好(泣)</span></h4>
+            </div>
+            <div>
+                <span class="sb-icon icon-camera">
+                    <a class="sb-icon-a"></a>
+                </span>
+                <h4><span>没想好(泣)</span></h4>
+            </div>
+            <div>
+                <h4><span>Profile</span></h4>
+                <span class="sb-toggle">轻触以打开</span>
+                <h5><span>&hearts;SCRM by why&hearts;</span></h5>
+            </div>
+        </div>
+    </main>
+    <main>
+        <div class="promotion-carousel">
+            <div class="promotions">
+                <div>
+                    <div class="promotion" id="section1" style="background-image: url(../img/index-6.jpg)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">产品定位1</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section2" style="background-image: url(../img/index-7.jpg)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">产品定位2</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section3" style="background-image: url(../img/index-8.jpg)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">产品定位3</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section4" style="background-image: url(../img/index-9.png)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">产品定位4</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section5" style="background-image: url(../img/index-5.jpg)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">功能特性1</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section6" style="background-image: url(../img/index-6.jpg)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">功能特性2</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section7" style="background-image: url(../img/index-7.jpg)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">功能特性3</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section8" style="background-image: url(../img/index-8.jpg)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">功能特性4</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section9" style="background-image: url(../img/index-9.png)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">使用帮助1</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section10" style="background-image: url(../img/index-5.jpg)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">使用帮助2</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section11" style="background-image: url(../img/index-6.jpg)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">微信端</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promotion" id="section12" style="background-image: url(../img/index-7.jpg)">
+                        <div class="shade"></div>
+                        <div class="promo-detail cycle-overlay">
+                            <div class="promo-text">
+                                <span class="dash"></span>
+                                <span class="promo-flag">Text1</span>
+                                <a href="#" class="copy">
+                                    <div class="headline">联系我们</div>
+                                    <p class="body long">Detail
+                                    </p>
+                                </a>
+                                <div class="buttons">
+                                    <a class="button sho-play-link" href="#"></span>Btn1</a>
+                                    <a class="button info-button" href="#">Btn2</a>
+                                    <a class="button see-all" href="#">Btn3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="navigation">
+        <ul>
+
+            <li><a href="#section1" data-number="1"></a></li>
+
+            <li><a href="#section2" data-number="2"></a></li>
+
+            <li><a href="#section3" data-number="3"></a></li>
+
+            <li><a href="#section4" data-number="4"></a></li>
+
+            <li><a href="#section5" data-number="5"></a></li>
+
+            <li><a href="#section6" data-number="6"></a></li>
+
+        </ul>
+    </div>
+
+    <!-- 后置js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../js-ref/modernizr.custom.79639.js"></script>
+    <script src="../js/index-nav.js"></script>
+    <script type="text/javascript" src="../js/index-swatchbook.js"></script>
+    <script src="../js/index-roll-script.js"></script>
+    <script src="../js/index-core.js"></script>
+</body>
+
+</html>

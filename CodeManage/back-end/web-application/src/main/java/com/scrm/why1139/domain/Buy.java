@@ -16,6 +16,7 @@ public class Buy implements Serializable
     private int m_nGoodsID;
     private String m_dtBuyDate;
     private int m_nBuyCnt;
+    private int m_nBuyID;
 
     private boolean m_isEmpty;//描述当前的对象是否被修改过。
 
@@ -45,6 +46,17 @@ public class Buy implements Serializable
         setGoodsID(_nGoodsID);
         setMngrID(_strMngrID);
         setUserID(_strUserID);
+    }
+
+    public Buy(String _strUserID, String _strMngrID, int _nGoodsID, String _dtBuyDate, int _nBuyCnt,int _nBuyID)
+    {
+        m_isEmpty = false;
+        setBuyCnt(_nBuyCnt);
+        setBuyDate(_dtBuyDate);
+        setGoodsID(_nGoodsID);
+        setMngrID(_strMngrID);
+        setUserID(_strUserID);
+        setBuyID(_nBuyID);
     }
 
     /**
@@ -160,5 +172,17 @@ public class Buy implements Serializable
     public boolean isEmpty()
     {
         return m_isEmpty;
+    }
+
+
+    public int getBuyID()
+    {
+        return m_nBuyID;
+    }
+
+    public void setBuyID(int _nBuyID)
+    {
+        m_isEmpty = false;
+        this.m_nBuyID = _nBuyID;
     }
 }

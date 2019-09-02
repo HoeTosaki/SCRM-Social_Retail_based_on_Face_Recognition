@@ -1,35 +1,13 @@
 package com.scrm.why1139.web;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.scrm.why1139.DataAnalysisModule.BatchLauncher;
-import com.scrm.why1139.DataAnalysisModule.DataBatchConfiguration;
-import com.scrm.why1139.dao.BuyDao;
-import com.scrm.why1139.dao.GoodsDao;
-import com.scrm.why1139.dao.MngrDao;
-import com.scrm.why1139.dao.UserDao;
-import com.scrm.why1139.domain.Buy;
-import com.scrm.why1139.domain.Goods;
-import com.scrm.why1139.domain.Mngr;
-import com.scrm.why1139.domain.User;
-import com.scrm.why1139.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 首页的Controller类。
@@ -51,7 +29,7 @@ public class IndexWeb
     {
         new DaoTest().printLog();
 //        BatchLauncher.testRun();
-        return new ModelAndView("Web/html/index.html");
+        return new ModelAndView("Web/index/html/index.html");
     }
 
     /**

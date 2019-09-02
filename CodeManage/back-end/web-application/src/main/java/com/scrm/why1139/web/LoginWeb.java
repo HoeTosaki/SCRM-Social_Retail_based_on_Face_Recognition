@@ -62,7 +62,7 @@ public class LoginWeb
     )
     public ModelAndView login()
     {
-        return new ModelAndView("Web/html/login.html");
+        return new ModelAndView("Web/login/html/login.html");
     }
 
     /**

@@ -1,0 +1,281 @@
+/* .rcmd-slider {
+    height: 400px;
+    width: 100%;
+    background: #4b99d86e;
+}
+
+.rcmd-txt {
+    text-align: center;
+    top: 40%;
+} */
+
+/* #gds-other>.row>.card>.goods-card:nth-child(1) {
+    background: #fef
+} */
+/* #gds-other>.row>.card:nth-child(1) {
+    background: #fef
+} */
+
+body {
+    /* background: #fff; */
+    background-repeat: repeat;
+    background-image: url(../img/cover2.jpg);
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+.swiper-container {
+    width: 100%;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 400px;
+    height: 400px;
+    background: green;
+}
+
+/* .gds-pic-flow {} */
+.gds-best-pic {
+    width: 100%;
+    height: 100%;
+}
+
+.gds-best-caption {
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    top: 100%;
+}
+
+.gds-best-caption>h3>span {
+    align-self: center;
+}
+
+
+.gds-pic {
+    width: 100%;
+    height: 100%;
+}
+
+.goods-card {
+    background-image: url("../img/cartboard.jpg");
+    background-repeat: repeat;
+}
+
+
+
+.type-nav {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    z-index: 99;
+}
+
+.sidebar {
+    position: fixed;
+    width: 215px;
+    height: 100%;
+    background: #262930;
+    transition: all .3s ease;
+    z-index: 100;
+    padding-top: 100px;
+}
+
+.sidebar>h4 {
+    margin: 0;
+    padding: 18px 10px;
+    background: #00bfa5;
+    color: #fff;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+.cover {
+    padding-top: 40px;
+    padding-bottom: 10px;
+    text-align: center;
+    background: #20242c;
+}
+
+.cover>h2 {
+    position: relative;
+    margin: 0 auto;
+    max-height: 80px;
+    max-width: 80px;
+    background: #3d4147;
+    border: 1px solid #1ab394;
+    border-radius: 50%;
+}
+
+.cover>h2 img {
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    margin-left: -5px;
+    border: 1px solid #1ab394;
+}
+
+.cover>h2:after {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: -8px;
+    height: 96px;
+    width: 96px;
+    background: #3d4147;
+    border-radius: 50%;
+}
+
+.cover>b {
+    display: block;
+    margin-top: 20px;
+    color: #f3f3f4;
+    font-size: 13px;
+}
+
+.cover>p {
+    margin-top: 4px;
+    color: #acb0b8;
+    font-size: 12px;
+}
+
+/*sidenav*/
+.sidenav,
+.sidebar-dropdown {
+    padding: 0;
+}
+
+.sidenav a {
+    color: #9d9d9d;
+}
+
+.sidenav>li>a {
+    display: block;
+    padding: 10px;
+    font-size: 14px;
+    border-left: 2px solid transparent;
+    transition: .3s linear;
+}
+
+.sidenav>li>a>i {
+    margin-right: 10px;
+}
+
+.sidenav>li>a.hover,
+.sidenav>li>a:hover {
+    border-left: 2px solid #21b496;
+    background: #20242c;
+    text-decoration: none;
+}
+
+.iright {
+    margin-top: 4px;
+    font-family: "宋体";
+    font-style: normal;
+}
+
+.sidebar-dropdown {
+    display: none;
+    font-size: 14px;
+    background: #20242c;
+    border-left: 2px solid #21b496;
+}
+
+.sidebar-dropdown>li>a {
+    display: block;
+    padding: 10px 0 10px 36px;
+}
+
+/*伸缩侧边css代码*/
+.sidebar-collapse .main {
+    margin-left: 60px;
+}
+
+.sidebar-collapse .sidebar {
+    width: 10px;
+}
+
+.sidebar-collapse .sidenav>li {
+    position: relative;
+    z-index: 9999;
+    text-align: center;
+}
+
+.sidebar-collapse .sidenav>li:hover>a {
+    border-left: 2px solid #21b496;
+    background: #20242c;
+    background: #909091;
+    text-decoration: none;
+}
+
+.sidebar-collapse .sidenav>li:hover .sidebar-dropdown {
+    display: block !important;
+}
+
+.sidebar-collapse .cover>b {
+    font-size: 12px;
+}
+
+.sidebar-collapse .cover>p,
+.sidebar-collapse .sidespan,
+.sidebar-collapse .iright,
+.sidebar-collapse .cover>h2:after {
+    display: none;
+}
+
+.sidebar-collapse .cover {
+    padding-top: 30px;
+}
+
+.sidebar-collapse .cover>h2 {
+    margin: 6px;
+}
+
+.sidebar-collapse .sidebar-dropdown {
+    position: absolute;
+    top: 0;
+    left: 60px;
+    z-index: 9;
+    display: none !important;
+    width: 150px;
+    border-left: none;
+    list-style: none;
+}
+
+.sidebar-collapse .sidebar-dropdown>li>a {
+    padding-left: 0;
+}
+
+.sidebar-collapse .sidebar-dropdown>li>a:hover {
+    background: #191e26;
+    text-decoration: none;
+    color: #fff;
+}
+
+.sidebar-collapse .cover>h2 img {
+    margin-left: 0;
+    border: none;
+}
+
+/* main
+ ---------------------------------------- */
+.main {
+    overflow: hidden;
+    margin-left: 215px;
+    transition: all .3s ease;
+    padding-top: 50px;
+}
+
+.new-col{
+    float:none;
+    display:inline-block;
+}

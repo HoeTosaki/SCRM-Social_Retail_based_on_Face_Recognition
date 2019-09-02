@@ -50,7 +50,7 @@ public class AccntWeb
     )
     public ModelAndView accnt()
     {
-        return new ModelAndView("Web/html/accnt.html");
+        return new ModelAndView("Web/accnt/html/accnt.html");
     }
 
 //    /**

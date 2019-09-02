@@ -91,6 +91,22 @@ public class BuyDao
         return lstBuy;
     }
 
+    public Buy findBuyByBuyID(int _nBuyID)
+    {
+        Buy buy = new Buy();
+        m_jdbcTemp.query(" SELECT * FROM t_buy WHERE buy_id = ? "
+                , new Object[]{_nBuyID}, rs ->
+                {
+                    buy.setBuyDate(rs.getString("buy_date"));
+                    buy.setMngrID(rs.getString("mngr_id"));
+                    buy.setBuyCnt(rs.getInt("buy_cnt"));
+                    buy.setGoodsID(rs.getInt("goods_id"));
+                    buy.setUserID(rs.getString("user_id"));
+                    buy.setBuyID(rs.getInt("buy_id"));
+                });
+        return buy;
+    }
+
     /**
      * 更新当前的购物记录。新记录将以insert形式更新。
      * @param _buy in 每个buy记录遵循时间戳unique的编程假设。
