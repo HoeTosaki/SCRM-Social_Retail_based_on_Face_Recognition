@@ -78,6 +78,18 @@ public class AccntService extends GeneralService
         return m_goodsDao.findGoodsByID(_nGoodsID);
     }
 
+    public Goods findGoodsByGoodsName(String _strGoodsName)
+    {
+        return m_goodsDao.findGoodsByName(_strGoodsName);
+    }
+
+    public List<Goods> findGoodsByGoodsType(String _strGoodsType)
+    {
+        return m_goodsDao.getGoodsByClass(_strGoodsType,ConfigConst.GOODS_LIMIT);
+    }
+
+
+
     /**
      * 根据生物特征信息获取User对象
      * @param _btBioRef in BioRef

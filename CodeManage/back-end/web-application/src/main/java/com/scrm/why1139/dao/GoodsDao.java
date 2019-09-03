@@ -65,6 +65,23 @@ public class GoodsDao
         return goods;
     }
 
+    public Goods findGoodsByName(String _strGoodsName)
+    {
+        Goods goods = new Goods();
+        m_jdbcTemp.query(" SELECT * FROM t_goods WHERE goods_name = ? "
+                , new Object[]{_strGoodsName}, rs ->
+                {
+                    goods.setPrice(rs.getDouble("goods_price"));
+                    goods.setGoodsType(rs.getString("goods_type"));
+                    goods.setGoodsName(rs.getString("goods_name"));
+                    goods.setGoodsID(rs.getInt("goods_id"));
+                    goods.setGoodsDesc(rs.getString("goods_desc"));
+                    goods.setGoodsCnt(rs.getInt("goods_cnt"));
+                    goods.setPic(rs.getString("goods_pic"));
+                });
+        return goods;
+    }
+
     /**
      * 更新商品信息，新记录将以update形式更新，用于修改已有商品的信息。
      * @param _goods in 待更新的Goods对象，遵循GoodsID readonly的编程假设。
@@ -151,6 +168,11 @@ public class GoodsDao
                     while(nHits < _nLimit && rs.next());
                 });
         return lstGds;
+    }
+
+    public void delGoodsByGoodsID(int nGoodsID)
+    {
+        m_jdbcTemp.update("DELETE FROM t_goods WHERE goods_id = ?",new Object[]{nGoodsID});
     }
 
 }

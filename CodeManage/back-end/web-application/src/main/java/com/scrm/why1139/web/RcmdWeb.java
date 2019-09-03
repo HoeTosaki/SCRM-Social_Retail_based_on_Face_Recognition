@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.scrm.why1139.domain.Goods;
 import com.scrm.why1139.domain.User;
+import com.scrm.why1139.service.AccntService;
 import com.scrm.why1139.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,9 @@ import java.util.List;
 public class RcmdWeb
 {
     private UserService m_userService;
+
+    @Autowired
+    private AccntService m_accntService;
 
     /**
      * setter注入
@@ -98,6 +102,24 @@ public class RcmdWeb
                 {
                     String type = (String)(objReq.getJSONArray("args").get(0));
                     List<Goods> lstRcmd = m_userService.goodsQueryByType(user,type,offset,limit);
+                    lstRcmd.stream().map(gds->{
+                        JSONObject objGds = new JSONObject();
+                        objGds.put("name",gds.getGoodsName());
+                        objGds.put("prc",gds.getPrice());
+                        objGds.put("cnt",gds.getGoodsCnt());
+                        objGds.put("pic",gds.getPic());
+                        objGds.put("desc",gds.getGoodsDesc());
+                        objGds.put("id",gds.getGoodsID());
+                        objGds.put("type",gds.getGoodsType());
+                        return objGds;
+                    }).forEach(arrRet::add);
+                    break;
+                }
+                case 2:
+                {
+                    int nGoodsID = Integer.parseInt((String)(objReq.getJSONArray("args").get(0)));
+                    Goods curGds = m_accntService.findGoodsByGoodsID(nGoodsID);
+                    List<Goods> lstRcmd = m_userService.getGoodsRelated(curGds,offset,limit);
                     lstRcmd.stream().map(gds->{
                         JSONObject objGds = new JSONObject();
                         objGds.put("name",gds.getGoodsName());

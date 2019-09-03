@@ -7,6 +7,9 @@
 <body>
     <button onclick="send1()"><h1>userFigQuery</h1></button>
     <button onclick="send2()"><h1>userValQuery</h1></button>
+    <button onclick="send3()"><h1>userRcmdType</h1></button>
+
+    <button onclick="send4()"><h1>userGdsQuery</h1></button>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
@@ -50,6 +53,45 @@
                 }
             });
         }
+
+        function send3()
+        {
+            alert('why send');
+            $.post("userRcmd", {
+                userid: '12',
+                cmd:1,
+                offset:0,
+                limit:15,
+                args:"snacks"
+            }, function (result) {
+                alert(result);
+                var obj = JSON.parse(result);
+                if (obj["stat"] == "invalid") {
+                    alert('failed');
+                } else {
+                    alert('success');
+                }
+            });
+        }
+
+        function send4()
+        {
+            alert('why send');
+            $.post("userGdsQuery", {
+                userid: '12',
+                cmd:0,
+                args:['123']
+            }, function (result) {
+                alert(result);
+                var obj = JSON.parse(result);
+                if (obj["stat"] == "invalid") {
+                    alert('failed');
+                } else {
+                    alert('success');
+                }
+            });
+        }
+
     </script>
 </body>
 

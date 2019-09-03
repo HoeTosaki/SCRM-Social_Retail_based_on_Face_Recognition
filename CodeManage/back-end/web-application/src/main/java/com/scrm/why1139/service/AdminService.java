@@ -7,6 +7,7 @@ import com.scrm.why1139.dao.BuyDao;
 import com.scrm.why1139.dao.GoodsDao;
 import com.scrm.why1139.domain.Buy;
 import com.scrm.why1139.domain.Goods;
+import com.scrm.why1139.domain.Mngr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -238,6 +239,28 @@ public class AdminService extends GeneralService
         }
         return ret;//true;
     }
+
+    public List<Mngr> getMngrAll()
+    {
+        return m_mngrDao.getMngrAll(ConfigConst.ACCNT_ALL_LIMIT);
+    }
+
+    public void updateGoods(Goods _gds)
+    {
+        m_goodsDao.updateGoods(_gds);
+    }
+
+    public void delGoods(Goods _gds)
+    {
+        m_goodsDao.delGoodsByGoodsID(_gds.getGoodsID());
+    }
+
+    public void addGoods(Goods _gds)
+    {
+        m_goodsDao.insertGoods(_gds);
+    }
+
+
 
     public static void main(String s[])
     {

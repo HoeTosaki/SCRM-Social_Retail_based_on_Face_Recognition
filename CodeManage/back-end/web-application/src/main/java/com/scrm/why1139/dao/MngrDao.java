@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 用于持久化Mngr信息的Dao类。
@@ -87,4 +89,28 @@ public class MngrDao
         m_jdbcTemp.update("DELETE FROM t_mngr WHERE mngr_id=?",new Object[]{_mngr.getMngrID()});
     }
 
+    public List<Mngr> getMngrAll(int _nLimit)
+    {
+        List<Mngr> lstMngr = new CopyOnWriteArrayList<>();
+        m_jdbcTemp.query(" SELECT * FROM t_mngr"
+                ,new Object[]{},rs->
+                {
+                    int nHits = 0;
+                    do
+                    {
+                        Mngr mngr = new Mngr();
+                        mngr.setMngrType(rs.getInt("mngr_type"));
+                        mngr.setMngrID(rs.getString("mngr_id"));
+                        mngr.setPassword(rs.getString("password"));
+                        if(mngr.getMngrType() == 2)
+                        {
+                            lstMngr.add(mngr);
+                            ++nHits;
+                        }
+                    }
+                    while(nHits < _nLimit && rs.next());
+                });
+        return lstMngr;
+
+    }
 }

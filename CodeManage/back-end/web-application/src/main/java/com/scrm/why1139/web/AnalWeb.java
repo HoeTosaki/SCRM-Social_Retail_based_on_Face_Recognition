@@ -285,23 +285,23 @@ public class AnalWeb
         return objRet.toJSONString();
     }
 
-    @ResponseBody
-    @RequestMapping(
-            value = {"/userGdsQuery"}/*,
-            produces = "application/json;charset=UTF-8"*/
-    )
-    public String userGdsQuery(HttpServletRequest _req)
-    {
-        JSONObject objReq = JSONProc.parseReq(_req);
-        System.out.println(objReq.toJSONString());
-//        String strUserID = objReq.getString();
-
-        Map<String,Object> mp = new ConcurrentHashMap<>();
-
-        JSONObject obj = new JSONObject(mp);
-//        System.out.println("ret:"+obj.toJSONString());
-        return obj.toJSONString();
-    }
+//    @ResponseBody
+//    @RequestMapping(
+//            value = {"/userGdsQuery"}/*,
+//            produces = "application/json;charset=UTF-8"*/
+//    )
+//    public String userGdsQuery(HttpServletRequest _req)
+//    {
+//        JSONObject objReq = JSONProc.parseReq(_req);
+//        System.out.println(objReq.toJSONString());
+////        String strUserID = objReq.getString();
+//
+//        Map<String,Object> mp = new ConcurrentHashMap<>();
+//
+//        JSONObject obj = new JSONObject(mp);
+////        System.out.println("ret:"+obj.toJSONString());
+//        return obj.toJSONString();
+//    }
 
     @ResponseBody
     @RequestMapping(
