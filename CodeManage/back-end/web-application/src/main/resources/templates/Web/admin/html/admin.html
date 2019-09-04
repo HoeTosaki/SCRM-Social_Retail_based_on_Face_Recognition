@@ -164,7 +164,7 @@
                 <div class="form-group">
                     <div id="graph-start-date" v-show="cnt_chs != 'season'" class='input-group date datetimepicker'>
                         <input v-model="st_date" onchange="onFigDate()" type='text' class="form-control"
-                               placeholder="开始日期" name="x-min" />
+                               placeholder="开始日期" name="x-min" id="sale-cnt-date-start"/>
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -175,7 +175,7 @@
                 <div class="form-group">
                     <div id="graph-end-date" v-show="cnt_chs != 'season'" class='input-group date datetimepicker'>
                         <input v-model="ed_date" onchange="onFigDate()" type='text' class="form-control"
-                               placeholder="结束日期" name="x-max" />
+                               placeholder="结束日期" name="x-max" id="sale-cnt-date-end"/>
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -1251,6 +1251,7 @@
         setTimeout(() => {
             if (v_sale_cnt_fig.cnt_chs == 'month') //month,season,type,name,id
         {
+
             pullAnalFigByCmd(8, [v_sale_cnt_fig.st_date, v_sale_cnt_fig.ed_date]);
         } else if (v_sale_cnt_fig.cnt_chs == 'season') {
             pullAnalFigByCmd(9, []);
@@ -1271,7 +1272,11 @@
     function onFigDate() {
         // alert('onFigDate');
         setTimeout(() => {
-            if (v_sale_cnt_fig.cnt_chs == 'month') //month,season,type,name,id
+            // alert("st:"+$('#sale-cnt-date-start').val());
+            // alert("ed:"+$('#sale-cnt-date-end').val());
+        v_sale_cnt_fig.st_date =  $('#sale-cnt-date-start').val();
+        v_sale_cnt_fig.ed_date = $('#sale-cnt-date-end').val();
+        if (v_sale_cnt_fig.cnt_chs == 'month') //month,season,type,name,id
         {
             pullAnalFigByCmd(8, [v_sale_cnt_fig.st_date, v_sale_cnt_fig.ed_date]);
         } else if (v_sale_cnt_fig.cnt_chs == 'season') {
