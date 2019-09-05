@@ -30,10 +30,10 @@ statis_index = 'cnt'
 nCmd = int(sys.argv[2])
 
 # 数据预处理
-all_goods_info_from_csv = pd.read_csv(sys.argv[1] + r"\py\anal_data\t_goods.csv")
+all_goods_info_from_csv = pd.read_csv(sys.argv[1] + r"/py/anal_data/t_goods.csv")
 all_goods_info_from_csv = all_goods_info_from_csv.set_index('goods_id')
 
-all_user_buy_list_from_csv = pd.read_csv(sys.argv[1] + r"\py\anal_data\t_buy.csv",
+all_user_buy_list_from_csv = pd.read_csv(sys.argv[1] + r"/py/anal_data/t_buy.csv",
                                          usecols=['user_id', 'mngr_id', 'goods_id', 'buy_cnt', 'buy_date', 'buy_id'],
                                          parse_dates=['buy_date'])
 
@@ -377,6 +377,7 @@ def cmd_13_function():
     print(this_month_buy_list.at[0, 'total_pay'])
     print(today_all_user_buy_list['total_pay'].sum())
     today_all_user_buy_list_res = today_all_user_buy_list.loc[int(sys.argv[3]): int(sys.argv[3]) + int(sys.argv[4])]
+    print("  ")
     for index, row in today_all_user_buy_list_res.iterrows():
         print(row['buy_id'])
 
@@ -387,6 +388,7 @@ def cmd_14_function():
     one_week_or_month_all_user_buy_list = one_week_or_month_all_user_buy_list.reset_index()
     one_week_or_month_all_user_buy_list = one_week_or_month_all_user_buy_list.loc[int(sys.argv[3]): int(sys.argv[3])
                                                                                   + int(sys.argv[4])]
+    print("  ")
     for index, row in one_week_or_month_all_user_buy_list.iterrows():
         print(row['buy_id'])
 
@@ -398,6 +400,7 @@ def cmd_15_function():
     specific_time_all_buy_list = specific_time_all_buy_list.reset_index()
     specific_time_all_buy_list = specific_time_all_buy_list.loc[int(sys.argv[3]): int(sys.argv[3])
                                                                 + int(sys.argv[4])]
+    print("  ")
     for index, row in specific_time_all_buy_list.iterrows():
         print(row['buy_id'])
 

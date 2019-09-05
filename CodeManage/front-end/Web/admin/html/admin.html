@@ -10,6 +10,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="../css/bootstrap-table.css">
+    <script type="text/javascript" src="http://use.typekit.com/mxh7kqd.js"></script>
+    <script type="text/javascript">
+        try {
+            Typekit.load();
+        } catch (e) {}
+    </script>
 </head>
 
 <body>
@@ -164,7 +170,7 @@
                     <div class="form-group">
                         <div id="graph-start-date" v-show="cnt_chs != 'season'" class='input-group date datetimepicker'>
                             <input v-model="st_date" onchange="onFigDate()" type='text' class="form-control"
-                                placeholder="开始日期" name="x-min" />
+                                placeholder="开始日期" name="x-min" id="sale-cnt-date-start" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -175,7 +181,7 @@
                     <div class="form-group">
                         <div id="graph-end-date" v-show="cnt_chs != 'season'" class='input-group date datetimepicker'>
                             <input v-model="ed_date" onchange="onFigDate()" type='text' class="form-control"
-                                placeholder="结束日期" name="x-max" />
+                                placeholder="结束日期" name="x-max" id="sale-cnt-date-end" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -203,10 +209,10 @@
             <div id="sale-graph" class="ml20 mr20 mt15 box-background-color"></div>
         </div>
 
-        <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'gds-cnt'" id='gds-cnt-relfig'
+        <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'gds-cnt'"
             class="layer mt15 mb3 box-border box-background-color box-shadow gds-cnt-fig">
-            <div><span class="subtitle mt15 ml20">商品关联图</span></div>
-            <canvas id="viewport" width="1000" height="600"></canvas>
+            <span class="subtitle mt15 ml20">商品热度统计图</span>
+            <canvas id="sitemap" width="800" height="400"></canvas>
         </div>
 
         <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'gds-cnt'"
@@ -241,7 +247,7 @@
                     <div class="form-group">
                         <div id="table-start-date" class='input-group date datetimepicker'>
                             <input type='text' v-model="st_date" onchange="onListDate()" class="form-control"
-                                placeholder="开始日期" />
+                                placeholder="开始日期" id="list-st-date" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -253,7 +259,7 @@
                         <div id="table-end-date" class='input-group date datetimepicker'>
                             <!--v-show="v_user_cnt_list.cnt_chs == 'auto'"-->
                             <input type='text' v-model="ed_date" onchange="onListDate()" class="form-control"
-                                placeholder="结束日期" />
+                                placeholder="结束日期" id="list-ed-date" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -562,19 +568,24 @@
 
     <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-    <script src="../js-ref/arbor.js"></script>
-    <script src="../js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
     <script src="../js-ref/bootstrap-datetimepicker.min.js"></script>
     <script src="../js-ref/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="../js-ref/bootstrap-table.js"></script>
-    <script src="../js-ref/bootstrap-table.zh-CN.js"></script>
+    <script src="../js-ref/bootstrap-table-zh-CN.js"></script>
     <script src="../js-ref/echarts.min.js"></script>
+    <script src="js/jquery.address-1.4.min.js"></script>
+
+    <script src="js/lib/arbor.js"></script>
+    <script src="js/lib/arbor-tween.js"></script>
+    <script src="./js/lib/arbor-graphics.js"></script>
+    <script src="./site.js"></script>
+
     <script>
         x = $('#gds-cnt-relfig').css("width");
         y = $('#gds-cnt-relfig').css("height");
         alert(x);
-        $('#viewport').attr("width", x).attr("height", y);
+        $('#sitemap').attr("width", x).attr("height", y);
     </script>
     <script>
         cmd_str = window.location.search.split('?')[1];
@@ -855,18 +866,73 @@
                             v_sale_cnt_val.day_sum = obj.vals[3];
                             if (v_user_cnt_list.cnt_chs == 'day') {
                                 var true_vals = obj.vals.slice(4);
+                                var lst = [];
+                                alert('size = ' + true_vals.length);
+                                for (var i = 0; i < true_vals.length; ++i) {
+                                    var val = true_vals[i];
+                                    // alert(val.gds.type);
+                                    lst.push({
+                                        "buy_date": val.buydate,
+                                        "user_id": val.userid,
+                                        "mngr_id": val.mngrid,
+                                        "goods_id": val.goodsid,
+                                        "buy_cnt": val.buycnt,
+                                        "goods_type": val.gds.type,
+                                        "goods_name": val.gds.name,
+                                        "goods_price": val.gds.prc,
+                                        "total_pay": Number(val.gds.prc) * Number(val.buycnt)
+                                    });
+                                }
+                                presentLog(lst);
                                 // alert('单日查询:'+'x = '+true_vals);//单日查询
                             }
                             break;
                         }
                         case 14: {
                             var true_vals = obj.vals.slice(1);
-                            // alert('week/month查询:'+'x = '+true_vals);//week/month查询
+                            alert('week/month查询:' + 'x = ' + true_vals); //week/month查询
+                            var lst = [];
+                            alert('size = ' + true_vals.length);
+                            for (var i = 0; i < true_vals.length; ++i) {
+                                var val = true_vals[i];
+                                // alert(val.gds.type);
+                                lst.push({
+                                    "buy_date": val.buydate,
+                                    "user_id": val.userid,
+                                    "mngr_id": val.mngrid,
+                                    "goods_id": val.goodsid,
+                                    "buy_cnt": val.buycnt,
+                                    "goods_type": val.gds.type,
+                                    "goods_name": val.gds.name,
+                                    "goods_price": val.gds.prc,
+                                    "total_pay": Number(val.gds.prc) * Number(val.buycnt)
+                                });
+                            }
+                            presentLog(lst);
+                            // alert('lst'+lst);
                             break;
                         }
                         case 15: {
                             var true_vals = obj.vals.slice(1);
                             // alert('自定义auto查询:'+'x = '+true_vals);//自定义auto查询
+                            var lst = [];
+                            alert('size = ' + true_vals.length);
+                            for (var i = 0; i < true_vals.length; ++i) {
+                                var val = true_vals[i];
+                                // alert(val.gds.type);
+                                lst.push({
+                                    "buy_date": val.buydate,
+                                    "user_id": val.userid,
+                                    "mngr_id": val.mngrid,
+                                    "goods_id": val.goodsid,
+                                    "buy_cnt": val.buycnt,
+                                    "goods_type": val.gds.type,
+                                    "goods_name": val.gds.name,
+                                    "goods_price": val.gds.prc,
+                                    "total_pay": Number(val.gds.prc) * Number(val.buycnt)
+                                });
+                            }
+                            presentLog(lst);
                             break;
                         }
                     }
@@ -1256,6 +1322,7 @@
             setTimeout(() => {
                 if (v_sale_cnt_fig.cnt_chs == 'month') //month,season,type,name,id
                 {
+
                     pullAnalFigByCmd(8, [v_sale_cnt_fig.st_date, v_sale_cnt_fig.ed_date]);
                 } else if (v_sale_cnt_fig.cnt_chs == 'season') {
                     pullAnalFigByCmd(9, []);
@@ -1276,6 +1343,10 @@
         function onFigDate() {
             // alert('onFigDate');
             setTimeout(() => {
+                // alert("st:"+$('#sale-cnt-date-start').val());
+                // alert("ed:"+$('#sale-cnt-date-end').val());
+                v_sale_cnt_fig.st_date = $('#sale-cnt-date-start').val();
+                v_sale_cnt_fig.ed_date = $('#sale-cnt-date-end').val();
                 if (v_sale_cnt_fig.cnt_chs == 'month') //month,season,type,name,id
                 {
                     pullAnalFigByCmd(8, [v_sale_cnt_fig.st_date, v_sale_cnt_fig.ed_date]);
@@ -1344,7 +1415,11 @@
 
         function onListDate() {
             // alert('onListDate');
+            // list-ed-date
             setTimeout(() => {
+
+                v_user_cnt_list.st_date = $('#list-st-date').val();
+                v_user_cnt_list.ed_date = $('#list-ed-date').val();
                 if (v_user_cnt_list.cnt_chs == 'day') //month,season,type,name,id
                 {
                     pullAnalValByCmd(13, []);

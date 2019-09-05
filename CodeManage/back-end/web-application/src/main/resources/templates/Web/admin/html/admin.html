@@ -241,7 +241,7 @@
                 <div class="form-group">
                     <div id="table-start-date" class='input-group date datetimepicker'>
                         <input type='text' v-model="st_date" onchange="onListDate()" class="form-control"
-                               placeholder="开始日期" />
+                               placeholder="开始日期" id="list-st-date"/>
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -253,7 +253,7 @@
                     <div id="table-end-date" class='input-group date datetimepicker'>
                         <!--v-show="v_user_cnt_list.cnt_chs == 'auto'"-->
                         <input type='text' v-model="ed_date" onchange="onListDate()" class="form-control"
-                               placeholder="结束日期" />
+                               placeholder="结束日期" id="list-ed-date"/>
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -565,7 +565,7 @@
 <script src="Web/admin/js-ref/bootstrap-datetimepicker.min.js"></script>
 <script src="Web/admin/js-ref/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="Web/admin/js-ref/bootstrap-table.js"></script>
-<script src="Web/admin/js-ref/bootstrap-table.zh-CN.js"></script>
+<script src="Web/admin/js-ref/bootstrap-table-zh-CN.js"></script>
 <script src="Web/admin/js-ref/echarts.min.js"></script>
 <script>
     cmd_str = window.location.search.split('?')[1];
@@ -846,18 +846,76 @@
                         v_sale_cnt_val.day_sum = obj.vals[3];
                         if (v_user_cnt_list.cnt_chs == 'day') {
                             var true_vals = obj.vals.slice(4);
+                            var lst=[];
+                            alert('size = '+true_vals.length);
+                            for(var i = 0; i<true_vals.length;++i)
+                            {
+                                var val = true_vals[i];
+                                // alert(val.gds.type);
+                                lst.push({
+                                    "buy_date": val.buydate,
+                                    "user_id": val.userid,
+                                    "mngr_id": val.mngrid,
+                                    "goods_id": val.goodsid,
+                                    "buy_cnt": val.buycnt,
+                                    "goods_type": val.gds.type,
+                                    "goods_name": val.gds.name,
+                                    "goods_price": val.gds.prc,
+                                    "total_pay": Number(val.gds.prc) * Number(val.buycnt)
+                                });
+                            }
+                            presentLog(lst);
                             // alert('单日查询:'+'x = '+true_vals);//单日查询
                         }
                         break;
                     }
                     case 14: {
                         var true_vals = obj.vals.slice(1);
-                        // alert('week/month查询:'+'x = '+true_vals);//week/month查询
+                        alert('week/month查询:'+'x = '+true_vals);//week/month查询
+                        var lst=[];
+                        alert('size = '+true_vals.length);
+                        for(var i = 0; i<true_vals.length;++i)
+                        {
+                            var val = true_vals[i];
+                            // alert(val.gds.type);
+                            lst.push({
+                                "buy_date": val.buydate,
+                                "user_id": val.userid,
+                                "mngr_id": val.mngrid,
+                                "goods_id": val.goodsid,
+                                "buy_cnt": val.buycnt,
+                                "goods_type": val.gds.type,
+                                "goods_name": val.gds.name,
+                                "goods_price": val.gds.prc,
+                                "total_pay": Number(val.gds.prc) * Number(val.buycnt)
+                            });
+                        }
+                        presentLog(lst);
+                        // alert('lst'+lst);
                         break;
                     }
                     case 15: {
                         var true_vals = obj.vals.slice(1);
                         // alert('自定义auto查询:'+'x = '+true_vals);//自定义auto查询
+                        var lst=[];
+                        alert('size = '+true_vals.length);
+                        for(var i = 0; i<true_vals.length;++i)
+                        {
+                            var val = true_vals[i];
+                            // alert(val.gds.type);
+                            lst.push({
+                                "buy_date": val.buydate,
+                                "user_id": val.userid,
+                                "mngr_id": val.mngrid,
+                                "goods_id": val.goodsid,
+                                "buy_cnt": val.buycnt,
+                                "goods_type": val.gds.type,
+                                "goods_name": val.gds.name,
+                                "goods_price": val.gds.prc,
+                                "total_pay": Number(val.gds.prc) * Number(val.buycnt)
+                            });
+                        }
+                        presentLog(lst);
                         break;
                     }
                 }
@@ -1344,17 +1402,21 @@
 
     function onListDate() {
         // alert('onListDate');
+        // list-ed-date
         setTimeout(() => {
+
+            v_user_cnt_list.st_date =  $('#list-st-date').val();
+            v_user_cnt_list.ed_date = $('#list-ed-date').val();
             if (v_user_cnt_list.cnt_chs == 'day') //month,season,type,name,id
-        {
-            pullAnalValByCmd(13, []);
-        } else if (v_user_cnt_list.cnt_chs == 'week') {
-            pullAnalValByCmd(14, ["week"]);
-        } else if (v_user_cnt_list.cnt_chs == 'month') {
-            pullAnalValByCmd(14, ["month"]);
-        } else if (v_user_cnt_list.cnt_chs == 'auto') {
-            pullAnalValByCmd(15, [v_user_cnt_list.st_date, v_user_cnt_list.ed_date]);
-        }
+            {
+                pullAnalValByCmd(13, []);
+            } else if (v_user_cnt_list.cnt_chs == 'week') {
+                pullAnalValByCmd(14, ["week"]);
+            } else if (v_user_cnt_list.cnt_chs == 'month') {
+                pullAnalValByCmd(14, ["month"]);
+            } else if (v_user_cnt_list.cnt_chs == 'auto') {
+                pullAnalValByCmd(15, [v_user_cnt_list.st_date, v_user_cnt_list.ed_date]);
+            }
     }, 200);
     }
 

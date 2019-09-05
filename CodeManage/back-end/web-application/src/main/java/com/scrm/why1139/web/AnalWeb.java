@@ -350,7 +350,7 @@ public class AnalWeb
                         JSONArray arrVal = new JSONArray();
                         for(int i = 0;i<lstVal.size();++i)
                         {
-                            if(i <= 3)
+                            if(i <= 4)
                                 arrVal.add(lstVal.get(i));
                             else
                             {

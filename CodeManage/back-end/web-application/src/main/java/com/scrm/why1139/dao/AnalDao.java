@@ -51,79 +51,79 @@ public class AnalDao
     public boolean buyListAnalyzeFigForAdmin(int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
     {
         System.out.println("DP输入[fig]:"+"\tcmd:"+_nCmd+"\tlim:"+_nLimit+"\targs:"+_args);
-        for(int i = 0;i<20;++i)
-        {
-            _x.add(""+i);
-            _y.add(""+Math.random()*400);
-        }
-        return true;
-//        return m_dataProcessor.buyListAnalyzeFigForAdmin(_nCmd,_nLimit,_x,_y,_args);
+//        for(int i = 0;i<20;++i)
+//        {
+//            _x.add(""+i);
+//            _y.add(""+Math.random()*400);
+//        }
+//        return true;
+        return m_dataProcessor.buyListAnalyzeFigForAdmin(_nCmd,_nLimit,_x,_y,_args);
     }
 
     public boolean buyListAnalyzeValForAdmin(int _nCmd,int _nOffset, int _nLimit, List<String> _vals, List<Object> _args)
     {
         System.out.println("DP输入[val]:"+"\tcmd:"+_nCmd+"\toffset:"+_nOffset+"\tlim:"+_nLimit+"\targs:"+_args);
-        for(int i = 0;i<20;++i)
-        {
-            _vals.add(""+i);
-        }
-        _vals.set(0,""+12520);
-        _vals.set(1,""+1530);
-        _vals.set(2,""+82);
+//        for(int i = 0;i<20;++i)
+//        {
+//            _vals.add(""+i);
+//        }
+//        _vals.set(0,""+12520);
+//        _vals.set(1,""+1530);
+//        _vals.set(2,""+82);
 
-        List<String> lst = new CopyOnWriteArrayList<>();
-        for(int i = 0;i<3;++i)
-        {
-            lst.add(""+i);
-        }
-        _args.add(lst);
-//        boolean ret = m_dataProcessor.buyListAnalyzeValForUser(_strUserID,_nCmd,_nOffset,_nLimit,_vals,_args);
-        if(_nCmd == 13 && _vals.size()<4)
+//        List<String> lst = new CopyOnWriteArrayList<>();
+//        for(int i = 0;i<3;++i)
+//        {
+//            lst.add(""+i);
+//        }
+//        _args.add(lst);
+        boolean ret = m_dataProcessor.buyListAnalyzeValForAdmin(_nCmd,_nOffset,_nLimit,_vals,_args);
+        if(_nCmd == 13 && _vals.size()<5)
             return false;
         if(_nCmd == 14 && _vals.size()<1)
             return false;
         if(_nCmd == 15 && _vals.size()<1)
             return false;
-        return true;
-//        return ret;
+//        return true;
+        return ret;
 //        return m_dataProcessor.buyListAnalyzeValForAdmin(_nCmd,_nOffset,_nLimit,_vals,_args);
     }
 
     public boolean buyListAnalyzeFigForUser(String _strUserID,int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
     {
         System.out.println("DP输入[fig]:\tUserID:"+_strUserID+"\tcmd:"+_nCmd+"\tlim:"+_nLimit+"\targs:"+_args);
-        for(int i = 0;i<7;++i)
-        {
-            _x.add(""+i);
-            _y.add(""+i);
-        }
-        return true;
-//        return m_dataProcessor.buyListAnalyzeFigForUser(_strUserID,_nCmd,_nLimit,_x,_y,_args);
+//        for(int i = 0;i<7;++i)
+//        {
+//            _x.add(""+i);
+//            _y.add(""+i);
+//        }
+//        return true;
+        return m_dataProcessor.buyListAnalyzeFigForUser(_strUserID,_nCmd,_nLimit,_x,_y,_args);
     }
 
     public boolean buyListAnalyzeValForUser(String _strUserID,int _nCmd,int _nOffset, int _nLimit, List<String> _vals, List<Object> _args)
     {
         System.out.println("DP输入[val]:\tUserID:"+_strUserID+"\tcmd:"+_nCmd+"\toffset:"+_nOffset+"\tlim:"+_nLimit+"\targs:"+_args);
-        for(int i = 0;i<7;++i)
-        {
-            _vals.add(""+i);
-        }
+//        for(int i = 0;i<7;++i)
+//        {
+//            _vals.add(""+i);
+//        }
 
-        List<String> lst = new CopyOnWriteArrayList<>();
-        for(int i = 0;i<3;++i)
-        {
-            lst.add(""+i);
-        }
-        _args.add(lst);
-//        boolean ret = m_dataProcessor.buyListAnalyzeValForUser(_strUserID,_nCmd,_nOffset,_nLimit,_vals,_args);
+//        List<String> lst = new CopyOnWriteArrayList<>();
+//        for(int i = 0;i<3;++i)
+//        {
+//            lst.add(""+i);
+//        }
+//        _args.add(lst);
+        boolean ret = m_dataProcessor.buyListAnalyzeValForUser(_strUserID,_nCmd,_nOffset,_nLimit,_vals,_args);
         if(_nCmd == 5 && _vals.size()<4)
             return false;
         if(_nCmd == 6 && _vals.size()<1)
             return false;
         if(_nCmd == 7 && _vals.size()<1)
             return false;
-        return true;
-//        return ret;
+//        return true;
+        return ret;
     }
 
 }
