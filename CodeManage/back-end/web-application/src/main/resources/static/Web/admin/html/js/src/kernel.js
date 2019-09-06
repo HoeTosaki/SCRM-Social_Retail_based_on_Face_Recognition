@@ -5,7 +5,7 @@
 //
     
   var Kernel = function(pSystem){
-    // in chrome, web workers aren't available to pages with file:// urls
+    // in chrome, controller workers aren't available to pages with file:// urls
     var chrome_local_file = window.location.protocol == "file:" &&
                             navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
     var USE_WORKER = (window.Worker !== undefined && !chrome_local_file)    
@@ -36,7 +36,7 @@
         var params = pSystem.parameters()
                 
         if(USE_WORKER){
-          trace('using web workers')
+          trace('using controller workers')
           _screenInterval = setInterval(that.screenUpdate, params.timeout)
 
           _physics = new Worker(arbor_path()+'physics/worker.js')
@@ -46,7 +46,7 @@
                                 physics:objmerge(params, 
                                                 {timeout:Math.ceil(params.timeout)}) })
         }else{
-          trace("couldn't use web workers, be careful...")
+          trace("couldn't use controller workers, be careful...")
           _physics = Physics(params.dt, params.stiffness, params.repulsion, params.friction, that.system._updateGeometry)
           that.start()
         }
@@ -108,7 +108,7 @@
       
 
       // 
-      // the main render loop when running in web worker mode
+      // the main render loop when running in controller worker mode
       _lastFrametime:new Date().valueOf(),
       _lastBounds:null,
       _currentRenderer:null,

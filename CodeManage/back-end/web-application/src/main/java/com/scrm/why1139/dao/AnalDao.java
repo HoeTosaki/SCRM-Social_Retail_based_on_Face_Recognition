@@ -26,17 +26,17 @@ public class AnalDao
     {
         List<Integer> lstGdsInd = m_rcmder.getRcmdByUser(_user.getUserID(),0,_nOffset,_nLimit,new CopyOnWriteArrayList<>());
         List<Goods> ret = new CopyOnWriteArrayList<>();
-        lstGdsInd.stream().map(gdsid->m_goodsDao.findGoodsByID(gdsid)).forEach(ret::add);
+        lstGdsInd.stream().map(gdsid->m_goodsDao.findGoodsByGoodsID(gdsid)).forEach(ret::add);
         return ret;
     }
 
-    public List<Goods> getRcmdByQuery(User _user,String _strQuery,int _nOffset,int _nLimit)
+    public List<Goods> getRcmdByUserAndType(User _user,String _strQuery,int _nOffset,int _nLimit)
     {
         List<String> lststrQuery = new CopyOnWriteArrayList<>();
         lststrQuery.add(_strQuery);
         List<Integer> lstGdsInd = m_rcmder.getRcmdByUser(_user.getUserID(),1,_nOffset,_nLimit,lststrQuery);
         List<Goods> ret = new CopyOnWriteArrayList<>();
-        lstGdsInd.stream().map(gdsid->m_goodsDao.findGoodsByID(gdsid)).forEach(ret::add);
+        lstGdsInd.stream().map(gdsid->m_goodsDao.findGoodsByGoodsID(gdsid)).forEach(ret::add);
         return ret;
     }
 
@@ -44,7 +44,7 @@ public class AnalDao
     {
         List<Integer> lstGdsInd = m_rcmder.getRcmdByGoods(_gds.getGoodsID(),0,_nOffset,_nLimit,new CopyOnWriteArrayList<>());
         List<Goods> ret = new CopyOnWriteArrayList<>();
-        lstGdsInd.stream().map(gdsid->m_goodsDao.findGoodsByID(gdsid)).forEach(ret::add);
+        lstGdsInd.stream().map(gdsid->m_goodsDao.findGoodsByGoodsID(gdsid)).forEach(ret::add);
         return ret;
     }
 
@@ -77,16 +77,18 @@ public class AnalDao
 //            lst.add(""+i);
 //        }
 //        _args.add(lst);
-        boolean ret = m_dataProcessor.buyListAnalyzeValForAdmin(_nCmd,_nOffset,_nLimit,_vals,_args);
-        if(_nCmd == 13 && _vals.size()<5)
-            return false;
-        if(_nCmd == 14 && _vals.size()<1)
-            return false;
-        if(_nCmd == 15 && _vals.size()<1)
-            return false;
 //        return true;
+        boolean ret = m_dataProcessor.buyListAnalyzeValForAdmin(_nCmd,_nOffset,_nLimit,_vals,_args);
+        if(_nCmd == 13 && _vals.size()<5) {
+            return false;
+        }
+        if(_nCmd == 14 && _vals.size()<1) {
+            return false;
+        }
+        if(_nCmd == 15 && _vals.size()<1) {
+            return false;
+        }
         return ret;
-//        return m_dataProcessor.buyListAnalyzeValForAdmin(_nCmd,_nOffset,_nLimit,_vals,_args);
     }
 
     public boolean buyListAnalyzeFigForUser(String _strUserID,int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
@@ -146,9 +148,9 @@ public class AnalDao
     }
 
     public boolean mngrAnalyzeFig(List<String> _mngrID, List<String> _sale)
-{
-    return m_dataProcessor.mngrAnalyzeFig(_mngrID, _sale);
-}
+    {
+        return m_dataProcessor.mngrAnalyzeFig(_mngrID, _sale);
+    }
 
 
 }

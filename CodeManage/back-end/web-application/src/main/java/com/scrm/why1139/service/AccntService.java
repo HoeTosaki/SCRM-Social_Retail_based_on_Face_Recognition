@@ -22,50 +22,37 @@ import java.util.List;
  * @author why
  */
 @Service
-public class AccntService extends GeneralService
+public class AccntService
 {
-    private GoodsDao m_goodsDao;
-    private BuyDao m_buyDao;
-
     @Autowired
-    private AnalDao m_analDao;
+    private GoodsService m_goodsService;
+    @Autowired
+    private ManService m_manService;
+    @Autowired
+    private BuyService m_buyService;
 
     /**
-     * setter注入
-     * @param _goodsDao in
+     * 通过Mngr的个人信息，获取在数据库中的匹配结果
+     * @param _strMngrID in MngrID
+     * @param _strPassword in Mngr密码
+     * @return 标志匹配结果的boolean值
      * @author why
      */
-    @Autowired
-    public void setGoodsDao(GoodsDao _goodsDao)
+    public boolean hasMatchMngr(String _strMngrID,String _strPassword)
     {
-        this.m_goodsDao = _goodsDao;
-//        this.m_goodsDao = Optional.ofNullable(_goodsDao).orElseThrow();
+        return m_manService.hasMatchMngr(_strMngrID, _strPassword);
     }
 
     /**
-     * setter注入
-     * @param _buyDao in
+     * 通过MngrID获取Mngr对象
+     * @param _strMngrID in 表示MngrID的字符串
+     * @return Mngr对象
      * @author why
      */
-    @Autowired
-    public void setBuyDao(BuyDao _buyDao)
+    public Mngr findMngrByMngrID(String _strMngrID)
     {
-        this.m_buyDao = _buyDao;
-//        this.m_buyDao = Optional.ofNullable(_buyDao).orElseThrow();
+        return m_manService.findMngrByMngrID(_strMngrID);
     }
-
-    /**
-     * setter注入
-     * @param _userDao in
-     * @author why
-     */
-    @Autowired
-    public void setUserDao(UserDao _userDao)
-    {
-        this.m_userDao = _userDao;
-    }
-
-
 
     /**
      * 通过GoodsID获取Goods对象
@@ -75,20 +62,42 @@ public class AccntService extends GeneralService
      */
     public Goods findGoodsByGoodsID(int _nGoodsID)
     {
-        return m_goodsDao.findGoodsByID(_nGoodsID);
+        return m_goodsService.findGoodsByGoodsID(_nGoodsID);
     }
 
     public Goods findGoodsByGoodsName(String _strGoodsName)
     {
-        return m_goodsDao.findGoodsByName(_strGoodsName);
+        return m_goodsService.findGoodsByGoodsName(_strGoodsName);
     }
 
     public List<Goods> findGoodsByGoodsType(String _strGoodsType)
     {
-        return m_goodsDao.getGoodsByClass(_strGoodsType,ConfigConst.GOODS_LIMIT);
+        return m_goodsService.findGoodsByGoodsType(_strGoodsType);
     }
 
+    /**
+     * 通过User的个人信息，获取在数据库中的匹配结果
+     * @param _strUserID in UserID
+     * @param _strPassword in User密码
+     * @return 标志匹配结果的boolean值
+     * @author why
+     */
+    public boolean hasMatchUser(String _strUserID,String _strPassword)
+    {
+        return m_manService.hasMatchUser(_strUserID, _strPassword);
+    }
 
+    /**
+     * 通过UserID获取User对象
+     * used for some bad circumstances where customers failed to provide bio info.
+     * @param _strUserID in 表示UserID的字符串 userid,primary key in table t_user, which can deduce a unique user.
+     * @return User对象
+     * @author why
+     */
+    public User findUserByUserID(String _strUserID)
+    {
+        return m_manService.findUserByUserID(_strUserID);
+    }
 
     /**
      * 根据生物特征信息获取User对象
@@ -98,15 +107,7 @@ public class AccntService extends GeneralService
      */
     public User findUserByBioRef(String _btBioRef)
     {
-        //TODO: need impl in future based on Face-Reg modules or some newest tech, ehh, you know.
-        List<String> strlstUserID = BioCertificater.certificateUser(_btBioRef);
-        if(strlstUserID.size() == 0)
-            return new User();
-        else
-        {
-            User userBestFit = m_userDao.findUserByUserID(strlstUserID.get(0));
-            return userBestFit;
-        }
+        return m_manService.findUserByBioRef(_btBioRef);
     }
 
     /**
@@ -115,11 +116,11 @@ public class AccntService extends GeneralService
      * @return list对象
      * @author why
      */
-    public List<Buy> getBuyLog(User _user)
+    public List<Buy> getBuyLogByUser(User _user)
     {
-        List<Buy> ret = m_buyDao.findBuyByUserID(_user.getUserID(),ConfigConst.BUYLOG_LIMIT);
-        return ret;
+        return m_buyService.getBuyLogByUser(_user);
     }
+
 
     /**
      * 添加购物记录
@@ -131,16 +132,8 @@ public class AccntService extends GeneralService
      */
     public void addBuyLog(String _strMngrID,String _strUserID,int _nGoodsID,int _nCnt)
     {
-        Buy newBuy = new Buy();
-        newBuy.setUserID(_strUserID);
-        newBuy.setGoodsID(_nGoodsID);
-        newBuy.setBuyCnt(_nCnt);
-        newBuy.setMngrID(_strMngrID);
-        newBuy.setBuyDate(new Date().toString());
-        m_buyDao.updateBuy(newBuy);
+        m_buyService.addBuyLog(_strMngrID, _strUserID, _nGoodsID, _nCnt);
     }
-
-
 
     /**
      * 根据指定Goods类型查询商品
@@ -150,79 +143,10 @@ public class AccntService extends GeneralService
      */
     public List<Goods> goodsQuery(String _strType)
     {
-        //TODO:for XXS, need replacer strategy to do extra work here.
-        List<Goods> ret = m_goodsDao.getGoodsByClass(_strType,ConfigConst.GOODS_LIMIT);
-        return ret;
+        return m_goodsService.findGoodsByGoodsType(_strType);
     }
 
-    private static boolean generateImage(String imgStr,String _strID)
-    {
-        // 对字节数组字符串进行Base64解码并生成图片
-        if (imgStr == null) // 图像数据为空
-            return false;
-        else
-            System.out.println(imgStr);
-//        BASE64Decoder decoder = new BASE64Decoder();
-        try {
-// Base64解码
-            Base64.Decoder decoder = Base64.getDecoder();
-            byte[] b = decoder.decode(imgStr);
-//            byte[] b = decoder.decodeBuffer(imgStr);
-            for (int i = 0; i < b.length; ++i) {
-                if (b[i] < 0) {// 调整异常数据
-                    b[i] += 256;
-                }
-            }
-// 生成jpeg图片
-            String imgFilePath = _strID+".png";// 新生成的图片
-            OutputStream out = new FileOutputStream(imgFilePath);
-            out.write(b);
-            out.flush();
-            out.close();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
-    /**
-     * 将Base64格式存储到图片中
-     * @deprecated 当前版本无效。
-     * @param _strSrcBase64 in Base64格式的用户人脸信息
-     * @return 存储是否成功的boolean值
-     * @author why
-     */
-    private static boolean genBase64(String _strSrcBase64)
-    {
-        String name = "why";
-        if(!generateImage(_strSrcBase64,"why"))
-            return false;
-        ByteArrayOutputStream baos = null;
-        try
-        {
-            baos = new ByteArrayOutputStream();
-            BufferedInputStream bos = new BufferedInputStream(new FileInputStream("why.png"));
-            int b = bos.read();
-            while(b != -1)
-            {
-                baos.write(b);
-                b = bos.read();
-            }
-//            ret = baos.toByteArray();
-        } catch (IOException e)
-        { }
-        finally
-        {
-            try
-            {
-                if(baos!=null)
-                    baos.close();
-            }
-            catch (IOException e)
-            { }
-        }
-        return false;
-    }
 
     /**
      * 创建新的Accnt对象
@@ -233,14 +157,7 @@ public class AccntService extends GeneralService
      */
     public boolean creatNewAccnt(String _strAccntID,String _strPassword)
     {
-        if(!checkString(_strAccntID) || !checkString(_strPassword))
-            return false;
-        Mngr accnt = new Mngr();
-        accnt.setMngrID(_strAccntID);
-        accnt.setPassword(_strPassword);
-        accnt.setMngrType(2);
-        m_mngrDao.insertMngr(accnt);
-        return true;
+        return m_manService.creatNewAccnt(_strAccntID,_strPassword);
     }
 
     /**
@@ -251,7 +168,6 @@ public class AccntService extends GeneralService
      */
     public List<Goods> getGoodsRcmdForUser(User _user)
     {
-        List<Goods> ret = m_analDao.getRcmdByUser(_user,0,ConfigConst.ACCNT_RCMD_LIMIT);
-        return ret;
+        return m_goodsService.getGoodsRcmdGeneralForUser(_user,0,ConfigConst.ACCNT_RCMD_LIMIT);
     }
 }

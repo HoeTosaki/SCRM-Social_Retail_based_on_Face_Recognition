@@ -305,7 +305,7 @@
         switch (_path){
           case '':
           case '/':
-          dom.find('p').text('a graph visualization library using web workers and jQuery')
+          dom.find('p').text('a graph visualization library using controller workers and jQuery')
           dom.find('> a').removeClass('active').attr('href','#')
 
           $('#docs').fadeTo('fast',0, function(){

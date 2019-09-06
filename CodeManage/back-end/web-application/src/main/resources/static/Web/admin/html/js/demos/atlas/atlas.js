@@ -175,7 +175,7 @@
     var _sources = {
       nations:'Derived from Wikipedia’s <a target="_blank" href="http://en.wikipedia.org/wiki/List_of_countries_and_territories_by_land_borders">List of countries and territories by land borders</a>',
       states:'Derived from <a target="_blank" href="http://www.statemaster.com/graph/geo_lan_bou_bor_cou-geography-land-borders">Land borders by state</a>',
-      risk:'Derived from Garrett Robinson’s <a target="_blank" href="http://web.mit.edu/sp.268/www/risk.pdf">The Strategy of Risk</a>'
+      risk:'Derived from Garrett Robinson’s <a target="_blank" href="http://controller.mit.edu/sp.268/www/risk.pdf">The Strategy of Risk</a>'
     }
 
     var _maps = {

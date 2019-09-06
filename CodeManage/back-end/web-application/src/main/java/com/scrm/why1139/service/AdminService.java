@@ -19,275 +19,121 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author why
  */
 @Service
-public class AdminService extends GeneralService
+public class AdminService
 {
     @Autowired
-    private AnalDao m_analDao;
+    private AnalService m_analService;
     @Autowired
-    private BuyDao m_buyDao;
+    private ManService m_manService;
     @Autowired
-    private GoodsDao m_goodsDao;
+    private GoodsService m_goodsService;
 
-    public boolean getFig(int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
+    public boolean getBuyListAnalyzeFigForAdmin(int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
     {
-        return m_analDao.buyListAnalyzeFigForAdmin(_nCmd,_nLimit,_x,_y,_args);
+        return m_analService.getBuyListAnalyzeFigForAdmin(_nCmd, _nLimit, _x, _y, _args);
     }
 
-    public boolean getVal(int _nCmd,int _nOffset, int _nLimit, List<Object> _vals,List<Object> _args)
+    public boolean getBuyListAnalyzeValForAdmin(int _nCmd,int _nOffset, int _nLimit, List<Object> _vals,List<Object> _args)
     {
-        List<String> valsStr = new CopyOnWriteArrayList<>();
-        boolean ret = m_analDao.buyListAnalyzeValForAdmin(_nCmd,_nOffset,_nLimit,valsStr,_args);
-        if(!ret)
-            return ret;
-        if(_nCmd == 13)
-        {
-            for(int i = 0; i< valsStr.size();++i)
-            {
-                if(i <= 4)
-                    _vals.add(valsStr.get(i));
-                else
-                {
-                    int buyID = Integer.parseInt(valsStr.get(i));
-                    Buy buy = m_buyDao.findBuyByBuyID(buyID);
-                    JSONObject jsonbuy = new JSONObject();
-                    if(buy == null || buy.isEmpty())
-                    {
-                        jsonbuy.put("buyid","-1");
-                        jsonbuy.put("userid","undefined");
-                        jsonbuy.put("mngrid","undefined");
-                        jsonbuy.put("goodsid","undefined");
-                        jsonbuy.put("buycnt","-1");
-                        jsonbuy.put("buydate","undefined");
-                        jsonbuy.put("gds","undefined");
-                    }
-                    else
-                    {
-                        jsonbuy.put("buyid",buy.getBuyID());
-                        jsonbuy.put("userid",buy.getUserID());
-                        jsonbuy.put("mngrid",buy.getMngrID());
-                        jsonbuy.put("goodsid",buy.getGoodsID());
-                        jsonbuy.put("buycnt",buy.getBuyCnt());
-                        jsonbuy.put("buydate",buy.getBuyDate());
-                        int gdsID = buy.getGoodsID();
-                        Goods gds = m_goodsDao.findGoodsByID(gdsID);
-                        JSONObject objGds = new JSONObject();
-                        if(gds == null || gds.isEmpty())
-                        {
-                            objGds.put("name","undefined");
-                            objGds.put("prc","0.0");
-                            objGds.put("cnt","-1");
-                            objGds.put("pic","undefined");
-                            objGds.put("desc","undefined");
-                            objGds.put("id","-1");
-                            objGds.put("type","undefined");
-                        }
-                        else
-                        {
-                            objGds.put("name",gds.getGoodsName());
-                            objGds.put("prc",gds.getPrice());
-                            objGds.put("cnt",gds.getGoodsCnt());
-                            objGds.put("pic",gds.getPic());
-                            objGds.put("desc",gds.getGoodsDesc());
-                            objGds.put("id",gds.getGoodsID());
-                            objGds.put("type",gds.getGoodsType());
-                        }
-                        jsonbuy.put("gds",objGds);
-                    }
-                    _vals.add(jsonbuy);
-                }
-            }
-            JSONArray arr = new JSONArray();
-            List<String> lstStrArgs = (List<String>) (_args.get(_args.size() - 1));
-            for(int i = 0;i<lstStrArgs.size();++i)
-            {
-                arr.add(lstStrArgs.get(i));
-            }
-            _args.remove(_args.size()-1);
-            _args.add(arr);
-        }
-        else if(_nCmd == 14)
-        {
-            for(int i = 0; i< valsStr.size();++i)
-            {
-                if(i <= 0)
-                    _vals.add(valsStr.get(i));
-                else
-                {
-                    int buyID = Integer.parseInt(valsStr.get(i));
-                    Buy buy = m_buyDao.findBuyByBuyID(buyID);
-                    JSONObject jsonbuy = new JSONObject();
-                    if(buy == null || buy.isEmpty())
-                    {
-                        jsonbuy.put("buyid","-1");
-                        jsonbuy.put("userid","undefined");
-                        jsonbuy.put("mngrid","undefined");
-                        jsonbuy.put("goodsid","undefined");
-                        jsonbuy.put("buycnt","-1");
-                        jsonbuy.put("buydate","undefined");
-                        jsonbuy.put("gds","undefined");
-                    }
-                    else
-                    {
-                        jsonbuy.put("buyid",buy.getBuyID());
-                        jsonbuy.put("userid",buy.getUserID());
-                        jsonbuy.put("mngrid",buy.getMngrID());
-                        jsonbuy.put("goodsid",buy.getGoodsID());
-                        jsonbuy.put("buycnt",buy.getBuyCnt());
-                        jsonbuy.put("buydate",buy.getBuyDate());
-                        int gdsID = buy.getGoodsID();
-                        Goods gds = m_goodsDao.findGoodsByID(gdsID);
-                        JSONObject objGds = new JSONObject();
-                        if(gds == null || gds.isEmpty())
-                        {
-                            objGds.put("name","undefined");
-                            objGds.put("prc","0.0");
-                            objGds.put("cnt","-1");
-                            objGds.put("pic","undefined");
-                            objGds.put("desc","undefined");
-                            objGds.put("id","-1");
-                            objGds.put("type","undefined");
-                        }
-                        else
-                        {
-                            objGds.put("name",gds.getGoodsName());
-                            objGds.put("prc",gds.getPrice());
-                            objGds.put("cnt",gds.getGoodsCnt());
-                            objGds.put("pic",gds.getPic());
-                            objGds.put("desc",gds.getGoodsDesc());
-                            objGds.put("id",gds.getGoodsID());
-                            objGds.put("type",gds.getGoodsType());
-                        }
-                        jsonbuy.put("gds",objGds);
-                    }
-                    _vals.add(jsonbuy);
-                }
-            }
-            JSONArray arr = new JSONArray();
-            List<String> lstStrArgs = (List<String>) (_args.get(_args.size() - 1));
-            for(int i = 0;i<lstStrArgs.size();++i)
-            {
-                arr.add(lstStrArgs.get(i));
-            }
-            _args.remove(_args.size()-1);
-            _args.add(arr);
-        }
-        else if(_nCmd == 15)
-        {
-            for(int i = 0; i< valsStr.size();++i)
-            {
-                if(i <= 0)
-                    _vals.add(valsStr.get(i));
-                else
-                {
-                    int buyID = Integer.parseInt(valsStr.get(i));
-                    Buy buy = m_buyDao.findBuyByBuyID(buyID);
-                    JSONObject jsonbuy = new JSONObject();
-                    if(buy == null || buy.isEmpty())
-                    {
-                        jsonbuy.put("buyid","-1");
-                        jsonbuy.put("userid","undefined");
-                        jsonbuy.put("mngrid","undefined");
-                        jsonbuy.put("goodsid","undefined");
-                        jsonbuy.put("buycnt","-1");
-                        jsonbuy.put("buydate","undefined");
-                        jsonbuy.put("gds","undefined");
-                    }
-                    else
-                    {
-                        jsonbuy.put("buyid",buy.getBuyID());
-                        jsonbuy.put("userid",buy.getUserID());
-                        jsonbuy.put("mngrid",buy.getMngrID());
-                        jsonbuy.put("goodsid",buy.getGoodsID());
-                        jsonbuy.put("buycnt",buy.getBuyCnt());
-                        jsonbuy.put("buydate",buy.getBuyDate());
-                        int gdsID = buy.getGoodsID();
-                        Goods gds = m_goodsDao.findGoodsByID(gdsID);
-                        JSONObject objGds = new JSONObject();
-                        if(gds == null || gds.isEmpty())
-                        {
-                            objGds.put("name","undefined");
-                            objGds.put("prc","0.0");
-                            objGds.put("cnt","-1");
-                            objGds.put("pic","undefined");
-                            objGds.put("desc","undefined");
-                            objGds.put("id","-1");
-                            objGds.put("type","undefined");
-                        }
-                        else
-                        {
-                            objGds.put("name",gds.getGoodsName());
-                            objGds.put("prc",gds.getPrice());
-                            objGds.put("cnt",gds.getGoodsCnt());
-                            objGds.put("pic",gds.getPic());
-                            objGds.put("desc",gds.getGoodsDesc());
-                            objGds.put("id",gds.getGoodsID());
-                            objGds.put("type",gds.getGoodsType());
-                        }
-                        jsonbuy.put("gds",objGds);
-                    }
-                    _vals.add(jsonbuy);
-                }
-            }
-            JSONArray arr = new JSONArray();
-            List<String> lstStrArgs = (List<String>) (_args.get(_args.size() - 1));
-            for(int i = 0;i<lstStrArgs.size();++i)
-            {
-                arr.add(lstStrArgs.get(i));
-            }
-            _args.remove(_args.size()-1);
-            _args.add(arr);
-        }
-        return ret;//true;
+        return m_analService.getBuyListAnalyzeValForAdmin(_nCmd, _nOffset, _nLimit, _vals, _args);
     }
 
-    public List<Mngr> getMngrAll()
+    /**
+     * 通过MngrID获取Mngr对象
+     * @param _strMngrID in 表示MngrID的字符串
+     * @return Mngr对象
+     * @author why
+     */
+    public Mngr findMngrByMngrID(String _strMngrID)
     {
-        return m_mngrDao.getMngrAll(ConfigConst.ACCNT_ALL_LIMIT);
+        return m_manService.findMngrByMngrID(_strMngrID);
+    }
+
+    /**
+     * 通过Mngr的个人信息，获取在数据库中的匹配结果
+     * @param _strMngrID in MngrID
+     * @param _strPassword in Mngr密码
+     * @return 标志匹配结果的boolean值
+     * @author why
+     */
+    public boolean hasMatchMngr(String _strMngrID,String _strPassword)
+    {
+        return m_manService.hasMatchMngr(_strMngrID, _strPassword);
+    }
+
+    public List<Mngr> getMngrAllForAdmin()
+    {
+        return m_manService.getMngrAllForAdmin();
+    }
+
+    /**
+     * 更新Mngr信息
+     * @param _mngr in Mngr对象
+     * @author why
+     */
+    public void updateMngr(Mngr _mngr)
+    {
+        m_manService.updateMngr(_mngr);
+    }
+
+    /**
+     * 删除当前Mngr信息
+     * @param _mngr in Mngr对象
+     * @author why
+     */
+    public void delMngr(Mngr _mngr)
+    {
+        m_manService.delMngr(_mngr);
+    }
+
+    /**
+     * 创建新的Accnt对象
+     * @param _strAccntID in AccntID
+     * @param _strPassword in 密码
+     * @return 创建是否成功的boolean值
+     * @author why
+     */
+    public boolean creatNewAccnt(String _strAccntID,String _strPassword)
+    {
+        return m_manService.creatNewAccnt(_strAccntID, _strPassword);
+    }
+
+    /**
+     * 通过GoodsID获取Goods对象
+     * @param _nGoodsID in GoodsID
+     * @return Goods对象
+     * @author why
+     */
+    public Goods findGoodsByGoodsID(int _nGoodsID)
+    {
+        return m_goodsService.findGoodsByGoodsID(_nGoodsID);
     }
 
     public void updateGoods(Goods _gds)
     {
-        m_goodsDao.updateGoods(_gds);
+        m_goodsService.updateGoods(_gds);
     }
 
     public void delGoods(Goods _gds)
     {
-        m_goodsDao.delGoodsByGoodsID(_gds.getGoodsID());
+        m_goodsService.delGoods(_gds);
     }
 
     public void addGoods(Goods _gds)
     {
-        m_goodsDao.insertGoods(_gds);
+        m_goodsService.addGoods(_gds);
     }
 
-    public boolean getGoodsAnalyze(List<Goods> _gds1,List<Goods> _gds2,List<Double> _relNum,List<Goods> _gds,List<Integer> _buyCnt,List<Double> _cntNum)
+    public boolean getGoodsAnalyzeForAdmin(List<Goods> _gds1,List<Goods> _gds2,List<Double> _relNum,List<Goods> _gds,List<Integer> _buyCnt,List<Double> _cntNum)
     {
-        List<Integer> gds1ID = new CopyOnWriteArrayList<>();
-        List<Integer> gds2ID = new CopyOnWriteArrayList<>();
-        List<Double> relNum = new CopyOnWriteArrayList<>();
-        List<Integer> gdsID = new CopyOnWriteArrayList<>();
-        List<Integer> buyCnt = new CopyOnWriteArrayList<>();
-        List<Double> cntNum = new CopyOnWriteArrayList<>();
-        m_analDao.goodsAnalyze(gds1ID,gds2ID,relNum,gdsID,buyCnt,cntNum);
-        gds1ID.stream().map(gdsid->m_goodsDao.findGoodsByID(gdsid)).forEach(_gds1::add);
-        gds2ID.stream().map(gdsid->m_goodsDao.findGoodsByID(gdsid)).forEach(_gds2::add);
-        relNum.stream().forEach(_relNum::add);
-        gdsID.stream().map(gdsid->m_goodsDao.findGoodsByID(gdsid)).forEach(_gds::add);
-        buyCnt.stream().forEach(_buyCnt::add);
-        cntNum.stream().forEach(_cntNum::add);
-        System.out.println("size"+buyCnt.size());
-
-        return true;
+        return m_analService.getGoodsAnalyzeForAdmin(_gds1, _gds2, _relNum, _gds, _buyCnt, _cntNum);
     }
 
-    public boolean getMngrAnalyzeFig(List<Mngr> _mngr, List<String> _sale)
+    public boolean getMngrAnalyzeFigForAdmin(List<Mngr> _mngr, List<String> _sale)
     {
-        List<String> mngrID = new CopyOnWriteArrayList<>();
-        List<String> sale = new CopyOnWriteArrayList<>();
-        boolean ret = m_analDao.mngrAnalyzeFig(mngrID, sale);
-        mngrID.stream().map(mngrid->m_mngrDao.findMngrByMngrID(mngrid)).forEach(_mngr::add);
-        sale.stream().forEach(_sale::add);
-        return ret;
+        return m_analService.getMngrAnalyzeFigForAdmin(_mngr, _sale);
     }
+
+
 
 }

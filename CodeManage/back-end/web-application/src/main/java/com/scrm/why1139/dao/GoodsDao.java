@@ -48,7 +48,7 @@ public class GoodsDao
      * @return Goods对象
      * @author why
      */
-    public Goods findGoodsByID(int _nGoodsID)
+    public Goods findGoodsByGoodsID(int _nGoodsID)
     {
         Goods goods = new Goods();
         m_jdbcTemp.query(" SELECT * FROM t_goods WHERE goods_id = ? "
