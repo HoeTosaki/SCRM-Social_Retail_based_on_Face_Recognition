@@ -1,3 +1,4 @@
+buy_id,user_id,mngr_id,goods_id,buy_date,buy_cnt
 1,87,why2,1,Sun Aug 18 16:25:02 CST 2019,43
 2,54,Saitama,2,Mon Aug 19 16:25:02 CST 2019,33
 3,48,why3,3,Mon Aug 05 16:25:02 CST 2019,7

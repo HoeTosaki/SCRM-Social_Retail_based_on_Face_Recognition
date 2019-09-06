@@ -17,28 +17,30 @@ pd.set_option('expand_frame_repr', False)
 
 today_date = datetime.today().date()
 time_offset = dict(week=timedelta(7), month=timedelta(30))
-start_date_str = '2019-03-01'
-end_date_str = '2019-08-28'
-time_offset_key = 'week'
-user_id = 90  # if sys.argv.__len__() > 1 else sys.argv[1]
-goods_name = '12 Ounce Plastic Bowls'
-goods_type = 'snacks'
-goods_id = 20
-statis_index = 'cnt'
+# start_date_str = '2019-03-01'
+# end_date_str = '2019-08-28'
+# time_offset_key = 'week'
+# user_id = 90  # if sys.argv.__len__() > 1 else sys.argv[1]
+# goods_name = '12 Ounce Plastic Bowls'
+# goods_type = 'snacks'
+# goods_id = 20
+# statis_index = 'cnt'
 
 nCmd = int(sys.argv[2])
 
 # 数据预处理
-all_goods_info_from_csv = pd.read_csv(sys.argv[1] + "/py/anal_data/t_goods.csv")
+goods_field_names = ['goods_id', 'goods_type', 'goods_name', 'goods_price', 'goods_cnt']
+all_goods_info_from_csv = pd.read_csv(sys.argv[1] + "/py/anal_data/t_goods.csv", names=goods_field_names)
 all_goods_info_from_csv = all_goods_info_from_csv.set_index('goods_id')
 
-all_user_buy_list_from_csv = pd.read_csv(sys.argv[1] + "/py/anal_data/t_buy.csv",
+buy_list_field_name = ['buy_id', 'user_id', 'mngr_id', 'goods_id', 'buy_date', 'buy_cnt']
+all_user_buy_list_from_csv = pd.read_csv(sys.argv[1] + "/py/anal_data/t_buy.csv", names=buy_list_field_name,
                                          usecols=['user_id', 'mngr_id', 'goods_id', 'buy_cnt', 'buy_date', 'buy_id'],
                                          parse_dates=['buy_date'])
 
 all_user_buy_list_raw = pd.merge(all_user_buy_list_from_csv, all_goods_info_from_csv, on='goods_id')
 all_user_buy_list_raw.eval('total_pay = buy_cnt * goods_price', inplace=True)
-all_user_buy_list_raw.drop(['goods_desc', 'goods_cnt'], axis=1, inplace=True)
+all_user_buy_list_raw.drop(['goods_cnt'], axis=1, inplace=True)
 
 all_user_buy_list = all_user_buy_list_raw.set_index('buy_date')
 all_user_buy_list.drop(['goods_id'], axis=1, inplace=True)
@@ -47,7 +49,6 @@ all_user_buy_list = all_user_buy_list.sort_index(ascending=False)
 tomorrow_date = today_date + timedelta(1)
 today_all_user_buy_list = all_user_buy_list[tomorrow_date:today_date]
 today_all_user_buy_list = today_all_user_buy_list.reset_index()
-
 
 hot_goods_list_raw = all_user_buy_list_raw[['buy_date', 'goods_id', 'buy_cnt']]
 hot_goods_list = hot_goods_list_raw.set_index('buy_date')
