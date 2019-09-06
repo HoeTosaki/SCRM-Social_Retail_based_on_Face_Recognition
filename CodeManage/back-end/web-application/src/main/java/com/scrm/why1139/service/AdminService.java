@@ -260,10 +260,34 @@ public class AdminService extends GeneralService
         m_goodsDao.insertGoods(_gds);
     }
 
-
-
-    public static void main(String s[])
+    public boolean getGoodsAnalyze(List<Goods> _gds1,List<Goods> _gds2,List<Double> _relNum,List<Goods> _gds,List<Integer> _buyCnt,List<Double> _cntNum)
     {
+        List<Integer> gds1ID = new CopyOnWriteArrayList<>();
+        List<Integer> gds2ID = new CopyOnWriteArrayList<>();
+        List<Double> relNum = new CopyOnWriteArrayList<>();
+        List<Integer> gdsID = new CopyOnWriteArrayList<>();
+        List<Integer> buyCnt = new CopyOnWriteArrayList<>();
+        List<Double> cntNum = new CopyOnWriteArrayList<>();
+        m_analDao.goodsAnalyze(gds1ID,gds2ID,relNum,gdsID,buyCnt,cntNum);
+        gds1ID.stream().map(gdsid->m_goodsDao.findGoodsByID(gdsid)).forEach(_gds1::add);
+        gds2ID.stream().map(gdsid->m_goodsDao.findGoodsByID(gdsid)).forEach(_gds2::add);
+        relNum.stream().forEach(_relNum::add);
+        gdsID.stream().map(gdsid->m_goodsDao.findGoodsByID(gdsid)).forEach(_gds::add);
+        buyCnt.stream().forEach(_buyCnt::add);
+        cntNum.stream().forEach(_cntNum::add);
+        System.out.println("size"+buyCnt.size());
 
+        return true;
     }
+
+    public boolean getMngrAnalyzeFig(List<Mngr> _mngr, List<String> _sale)
+    {
+        List<String> mngrID = new CopyOnWriteArrayList<>();
+        List<String> sale = new CopyOnWriteArrayList<>();
+        boolean ret = m_analDao.mngrAnalyzeFig(mngrID, sale);
+        mngrID.stream().map(mngrid->m_mngrDao.findMngrByMngrID(mngrid)).forEach(_mngr::add);
+        sale.stream().forEach(_sale::add);
+        return ret;
+    }
+
 }

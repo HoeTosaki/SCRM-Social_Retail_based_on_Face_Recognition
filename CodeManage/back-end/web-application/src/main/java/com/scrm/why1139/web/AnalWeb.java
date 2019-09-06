@@ -2,6 +2,7 @@ package com.scrm.why1139.web;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.scrm.why1139.domain.Goods;
 import com.scrm.why1139.domain.Mngr;
 import com.scrm.why1139.domain.User;
 import com.scrm.why1139.service.AccntService;
@@ -562,5 +563,98 @@ public class AnalWeb
         System.out.println("控制器返回："+objRet.toJSONString());
         return objRet.toJSONString();
     }
+
+    @ResponseBody
+    @RequestMapping(
+            value = {"/goodsAnalPull"}/*,
+            produces = "application/json;charset=UTF-8"*/
+    )
+    public String goodsAnalPull(HttpServletRequest _req)
+    {
+        System.out.println("控制器接入："+"safe null");
+        JSONObject objRet = new JSONObject();
+
+        List<Goods> gds1 = new CopyOnWriteArrayList<>();
+        List<Goods> gds2 = new CopyOnWriteArrayList<>();
+        List<Double> relNum = new CopyOnWriteArrayList<>();
+        List<Goods> gds = new CopyOnWriteArrayList<>();
+        List<Integer> buyCnt = new CopyOnWriteArrayList<>();
+        List<Double> cntNum = new CopyOnWriteArrayList<>();
+
+        if(m_adminService.getGoodsAnalyze(gds1,gds2,relNum,gds,buyCnt,cntNum))
+        {
+            objRet.put("stat","success");
+            JSONArray arrRel = new JSONArray();
+            JSONArray arrGds = new JSONArray();
+            for(int i = 0;i < gds1.size();++i)
+            {
+                JSONObject objRel = new JSONObject();
+                objRel.put("gds1_name",gds1.get(i).getGoodsName());
+                objRel.put("gds1_id",gds1.get(i).getGoodsID());
+                objRel.put("gds2_name",gds2.get(i).getGoodsName());
+                objRel.put("gds2_id",gds2.get(i).getGoodsID());
+                objRel.put("rel_num",relNum.get(i));
+                arrRel.add(objRel);
+            }
+            for(int i = 0; i < gds.size();++i)
+            {
+                JSONObject objGds = new JSONObject();
+                objGds.put("gds_name",gds.get(i).getGoodsName());
+                objGds.put("gds_id",gds.get(i).getGoodsID());
+                objGds.put("buy_cnt",buyCnt.get(i));
+                objGds.put("cnt_num",cntNum.get(i));
+                objGds.put("gds_prc",gds.get(i).getPrice());
+                objGds.put("gds_type",gds.get(i).getGoodsType());
+                objGds.put("gds_cnt",gds.get(i).getGoodsCnt());
+
+
+                arrGds.add(objGds);
+            }
+            objRet.put("gds_lst",arrGds);
+            objRet.put("rel_lst",arrRel);
+        }
+        else
+        {
+            objRet.put("stat","invalid");
+        }
+
+        System.out.println("控制器返回："+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = {"/accntCntPullFig"}/*,
+            produces = "application/json;charset=UTF-8"*/
+    )
+    public String accntCntPullFig(HttpServletRequest _req)
+    {
+        System.out.println("控制器接入："+"safe null");
+        JSONObject objRet = new JSONObject();
+
+        List<Mngr> mngr = new CopyOnWriteArrayList<>();
+        List<String> sale = new CopyOnWriteArrayList<>();
+
+        if(m_adminService.getMngrAnalyzeFig(mngr,sale))
+        {
+            objRet.put("stat","success");
+            JSONArray arrMngr = new JSONArray();
+            JSONArray arrSale = new JSONArray();
+            mngr.stream().map(mn->mn.getMngrID()).forEach(arrMngr::add);
+            sale.stream().forEach(arrSale::add);
+            objRet.put("x",arrMngr);
+            objRet.put("y",arrSale);
+        }
+        else
+        {
+            objRet.put("stat","invalid");
+        }
+
+        System.out.println("控制器返回："+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
+
+
+
 
 }

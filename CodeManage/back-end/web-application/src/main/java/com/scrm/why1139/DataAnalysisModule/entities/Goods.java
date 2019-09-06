@@ -13,6 +13,8 @@ public class Goods {
     private String goods_name;
     private String goods_type;
     private String goods_price;
+    private String goods_cnt;
+
 
     public Integer getGoods_id() {
         return goods_id;
@@ -55,6 +57,14 @@ public class Goods {
 
     public String toCSV()
     {
-        return this.getGoods_id()+","+this.getGoods_name()+","+this.getGoods_price()+","+this.getGoods_type();
+        return this.getGoods_id()+","+this.getGoods_type()+","+this.getGoods_price()+","+this.getGoods_cnt();
+    }
+
+    public String getGoods_cnt() {
+        return goods_cnt;
+    }
+
+    public void setGoods_cnt(String goods_cnt) {
+        this.goods_cnt = goods_cnt;
     }
 }

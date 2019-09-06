@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 import sys
-import os
 import time
 from datetime import datetime, timedelta
 from typing import Dict, Any
+from sklearn import preprocessing
 import numpy as np
 import pandas as pd
 import warnings
-import json
 
 warnings.filterwarnings("ignore")
 
@@ -30,10 +29,10 @@ statis_index = 'cnt'
 nCmd = int(sys.argv[2])
 
 # 数据预处理
-all_goods_info_from_csv = pd.read_csv(sys.argv[1] + r"/py/anal_data/t_goods.csv")
+all_goods_info_from_csv = pd.read_csv(sys.argv[1] + "/py/anal_data/t_goods.csv")
 all_goods_info_from_csv = all_goods_info_from_csv.set_index('goods_id')
 
-all_user_buy_list_from_csv = pd.read_csv(sys.argv[1] + r"/py/anal_data/t_buy.csv",
+all_user_buy_list_from_csv = pd.read_csv(sys.argv[1] + "/py/anal_data/t_buy.csv",
                                          usecols=['user_id', 'mngr_id', 'goods_id', 'buy_cnt', 'buy_date', 'buy_id'],
                                          parse_dates=['buy_date'])
 
@@ -48,6 +47,14 @@ all_user_buy_list = all_user_buy_list.sort_index(ascending=False)
 tomorrow_date = today_date + timedelta(1)
 today_all_user_buy_list = all_user_buy_list[tomorrow_date:today_date]
 today_all_user_buy_list = today_all_user_buy_list.reset_index()
+
+
+hot_goods_list_raw = all_user_buy_list_raw[['buy_date', 'goods_id', 'buy_cnt']]
+hot_goods_list = hot_goods_list_raw.set_index('buy_date')
+hot_goods_list = hot_goods_list.sort_index(ascending=False)
+date = today_date - time_offset['month']
+one_month_hot_goods_list = hot_goods_list[today_date: date]
+one_month_hot_goods_list = one_month_hot_goods_list.to_period('D')
 
 
 def cmd_0_function():
@@ -377,7 +384,7 @@ def cmd_13_function():
     print(this_month_buy_list.at[0, 'total_pay'])
     print(today_all_user_buy_list['total_pay'].sum())
     today_all_user_buy_list_res = today_all_user_buy_list.loc[int(sys.argv[3]): int(sys.argv[3]) + int(sys.argv[4])]
-    print("  ")
+    print("today_all_user_buy_list")
     for index, row in today_all_user_buy_list_res.iterrows():
         print(row['buy_id'])
 
@@ -388,7 +395,7 @@ def cmd_14_function():
     one_week_or_month_all_user_buy_list = one_week_or_month_all_user_buy_list.reset_index()
     one_week_or_month_all_user_buy_list = one_week_or_month_all_user_buy_list.loc[int(sys.argv[3]): int(sys.argv[3])
                                                                                   + int(sys.argv[4])]
-    print("  ")
+    print("one_week_or_month_all_user_buy_list")
     for index, row in one_week_or_month_all_user_buy_list.iterrows():
         print(row['buy_id'])
 
@@ -400,9 +407,48 @@ def cmd_15_function():
     specific_time_all_buy_list = specific_time_all_buy_list.reset_index()
     specific_time_all_buy_list = specific_time_all_buy_list.loc[int(sys.argv[3]): int(sys.argv[3])
                                                                 + int(sys.argv[4])]
-    print("  ")
+    print("specific_time_all_buy_list")
     for index, row in specific_time_all_buy_list.iterrows():
         print(row['buy_id'])
+
+
+def cmd_16_function():
+    one_month_hot_goods_list_groups = one_month_hot_goods_list.groupby('goods_id')
+    one_month_top_30_goods_list = pd.DataFrame(columns=['goods_id', 'sale_cnt'])
+    for name, group in one_month_hot_goods_list_groups:
+        one_month_top_30_goods_list = one_month_top_30_goods_list.append(
+            [{'goods_id': name, 'sale_cnt': group['buy_cnt'].sum()}])
+    one_month_top_30_goods_list = one_month_top_30_goods_list.sort_values('sale_cnt', ascending=False).head(30)
+    one_month_top_30_goods_id = one_month_top_30_goods_list['goods_id'].tolist()
+    one_month_top_30_goods_sale_cnt = one_month_top_30_goods_list['sale_cnt'].tolist()
+    goods_sale_cnt_scaled = preprocessing.scale(one_month_top_30_goods_sale_cnt)
+    goods_sale_cnt_scaled = goods_sale_cnt_scaled.tolist()
+    for i in range(len(one_month_top_30_goods_list)):
+        print('{},{},{}'.format(one_month_top_30_goods_id[i], one_month_top_30_goods_sale_cnt[i],
+                                goods_sale_cnt_scaled[i]))
+    one_month_top_30_goods_id.sort()
+    gds_similar = np.load(sys.argv[1]+'/py/gds_similar.npy')
+    gds_similar_scaled = preprocessing.scale(gds_similar)
+    for i in range(len(one_month_top_30_goods_id)):
+        j = i + 1
+        while j < len(one_month_top_30_goods_id):
+            rel_num = gds_similar_scaled[one_month_top_30_goods_id[i], one_month_top_30_goods_id[j]]
+            if rel_num > 2:
+                print("{},{},{}".format(one_month_top_30_goods_id[i], one_month_top_30_goods_id[j], rel_num))
+            j += 1
+
+
+def cmd_17_function():
+    one_month_mngr_list = all_user_buy_list[today_date: today_date-time_offset['month']]
+    one_month_mngr_list_groups = one_month_mngr_list.groupby('mngr_id')
+    one_month_top_5_mnger_list = pd.DataFrame(columns=['mngr_id', 'sale'])
+    for name, group in one_month_mngr_list_groups:
+        one_month_top_5_mnger_list = one_month_top_5_mnger_list.append(
+            [{'mngr_id': name, 'sale': group['total_pay'].sum()}]
+        )
+    one_month_top_5_mngr_list = one_month_top_5_mnger_list.sort_values('sale', ascending=False)
+    for index, row in one_month_top_5_mngr_list.iterrows():
+        print('{},{}'.format(row['mngr_id'], row['sale']))
 
 
 processor: Dict[Any, None] = {
@@ -421,7 +467,9 @@ processor: Dict[Any, None] = {
     12: cmd_12_function,
     13: cmd_13_function,
     14: cmd_14_function,
-    15: cmd_15_function
+    15: cmd_15_function,
+    16: cmd_16_function,
+    17: cmd_17_function
 }
 
 

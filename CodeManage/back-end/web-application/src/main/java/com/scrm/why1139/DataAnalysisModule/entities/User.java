@@ -28,7 +28,7 @@ public class User {
 
     public String toCSV()
     {
-        return this.getUser_id()+",";
+        return this.getUser_id();
     }
 
 }

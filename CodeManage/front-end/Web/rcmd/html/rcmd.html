@@ -18,21 +18,74 @@
 </head>
 
 <body>
-    <div class="user sidebar">
+    <div class="func sidebar">
         <ul class="sidenav animated fadeInUp">
             <li><a class="withripple" href="">
                     <i class="icon icon-home"> </i>
                     <span class="sidespan">推荐首页</span></a>
             </li>
-            <li v-for="cls in gds_cls">
+            <li>
                 <a class="withripple hover" href="javascript:;">
                     <i class="icon icon-article"></i>
-                    <span class="sidespan">{{cls.cls_name}}</span>
+                    <span class="sidespan">食品专区</span>
                     <i class="iright pull-right">&gt;</i>
                 </a>
                 <ul class="sidebar-dropdown">
-                    <li v-for="type in cls.type_lst">
-                        <a :href="type.lnk" class="withripple" target="myframe">{{type.name}}</a>
+                    <li v-for="type in cls_foods">
+                        <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                            @click="onClsFoods(type.type_val)">{{type.type_name}}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="withripple hover" href="javascript:;">
+                    <i class="icon icon-article"></i>
+                    <span class="sidespan">早餐专区</span>
+                    <i class="iright pull-right">&gt;</i>
+                </a>
+                <ul class="sidebar-dropdown">
+                    <li v-for="type in cls_breakfasts">
+                        <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                            @click="onClsBreakfasts(type.type_val)">{{type.type_name}}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="withripple hover" href="javascript:;">
+                    <i class="icon icon-article"></i>
+                    <span class="sidespan">日常用品专区</span>
+                    <i class="iright pull-right">&gt;</i>
+                </a>
+                <ul class="sidebar-dropdown">
+                    <li v-for="type in cls_daily">
+                        <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                            @click="onClsDaily(type.type_val)">{{type.type_name}}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="withripple hover" href="javascript:;">
+                    <i class="icon icon-article"></i>
+                    <span class="sidespan">工具专区</span>
+                    <i class="iright pull-right">&gt;</i>
+                </a>
+                <ul class="sidebar-dropdown">
+                    <li v-for="type in cls_tools">
+                        <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                            @click="onClsTools(type.type_val)">{{type.type_name}}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="withripple hover" href="javascript:;">
+                    <i class="icon icon-article"></i>
+                    <span class="sidespan">更多推荐...</span>
+                    <i class="iright pull-right">&gt;</i>
+                </a>
+                <ul class="sidebar-dropdown">
+                    <li v-for="type in cls_more">
+                        <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                            @click="onClsMore(type.type_val)">{{type.type_name}}</a>
                     </li>
                 </ul>
             </li>
@@ -47,39 +100,52 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <!-- <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span> -->
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> -->
                 </button>
                 <a class="navbar-brand" href="#">SCRM</a>
                 <p class="navbar-text">基于人脸识别的社交新零售</p>
                 <p class="navbar-text">欢迎您，{{user_id}}</p>
-            </div>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Dropdown
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">功能 <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"></a></li>
-                            <li><a href="#">个人主页</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">退出登录</a></li>
-                            <li><a href="#">切换账号</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">回到首页</a></li>
-                </ul>
-                <form class="navbar-form navbar-right">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">搜索 </button>
-                </form>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">功能 <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"></a></li>
+                                <li><a href="#">个人主页</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">退出登录</a></li>
+                                <li><a href="#">切换账号</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">回到首页</a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">搜索 </button>
+                    </form>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
     </nav>
 
     <div id="gds-best" class="swiper-container">
@@ -125,9 +191,9 @@
 
 
     <!-- <ul class="nav nav-tabs nav-stacked type-nav">
-    <li role="presentation" class="active"><a href="#">Home</a></li>
-    <li role="presentation"><a href="#">Profile</a></li>
-    <li role="presentation"><a href="#">Messages</a></li>
+<li role="presentation" class="active"><a href="#">Home</a></li>
+<li role="presentation"><a href="#">Profile</a></li>
+<li role="presentation"><a href="#">Messages</a></li>
 </ul> -->
 
 
@@ -158,197 +224,107 @@
     </script>
 
     <script>
+        var v_func = new Vue({
+            el: '.func',
+            data: {
+                cls_chs: 'all', //all（推荐首页），foods（食品专区），breakfasts（早餐专区）、daily（日常用品专区）、tools（工具专区）、more（更多推荐）、搜索（search）
+                type_chs: '0',
+                cls_foods: [{
+                        type_name: '小吃类',
+                        type_val: 'snacks'
+                    },
+                    {
+                        type_name: '冷冻类',
+                        type_val: 'frozen'
+                    },
+                    {
+                        type_name: '饮料类',
+                        type_val: 'beverages'
+                    },
+                    {
+                        type_name: '储藏室类',
+                        type_val: 'pantry'
+                    },
+                    {
+                        type_name: '肉品海鲜类',
+                        type_val: 'meat seafood'
+                    },
+                    {
+                        type_name: '酒类',
+                        type_val: 'alcohol'
+                    },
+                    {
+                        type_name: '农产品类',
+                        type_val: 'produce'
+                    }
+                ],
+                cls_breakfasts: [{
+                        type_name: '熟食类',
+                        type_val: 'deli'
+                    },
+                    {
+                        type_name: '早餐类',
+                        type_val: 'breakfast'
+                    },
+                    {
+                        type_name: '乳蛋类',
+                        type_val: 'dairy eggs'
+                    },
+                    {
+                        type_name: '罐装食品类',
+                        type_val: 'canned goods'
+                    },
+                    {
+                        type_name: '干货面团类',
+                        type_val: 'dry goods pasta'
+                    },
+                    {
+                        type_name: '烘培类',
+                        type_val: 'bakery'
+                    }
+                ],
+                cls_daily: [{
+                        type_name: '个人护理类',
+                        type_val: 'personal care'
+                    },
+                    {
+                        type_name: '婴幼儿类',
+                        type_val: 'babies'
+                    },
+                    {
+                        type_name: '家居类',
+                        type_val: 'household'
+                    }
+                ],
+                cls_tools: [{
+                        type_name: '杂货类',
+                        type_val: 'missing'
+                    },
+                    {
+                        type_name: '大型类',
+                        type_val: 'bulk'
+                    }
+                ],
+                cls_more: [{
+                        type_name: '国际类',
+                        type_val: 'international'
+                    },
+                    {
+                        type_name: '宠物类',
+                        type_val: 'pets'
+                    },
+                    {
+                        type_name: '其他类',
+                        type_val: 'other'
+                    }
+                ]
+            }
+        });
+
         var v_user = new Vue({
             el: ".user",
             data: {
-                user_id: cmd_str,
-                cur_cls: -1,
-                cur_type: -1,
-                gds_cls: [{
-                        cls_name: '食品专区',
-                        type_lst: [{
-                                name: '小吃类',
-                                val: 'snack',
-                                lnk: ''
-                            },
-                            {
-                                name: '冷冻类',
-                                val: 'frozen',
-                                lnk: ''
-                            },
-                            {
-                                name: '饮料类',
-                                val: 'beverages',
-                                lnk: ''
-                            },
-                            {
-                                name: '储藏室类',
-                                val: 'pantry',
-                                lnk: ''
-                            },
-                            {
-                                name: '肉品海鲜类',
-                                val: 'meat',
-                                lnk: ''
-                            },
-                            {
-                                name: '酒类',
-                                val: 'alcohol',
-                                lnk: ''
-                            }
-                        ]
-                    },
-                    {
-                        cls_name: '早餐专区',
-                        type_lst: [{
-                                name: '熟食类',
-                                val: 'deli',
-                                lnk: ''
-                            },
-                            {
-                                name: '早餐类',
-                                val: 'breakfast',
-                                lnk: ''
-                            }, {
-                                name: '乳蛋类',
-                                val: 'dairy',
-                                lnk: ''
-                            }, {
-                                name: '罐装食品类',
-                                val: 'canned',
-                                lnk: ''
-                            }, {
-                                name: '干货面团类',
-                                val: 'dry',
-                                lnk: ''
-                            }, {
-                                name: '烘培类',
-                                val: 'bakery',
-                                lnk: ''
-                            }
-                        ]
-                    },
-                    {
-                        cls_name: '日常用品专区',
-                        type_lst: [{
-                                name: '个人护理类',
-                                val: 'personal',
-                                lnk: ''
-                            },
-                            {
-                                name: '婴幼儿类',
-                                val: 'babies',
-                                lnk: ''
-                            }, {
-                                name: '家居类',
-                                val: 'household',
-                                lnk: ''
-                            }
-                        ]
-                    },
-                    {
-                        cls_name: '工具专区',
-                        type_lst: [{
-                                name: '杂货类',
-                                val: 'missing',
-                                lnk: ''
-                            },
-                            {
-                                name: '工具类',
-                                val: 'produce',
-                                lnk: ''
-                            }, {
-                                name: '大型类',
-                                val: 'bulk',
-                                lnk: ''
-                            }
-                        ]
-                    },
-                    {
-                        cls_name: '更多推荐...',
-                        type_lst: [{
-                                name: '国际类',
-                                val: 'international',
-                                lnk: ''
-                            },
-                            {
-                                name: '宠物类',
-                                val: 'pets',
-                                lnk: ''
-                            }, {
-                                name: '其他类',
-                                val: 'other',
-                                lnk: ''
-                            }
-                        ]
-                    }
-                ]
-            },
-            mounted: function () {
-                for (cls in this.gds_cls) {
-                    for (type in cls.type_lst) {
-                        type.lnk = 'rcmd?' + this.user_id + "&" + type.val;
-                        // alert(type.lnk);
-                    }
-                    // // alert(cls.cls_name);
-                }
-                // // alert(v_user.gds_cls);
-            }
-        });
-        // var v_gds_type = new Vue({
-        //     el: "#gds-type",
-        //     data: {
-        //         type_chs: 0
-        //     }
-        // });
-
-        // {
-        //     name: 'goods_demo1dddddddd',
-        //         pic: '../img/gds_pic/1.png',
-        //     prc: '10.5元',
-        //     cnt: '100',
-        //     type: 'snack',
-        // }
-
-        var v_gds_best = new Vue({
-            el: "#gds-best",
-            data: {
-                gds_lst: [{
-                        name: 'goods_demo1dddddddd',
-                        pic: '../img/gds_pic/1.png',
-                        prc: '10.5元',
-                        cnt: '100',
-                        type: 'snack',
-                    },
-                    {
-                        name: 'goods_demo1dddddddd',
-                        pic: '../img/gds_pic/1.png',
-                        prc: '10.5元',
-                        cnt: '100',
-                        type: 'snack',
-                    },
-                    {
-                        name: 'goods_demo1dddddddd',
-                        pic: '../img/gds_pic/1.png',
-                        prc: '10.5元',
-                        cnt: '100',
-                        type: 'snack',
-                    },
-                    {
-                        name: 'goods_demo1dddddddd',
-                        pic: '../img/gds_pic/1.png',
-                        prc: '10.5元',
-                        cnt: '100',
-                        type: 'snack',
-                    },
-                    {
-                        name: 'goods_demo1dddddddd',
-                        pic: '../img/gds_pic/1.png',
-                        prc: '10.5元',
-                        cnt: '100',
-                        type: 'snack',
-                    }
-                ]
+                user_id: cmd_str
             }
         });
 
@@ -381,22 +357,95 @@
         });
     </script>
     <script>
+        function onClsFoods(val) {
+            alert(val);
+            pullRcmdByType(v_user.user_id, 0, 30, val);
+        }
+
+        function onClsBreakfasts(val) {
+            alert(val);
+            pullRcmdByType(v_user.user_id, 0, 30, val);
+        }
+
+        function onClsDaily(val) {
+            alert(val);
+            pullRcmdByType(v_user.user_id, 0, 30, val);
+        }
+
+        function onClsTools(val) {
+            alert(val);
+            pullRcmdByType(v_user.user_id, 0, 30, val);
+        }
+
+        function onClsMore(val) {
+            alert(val);
+            pullRcmdByType(v_user.user_id, 0, 30, val);
+        }
+    </script>
+    <script>
         function pullRcmdGeneral(userid, _offset, _limit) {
-            // alert("pullRcmdGeneral start");
+            alert("pullRcmdGeneral");
             $.post("userRcmd", {
                 userid: userid,
                 cmd: 0,
                 offset: _offset,
                 limit: _limit,
             }, function (result) {
-                // alert(result);
+                alert(result);
                 var obj = JSON.parse(result);
                 if (obj.stat != "success") {
-                    // alert("invalid");
+                    alert("invalid");
+                    return;
+                } else {
+                    alert('obj:\t' + obj);
+                    alert('obj.gds_lst:\t' + obj.gds_lst);
+                    alert('obj.gds_lst[0]:\t' + obj.gds_lst[0]);
+                    alert('obj.gds_lst[0].name:\t' + obj.gds_lst[0].name);
+                    alert('obj.gds_lst[0].prc:\t' + obj.gds_lst[0].prc);
+                    alert('obj.gds_lst[0].id:\t' + obj.gds_lst[0].id);
+                    alert('obj.gds_lst[0].pic:\t' + obj.gds_lst[0].pic);
+                    alert('obj.gds_lst[0].type:\t' + obj.gds_lst[0].type);
+                    alert('obj.gds_lst[0].desc:\t' + obj.gds_lst[0].desc);
+
+
+                    for (var i = 0; i < _limit; ++i) {
+
+                        if (i < 5) {
+                            v_gds_best.gds_lst[i].name = obj.gds_lst[i].name;
+                            v_gds_best.gds_lst[i].prc = obj.gds_lst[i].prc;
+                            v_gds_best.gds_lst[i].pic = obj.gds_lst[i].pic;
+                            v_gds_best.gds_lst[i].cnt = obj.gds_lst[i].cnt;
+                            v_gds_best.gds_lst[i].type = obj.gds_lst[i].type;
+                        } else {
+                            v_gds_other.gds_lst.push({
+                                "name": obj.gds_lst[i].name,
+                                "prc": obj.gds_lst[i].prc,
+                                "cnt": obj.gds_lst[i].cnt,
+                                "pic": obj.gds_lst[i].pic,
+                                "type": obj.gds_lst[i].type,
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        function pullRcmdByType(userid, _offset, _limit, type) {
+            alert("pullRcmdGeneral");
+            $.post("userRcmd", {
+                userid: userid,
+                cmd: 1,
+                offset: _offset,
+                limit: _limit,
+                args: type
+            }, function (result) {
+                alert(result);
+                var obj = JSON.parse(result);
+                if (obj.stat != "success") {
+                    alert("invalid");
                     return;
                 } else {
                     for (var i = 0; i < _limit; ++i) {
-
                         var objGds = new Object();
                         objGds.name = obj.gds_lst[i].name;
                         objGds.pic = "res/gdspic/" + obj.gds_lst[i].pic;
@@ -404,23 +453,18 @@
                         objGds.type = obj.gds_lst[i].type;
                         objGds.index = obj.gds_lst[i].type;
                         objGds.cnt = obj.gds_lst[i].cnt;
-
                         if (i < 5) {
-                            // // alert('add best!');
-                            v_gds_best.gds_lst[i].name = objGds.name
-                            v_gds_best.gds_lst[i].prc = objGds.prc
-                            v_gds_best.gds_lst[i].pic = objGds.pic
-                            v_gds_best.gds_lst[i].cnt = objGds.cnt
-                            v_gds_best.gds_lst[i].type = objGds.type
+                            v_gds_best.gds_lst[i].name = objGds.name;
+                            v_gds_best.gds_lst[i].prc = objGds.prc;
+                            v_gds_best.gds_lst[i].pic = objGds.pic;
+                            v_gds_best.gds_lst[i].cnt = objGds.cnt;
+                            v_gds_best.gds_lst[i].type = objGds.type;
                         } else {
-                            // // alert('add low!');
                             v_gds_other.gds_lst.push(objGds);
                         }
-                        // v_gds_other.gds_lst.push(gds);
                     }
                 }
             });
-            // alert("pullRcmdGeneral end");
         }
     </script>
     <script>

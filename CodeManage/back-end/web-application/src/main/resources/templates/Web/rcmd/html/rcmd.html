@@ -18,472 +18,618 @@
 </head>
 
 <body>
-    <div class="user sidebar">
-        <ul class="sidenav animated fadeInUp">
-            <li><a class="withripple" href="">
-                    <i class="icon icon-home"> </i>
-                    <span class="sidespan">推荐首页</span></a>
-            </li>
-            <li v-for="cls in gds_cls">
-                <a class="withripple hover" href="javascript:;">
-                    <i class="icon icon-article"></i>
-                    <span class="sidespan">{{cls.cls_name}}</span>
-                    <i class="iright pull-right">&gt;</i>
-                </a>
-                <ul class="sidebar-dropdown">
-                    <li v-for="type in cls.type_lst">
-                        <a :href="type.lnk" class="withripple" target="myframe">{{type.name}}</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+<div class="func sidebar">
+    <ul class="sidenav animated fadeInUp">
+        <li><a class="withripple" href="">
+            <i class="icon icon-home"> </i>
+            <span class="sidespan">推荐首页</span></a>
+        </li>
+        <li>
+            <a class="withripple hover" href="javascript:;">
+                <i class="icon icon-article"></i>
+                <span class="sidespan">食品专区</span>
+                <i class="iright pull-right">&gt;</i>
+            </a>
+            <ul class="sidebar-dropdown">
+                <li v-for="type in cls_foods">
+                    <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                       @click="onClsFoods(type.type_val)">{{type.type_name}}</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="withripple hover" href="javascript:;">
+                <i class="icon icon-article"></i>
+                <span class="sidespan">早餐专区</span>
+                <i class="iright pull-right">&gt;</i>
+            </a>
+            <ul class="sidebar-dropdown">
+                <li v-for="type in cls_breakfasts">
+                    <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                       @click="onClsBreakfasts(type.type_val)">{{type.type_name}}</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="withripple hover" href="javascript:;">
+                <i class="icon icon-article"></i>
+                <span class="sidespan">日常用品专区</span>
+                <i class="iright pull-right">&gt;</i>
+            </a>
+            <ul class="sidebar-dropdown">
+                <li v-for="type in cls_daily">
+                    <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                       @click="onClsDaily(type.type_val)">{{type.type_name}}</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="withripple hover" href="javascript:;">
+                <i class="icon icon-article"></i>
+                <span class="sidespan">工具专区</span>
+                <i class="iright pull-right">&gt;</i>
+            </a>
+            <ul class="sidebar-dropdown">
+                <li v-for="type in cls_tools">
+                    <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                       @click="onClsTools(type.type_val)">{{type.type_name}}</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="withripple hover" href="javascript:;">
+                <i class="icon icon-article"></i>
+                <span class="sidespan">更多推荐...</span>
+                <i class="iright pull-right">&gt;</i>
+            </a>
+            <ul class="sidebar-dropdown">
+                <li v-for="type in cls_more">
+                    <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                       @click="onClsMore(type.type_val)">{{type.type_name}}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
 
-
-    <nav class="user navbar navbar-default navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+<nav class="user navbar navbar-default navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <!-- <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span> -->
-                </button>
-                <a class="navbar-brand" href="#">SCRM</a>
-                <p class="navbar-text">基于人脸识别的社交新零售</p>
-                <p class="navbar-text">欢迎您，{{user_id}}</p>
+                <!-- <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> -->
+            </button>
+            <a class="navbar-brand" href="#">SCRM</a>
+            <p class="navbar-text">基于人脸识别的社交新零售</p>
+            <p class="navbar-text">欢迎您，{{user_id}}</p>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">功能 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"></a></li>
+                        <li><a href="#">个人主页</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">退出登录</a></li>
+                        <li><a href="#">切换账号</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">回到首页</a></li>
+            </ul>
+            <div class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" v-model="cur_search" class="form-control" placeholder="输入商品ID/名称/类别...">
+                </div>
+                <button type="button" @click="onUserSearch()" class="btn btn-default">搜索 </button>
             </div>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">功能 <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"></a></li>
-                            <li><a href="#">个人主页</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">退出登录</a></li>
-                            <li><a href="#">切换账号</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">回到首页</a></li>
-                </ul>
-                <form class="navbar-form navbar-right">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+<div id="gds-best" v-show="v_func.type_chs != 'search'" class="swiper-container">
+    <div class="swiper-wrapper">
+        <div v-for="gds in gds_lst" class="swiper-slide">
+            <img class="gds-best-pic" :src="gds.pic">
+            <div class="gds-best-caption">
+                <h3>
+                    <span class="label label-primary">{{gds.name}}</span>
+                    <span class="label label-primary">{{gds.prc}}</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="gds-other" class="container">
+    <div class="row">
+        <div v-for="gds in gds_lst" class="card col-md-3 new-col">
+            <div class="thumbnail goods-card">
+                <img class="gds-pic" :src="gds.pic">
+                <div class="caption">
+                    <h3>{{gds.name}}</h3>
+                    <p>售价：{{gds.prc}}</p>
+                    <p>剩余库存：{{gds.cnt}}</p>
+                    <p>类型：{{gds.type}}</p>
+                    <p>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary"
+                                    @click="onMore(gds.index)">查看更多</button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-info">加入购物车</button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-default">搜索 </button>
-                </form>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-
-    <div id="gds-best" class="swiper-container">
-        <div class="swiper-wrapper">
-            <div v-for="gds in gds_lst" class="swiper-slide">
-                <img class="gds-best-pic" :src="gds.pic">
-                <div class="gds-best-caption">
-                    <h3>
-                        <span class="label label-primary">{{gds.name}}</span>
-                        <span class="label label-primary">{{gds.prc}}</span>
-                    </h3>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-
-    <div id="gds-other" class="container">
-        <div class="row">
-            <div v-for="gds in gds_lst" class="card col-md-3 new-col">
-                <div class="thumbnail goods-card">
-                    <img class="gds-pic" :src="gds.pic">
-                    <div class="caption">
-                        <h3>{{gds.name}}</h3>
-                        <p>售价：{{gds.prc}}</p>
-                        <p>剩余库存：{{gds.cnt}}</p>
-                        <p>类型：{{gds.type}}</p>
-                        <p>
-                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-primary"
-                                        @click="onMore(gds.index)">查看更多</button>
-                                </div>
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-info">加入购物车</button>
-                                </div>
-                            </div>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 
 
-    <!-- <ul class="nav nav-tabs nav-stacked type-nav">
-    <li role="presentation" class="active"><a href="#">Home</a></li>
-    <li role="presentation"><a href="#">Profile</a></li>
-    <li role="presentation"><a href="#">Messages</a></li>
+<!-- <ul class="nav nav-tabs nav-stacked type-nav">
+<li role="presentation" class="active"><a href="#">Home</a></li>
+<li role="presentation"><a href="#">Profile</a></li>
+<li role="presentation"><a href="#">Messages</a></li>
 </ul> -->
 
 
 
-    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script> -->
+<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script> -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.esm.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.esm.bundle.js"></script>
-    <!--<script type="text/javascript" src="Web/rcmd/js-ref/tinybox.js"></script>-->
-    <script>
-        cmd_str = window.location.search.split('?')[1];
-        // alert(cmd_str);
-        // v_user.user_id = cmd_str;//暂时
-        // cmd = cmd_str.split('&');
-        // v_user.user_id = cmd[0];
-        // v_user.cur_cls = cmd[1];
-        // v_user.cur_type = cmd[2];
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.esm.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.esm.bundle.js"></script>
+<!--<script type="text/javascript" src="Web/rcmd/js-ref/tinybox.js"></script>-->
+<script>
+    cmd_str = window.location.search.split('?')[1];
+    // alert(cmd_str);
+    // v_user.user_id = cmd_str;//暂时
+    // cmd = cmd_str.split('&');
+    // v_user.user_id = cmd[0];
+    // v_user.cur_cls = cmd[1];
+    // v_user.cur_type = cmd[2];
 
-        // v_gds_type.type_chs = ;
-        // function getCurTypeName()
-        // {
-        //     return v_user.gds_cls[]
-        // }
-    </script>
+    // v_gds_type.type_chs = ;
+    // function getCurTypeName()
+    // {
+    //     return v_user.gds_cls[]
+    // }
+</script>
 
-    <script>
-        var v_user = new Vue({
-            el: ".user",
-            data: {
-                user_id: cmd_str,
-                cur_cls: -1,
-                cur_type: -1,
-                gds_cls: [{
-                        cls_name: '食品专区',
-                        type_lst: [{
-                                name: '小吃类',
-                                val: 'snack',
-                                lnk: ''
-                            },
-                            {
-                                name: '冷冻类',
-                                val: 'frozen',
-                                lnk: ''
-                            },
-                            {
-                                name: '饮料类',
-                                val: 'beverages',
-                                lnk: ''
-                            },
-                            {
-                                name: '储藏室类',
-                                val: 'pantry',
-                                lnk: ''
-                            },
-                            {
-                                name: '肉品海鲜类',
-                                val: 'meat',
-                                lnk: ''
-                            },
-                            {
-                                name: '酒类',
-                                val: 'alcohol',
-                                lnk: ''
-                            }
-                        ]
-                    },
-                    {
-                        cls_name: '早餐专区',
-                        type_lst: [{
-                                name: '熟食类',
-                                val: 'deli',
-                                lnk: ''
-                            },
-                            {
-                                name: '早餐类',
-                                val: 'breakfast',
-                                lnk: ''
-                            }, {
-                                name: '乳蛋类',
-                                val: 'dairy',
-                                lnk: ''
-                            }, {
-                                name: '罐装食品类',
-                                val: 'canned',
-                                lnk: ''
-                            }, {
-                                name: '干货面团类',
-                                val: 'dry',
-                                lnk: ''
-                            }, {
-                                name: '烘培类',
-                                val: 'bakery',
-                                lnk: ''
-                            }
-                        ]
-                    },
-                    {
-                        cls_name: '日常用品专区',
-                        type_lst: [{
-                                name: '个人护理类',
-                                val: 'personal',
-                                lnk: ''
-                            },
-                            {
-                                name: '婴幼儿类',
-                                val: 'babies',
-                                lnk: ''
-                            }, {
-                                name: '家居类',
-                                val: 'household',
-                                lnk: ''
-                            }
-                        ]
-                    },
-                    {
-                        cls_name: '工具专区',
-                        type_lst: [{
-                                name: '杂货类',
-                                val: 'missing',
-                                lnk: ''
-                            },
-                            {
-                                name: '工具类',
-                                val: 'produce',
-                                lnk: ''
-                            }, {
-                                name: '大型类',
-                                val: 'bulk',
-                                lnk: ''
-                            }
-                        ]
-                    },
-                    {
-                        cls_name: '更多推荐...',
-                        type_lst: [{
-                                name: '国际类',
-                                val: 'international',
-                                lnk: ''
-                            },
-                            {
-                                name: '宠物类',
-                                val: 'pets',
-                                lnk: ''
-                            }, {
-                                name: '其他类',
-                                val: 'other',
-                                lnk: ''
-                            }
-                        ]
-                    }
-                ]
+<script>
+    var v_func = new Vue({
+        el: '.func',
+        data: {
+            cls_chs: 'all', //all（推荐首页），foods（食品专区），breakfasts（早餐专区）、daily（日常用品专区）、tools（工具专区）、more（更多推荐）、搜索（search）
+            type_chs: 'none',
+            cls_foods: [{
+                type_name: '小吃类',
+                type_val: 'snacks'
             },
-            mounted: function () {
-                for (cls in this.gds_cls) {
-                    for (type in cls.type_lst) {
-                        type.lnk = 'rcmd?' + this.user_id + "&" + type.val;
-                        // alert(type.lnk);
-                    }
-                    // // alert(cls.cls_name);
+                {
+                    type_name: '冷冻类',
+                    type_val: 'frozen'
+                },
+                {
+                    type_name: '饮料类',
+                    type_val: 'beverages'
+                },
+                {
+                    type_name: '储藏室类',
+                    type_val: 'pantry'
+                },
+                {
+                    type_name: '肉品海鲜类',
+                    type_val: 'meat seafood'
+                },
+                {
+                    type_name: '酒类',
+                    type_val: 'alcohol'
+                },
+                {
+                    type_name: '农产品类',
+                    type_val: 'produce'
                 }
-                // // alert(v_user.gds_cls);
-            }
-        });
-        // var v_gds_type = new Vue({
-        //     el: "#gds-type",
-        //     data: {
-        //         type_chs: 0
-        //     }
-        // });
-
-        // {
-        //     name: 'goods_demo1dddddddd',
-        //         pic: 'Web/rcmd/img/gds_pic/1.png',
-        //     prc: '10.5元',
-        //     cnt: '100',
-        //     type: 'snack',
-        // }
-
-        var v_gds_best = new Vue({
-            el: "#gds-best",
-            data: {
-                gds_lst: [{
-                        name: 'goods_demo1dddddddd',
-                        pic: 'Web/rcmd/img/gds_pic/1.png',
-                        prc: '10.5元',
-                        cnt: '100',
-                        type: 'snack',
-                    },
-                    {
-                        name: 'goods_demo1dddddddd',
-                        pic: 'Web/rcmd/img/gds_pic/1.png',
-                        prc: '10.5元',
-                        cnt: '100',
-                        type: 'snack',
-                    },
-                    {
-                        name: 'goods_demo1dddddddd',
-                        pic: 'Web/rcmd/img/gds_pic/1.png',
-                        prc: '10.5元',
-                        cnt: '100',
-                        type: 'snack',
-                    },
-                    {
-                        name: 'goods_demo1dddddddd',
-                        pic: 'Web/rcmd/img/gds_pic/1.png',
-                        prc: '10.5元',
-                        cnt: '100',
-                        type: 'snack',
-                    },
-                    {
-                        name: 'goods_demo1dddddddd',
-                        pic: 'Web/rcmd/img/gds_pic/1.png',
-                        prc: '10.5元',
-                        cnt: '100',
-                        type: 'snack',
-                    }
-                ]
-            }
-        });
-
-        // {
-        //     name: 'goods_demo_other_1',
-        //         pic: 'Web/rcmd/img/gds_pic/1.png',
-        //     prc: '10.5元',
-        //     cnt: '100',
-        //     type: 'snack',
-        //     index: 0
-        // }
-        var v_gds_other = new Vue({
-            el: "#gds-other",
-            data: {
-                gds_lst: []
+            ],
+            cls_breakfasts: [{
+                type_name: '熟食类',
+                type_val: 'deli'
             },
-            methods: {
-                onMore: function (ind) {
-                    // // alert("why" + ind);
-                    // $('#gds-other>.row>.card:nth-child(' + (ind + 1) + ')').toggleClass("col-md-3");
-                    // $('#gds-other>.row>.card:nth-child(' + (ind + 1) + ')').toggleClass("col-md-5");
-                    // TINY.box.show('rcmd-gds.html?' + this.gds_lst[ind].name + '&' + this.gds_lst[ind].pic +
-                    //     '&' + this.gds_lst[ind].prc + '&' + this.gds_lst[ind].cnt + '&' + this.gds_lst[
-                    //         ind]
-                    //     .type, 1, 800,
-                    //     550, 1);
+                {
+                    type_name: '早餐类',
+                    type_val: 'breakfast'
+                },
+                {
+                    type_name: '乳蛋类',
+                    type_val: 'dairy eggs'
+                },
+                {
+                    type_name: '罐装食品类',
+                    type_val: 'canned goods'
+                },
+                {
+                    type_name: '干货面团类',
+                    type_val: 'dry goods pasta'
+                },
+                {
+                    type_name: '烘培类',
+                    type_val: 'bakery'
+                }
+            ],
+            cls_daily: [{
+                type_name: '个人护理类',
+                type_val: 'personal care'
+            },
+                {
+                    type_name: '婴幼儿类',
+                    type_val: 'babies'
+                },
+                {
+                    type_name: '家居类',
+                    type_val: 'household'
+                }
+            ],
+            cls_tools: [{
+                type_name: '杂货类',
+                type_val: 'missing'
+            },
+                {
+                    type_name: '大型类',
+                    type_val: 'bulk'
+                }
+            ],
+            cls_more: [{
+                type_name: '国际类',
+                type_val: 'international'
+            },
+                {
+                    type_name: '宠物类',
+                    type_val: 'pets'
+                },
+                {
+                    type_name: '其他类',
+                    type_val: 'other'
+                }
+            ]
+        }
+    });
 
+    var v_user = new Vue({
+        el: ".user",
+        data: {
+            user_id: cmd_str,
+            cur_cls: -1,
+            cur_type: -1,
+            cur_search:'',
+        }
+    });
+    // var v_gds_type = new Vue({
+    //     el: "#gds-type",
+    //     data: {
+    //         type_chs: 0
+    //     }
+    // });
+
+    // {
+    //     name: 'goods_demo1dddddddd',
+    //         pic: 'Web/rcmd/img/gds_pic/1.png',
+    //     prc: '10.5元',
+    //     cnt: '100',
+    //     type: 'snack',
+    // }
+
+    var v_gds_best = new Vue({
+        el: "#gds-best",
+        data: {
+            gds_lst: [{
+                name: '空缺位置',
+                pic: 'Web/rcmd/img/ad.jpg',
+                prc: '',
+                cnt: '',
+                type: '',
+            },
+                {
+                    name: '空缺位置',
+                    pic: 'Web/rcmd/img/ad.jpg',
+                    prc: '',
+                    cnt: '',
+                    type: '',
+                },
+                {
+                    name: '空缺位置',
+                    pic: 'Web/rcmd/img/ad.jpg',
+                    prc: '',
+                    cnt: '',
+                    type: '',
+                },
+                {
+                    name: '空缺位置',
+                    pic: 'Web/rcmd/img/ad.jpg',
+                    prc: '',
+                    cnt: '',
+                    type: '',
+                },
+                {
+                    name: '空缺位置',
+                    pic: 'Web/rcmd/img/ad.jpg',
+                    prc: '',
+                    cnt: '',
+                    type: '',
+                }
+            ]
+        }
+    });
+
+    // {
+    //     name: 'goods_demo_other_1',
+    //         pic: 'Web/rcmd/img/gds_pic/1.png',
+    //     prc: '10.5元',
+    //     cnt: '100',
+    //     type: 'snack',
+    //     index: 0
+    // }
+    var v_gds_other = new Vue({
+        el: "#gds-other",
+        data: {
+            gds_lst: []
+        },
+        methods: {
+            onMore: function (ind) {
+                // // alert("why" + ind);
+                // $('#gds-other>.row>.card:nth-child(' + (ind + 1) + ')').toggleClass("col-md-3");
+                // $('#gds-other>.row>.card:nth-child(' + (ind + 1) + ')').toggleClass("col-md-5");
+                // TINY.box.show('rcmd-gds.html?' + this.gds_lst[ind].name + '&' + this.gds_lst[ind].pic +
+                //     '&' + this.gds_lst[ind].prc + '&' + this.gds_lst[ind].cnt + '&' + this.gds_lst[
+                //         ind]
+                //     .type, 1, 800,
+                //     550, 1);
+
+            }
+        }
+    });
+</script>
+<script>
+    function onUserSearch(){
+        alert(v_user.cur_search);
+        v_func.cls_chs = "search";
+        v_func.type_chs = "search";
+        pullGdsSearch();
+        // alert("");
+    }
+</script>
+<script>
+    function pullRcmdGeneral(userid, _offset, _limit) {
+        // alert("pullRcmdGeneral start");
+        $.post("userRcmd", {
+            userid: userid,
+            cmd: 0,
+            offset: _offset,
+            limit: _limit,
+        }, function (result) {
+            // alert(result);
+            var obj = JSON.parse(result);
+            if (obj.stat != "success") {
+                // alert("invalid");
+                return;
+            } else {
+                for (var i = 0; i < _limit; ++i) {
+
+                    var objGds = new Object();
+                    objGds.name = obj.gds_lst[i].name;
+                    objGds.pic = "res/gdspic/" + obj.gds_lst[i].pic;
+                    objGds.prc = obj.gds_lst[i].prc+"元";
+                    objGds.type = obj.gds_lst[i].type;
+                    objGds.index = obj.gds_lst[i].type;
+                    objGds.cnt = obj.gds_lst[i].cnt;
+
+                    if (i < 5) {
+                        // // alert('add best!');
+                        v_gds_best.gds_lst[i].name = objGds.name
+                        v_gds_best.gds_lst[i].prc = objGds.prc
+                        v_gds_best.gds_lst[i].pic = objGds.pic
+                        v_gds_best.gds_lst[i].cnt = objGds.cnt
+                        v_gds_best.gds_lst[i].type = objGds.type
+                    } else {
+                        // // alert('add low!');
+                        v_gds_other.gds_lst.push(objGds);
+                    }
+                    // v_gds_other.gds_lst.push(gds);
                 }
             }
         });
-    </script>
-    <script>
-        function pullRcmdGeneral(userid, _offset, _limit) {
-            // alert("pullRcmdGeneral start");
-            $.post("userRcmd", {
-                userid: userid,
-                cmd: 0,
-                offset: _offset,
-                limit: _limit,
+        // alert("pullRcmdGeneral end");
+    }
+
+    function pullRcmdByType(userid, _offset, _limit, type) {
+        alert("pullRcmdGeneral");
+        $.post("userRcmd", {
+            userid: userid,
+            cmd: 1,
+            offset: _offset,
+            limit: _limit,
+            args: type
+        }, function (result) {
+            alert(result);
+            var obj = JSON.parse(result);
+            if (obj.stat != "success") {
+                alert("invalid");
+                return;
+            } else {
+                v_gds_other.gds_lst = [];
+                for (var i = 0; i < _limit; ++i) {
+                    var objGds = new Object();
+                    objGds.name = obj.gds_lst[i].name;
+                    objGds.pic = "res/gdspic/" + obj.gds_lst[i].pic;
+                    objGds.prc = obj.gds_lst[i].prc;
+                    objGds.type = obj.gds_lst[i].type;
+                    objGds.index = obj.gds_lst[i].type;
+                    objGds.cnt = obj.gds_lst[i].cnt;
+                    if (i < 5) {
+                        v_gds_best.gds_lst[i].name = objGds.name;
+                        v_gds_best.gds_lst[i].prc = objGds.prc;
+                        v_gds_best.gds_lst[i].pic = objGds.pic;
+                        v_gds_best.gds_lst[i].cnt = objGds.cnt;
+                        v_gds_best.gds_lst[i].type = objGds.type;
+                    } else {
+                        v_gds_other.gds_lst.push(objGds);
+                    }
+                }
+            }
+        });
+    }
+
+    function pullGdsSearch(){
+        alert("pullGdsSearch");
+        v_gds_other.gds_lst = [];
+        for(var i = 0;i<3;++i)
+        {
+            $.post("userGdsQuery", {
+                userid: v_user.user_id,
+                cmd: i,
+                args: [v_user.cur_search]
             }, function (result) {
-                // alert(result);
+                alert(result);
                 var obj = JSON.parse(result);
                 if (obj.stat != "success") {
-                    // alert("invalid");
+                    alert("invalid");
                     return;
                 } else {
-                    for (var i = 0; i < _limit; ++i) {
+                    // alert('obj.gds:\t'+obj.gds);
+                    // alert('obj.gds.length:\t'+obj.gds.length);
+                    // alert('obj.gds[0].name:\t'+obj.gds[0].name);
+                    // alert('obj.gds[0].pic:\t'+obj.gds[0].pic);
+                    // alert('obj.gds[0].type:\t'+obj.gds[0].type);
+                    // alert('obj.gds[0].cnt:\t'+obj.gds[0].cnt);
+                    // alert('obj.gds[0].prc:\t'+obj.gds[0].prc);
 
+                    for (var i = 0; i < obj.gds.length; ++i) {
                         var objGds = new Object();
-                        objGds.name = obj.gds_lst[i].name;
-                        objGds.pic = "res/gdspic/" + obj.gds_lst[i].pic;
-                        objGds.prc = obj.gds_lst[i].prc;
-                        objGds.type = obj.gds_lst[i].type;
-                        objGds.index = obj.gds_lst[i].type;
-                        objGds.cnt = obj.gds_lst[i].cnt;
-
-                        if (i < 5) {
-                            // // alert('add best!');
-                            v_gds_best.gds_lst[i].name = objGds.name
-                            v_gds_best.gds_lst[i].prc = objGds.prc
-                            v_gds_best.gds_lst[i].pic = objGds.pic
-                            v_gds_best.gds_lst[i].cnt = objGds.cnt
-                            v_gds_best.gds_lst[i].type = objGds.type
-                        } else {
-                            // // alert('add low!');
-                            v_gds_other.gds_lst.push(objGds);
-                        }
-                        // v_gds_other.gds_lst.push(gds);
+                        objGds.name = obj.gds[i].name;
+                        objGds.pic = "res/gdspic/" + obj.gds[i].pic;
+                        objGds.prc = obj.gds[i].prc;
+                        objGds.type = obj.gds[i].type;
+                        objGds.cnt = obj.gds[i].cnt;
+                        v_gds_other.gds_lst.push(objGds);
                     }
                 }
             });
-            // alert("pullRcmdGeneral end");
         }
-    </script>
-    <script>
-        // function pullRcmd()
-        // {
-        //     pullRcmdGeneral("12",0,15);
-        // }
-        pullRcmdGeneral(cmd_str, 0, 30);
-    </script>
+    }
+</script>
 
-    <script>
-        /* 侧边栏切换形态 */
-        // $(".navbar-side a").click(function () {
-        //     $("body").toggleClass("sidebar-collapse");
-        //     if ($("body").hasClass("sidebar-collapse")) {
-        //         $(".sidebar > h4").html("博客");
-        //     } else {
-        //         $(".sidebar > h4").html("博客管理系统(四月)");
-        //     }
-        //     return false;
-        // })
 
-        $(".sidenav>li>a").click(function () {
-            $(this).addClass("hover");
-            $(this).next().slideToggle();
-            $(this).parent().siblings().children("a").removeClass("hover").next().slideUp();
-        });
-        $('.sidebar').on('mouseenter mouseleave', null, function () {
-            $("body").toggleClass("sidebar-collapse");
-        });
+<script>
+    /* 侧边栏切换形态 */
+    // $(".navbar-side a").click(function () {
+    //     $("body").toggleClass("sidebar-collapse");
+    //     if ($("body").hasClass("sidebar-collapse")) {
+    //         $(".sidebar > h4").html("博客");
+    //     } else {
+    //         $(".sidebar > h4").html("博客管理系统(四月)");
+    //     }
+    //     return false;
+    // })
+
+    $(".sidenav>li>a").click(function () {
+        $(this).addClass("hover");
+        $(this).next().slideToggle();
+        $(this).parent().siblings().children("a").removeClass("hover").next().slideUp();
+    });
+    $('.sidebar').on('mouseenter mouseleave', null, function () {
         $("body").toggleClass("sidebar-collapse");
-    </script>
+    });
+    $("body").toggleClass("sidebar-collapse");
+</script>
 
-    <script>
-        var swiper = new Swiper('.swiper-container', {
-            effect: 'coverflow',
-            // initialSlide: 2,
-            autoplay: true,
-            // grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: 'auto',
-            loop: true,
-            coverflowEffect: {
-                rotate: -50,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: true,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-            },
-            on: {
-                tap: function (e) {
-                    // alert("tap on" + this.realIndex);
-                    // $("body").toggleClass("sidebar-collapse");
-                }
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        effect: 'coverflow',
+        // initialSlide: 2,
+        autoplay: true,
+        // grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        loop: true,
+        coverflowEffect: {
+            rotate: -50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        on: {
+            tap: function (e) {
+                // alert("tap on" + this.realIndex);
+                // $("body").toggleClass("sidebar-collapse");
             }
-        });
-    </script>
-    <button onclick="pullRcmd()">
-        <h1>show more</h1>
-    </button>
+        }
+    });
+</script>
+<script>
+    // function pullRcmd()
+    // {
+    //     pullRcmdGeneral("12",0,15);
+    // }
+    pullRcmdGeneral(cmd_str, 0, 30);
+</script>
+<script>
+    function onClsAll(){
+        v_func.cls_chs = "all"
+        v_func.type_chs = "none";
+        pullRcmdGeneral(v_user.user_id, 0, 30);
+    }
+
+    function onClsFoods(val) {
+        alert(val);
+        pullRcmdByType(v_user.user_id, 0, 30, val);
+        v_func.cls_chs = "foods"
+        v_func.type_chs = val;
+    }
+
+    function onClsBreakfasts(val) {
+        alert(val);
+        pullRcmdByType(v_user.user_id, 0, 30, val);
+        v_func.cls_chs = "breakfast"
+        v_func.type_chs = val;
+    }
+
+    function onClsDaily(val) {
+        alert(val);
+        pullRcmdByType(v_user.user_id, 0, 30, val);
+        v_func.cls_chs = "daily"
+        v_func.type_chs = val;
+    }
+
+    function onClsTools(val) {
+        alert(val);
+        pullRcmdByType(v_user.user_id, 0, 30, val);
+        v_func.cls_chs = "tools"
+        v_func.type_chs = val;
+    }
+
+    function onClsMore(val) {
+        alert(val);
+        pullRcmdByType(v_user.user_id, 0, 30, val);
+        v_func.cls_chs = "more"
+        v_func.type_chs = val;
+    }
+</script>
 </body>
 
 </html>

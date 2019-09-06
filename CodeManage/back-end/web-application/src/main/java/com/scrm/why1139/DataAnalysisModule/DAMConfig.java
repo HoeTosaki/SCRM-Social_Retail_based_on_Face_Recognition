@@ -18,7 +18,7 @@ public class DAMConfig
 
     public void disableDBAccess()
     {
-
+        m_isDBAccess = false;
     }
 
     public boolean isDBAccess()

@@ -10,6 +10,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="Web/admin/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="Web/admin/css/bootstrap-table.css">
+    <script type="text/javascript" src="http://use.typekit.com/mxh7kqd.js"></script>
+    <script type="text/javascript">
+        try {
+            Typekit.load();
+        } catch (e) {}
+    </script>
 </head>
 
 <body>
@@ -28,7 +34,7 @@
             <ul class="sidebar-dropdown">
                 <li v-for="type in cls_sale">
                     <a href="javascript:void(0)" class="withripple" target="myframe"
-                       @click="onClsSale(type.type_val)">{{type.type_name}}</a>
+                       onclick="return false" @click="onClsSale(type.type_val)">{{type.type_name}}</a>
                 </li>
             </ul>
         </li>
@@ -41,7 +47,7 @@
             <ul class="sidebar-dropdown">
                 <li v-for="type in cls_person">
                     <a href="javascript:void(0)" class="withripple" target="myframe"
-                       @click="onClsPerson(type.type_val)">{{type.type_name}}</a>
+                       onclick="return false" @click="onClsPerson(type.type_val)">{{type.type_name}}</a>
                 </li>
             </ul>
         </li>
@@ -54,7 +60,7 @@
             <ul class="sidebar-dropdown">
                 <li v-for="type in cls_goods">
                     <a href="javascript:void(0)" class="withripple" target="myframe"
-                       @click="onClsGds(type.type_val)">{{type.type_name}}</a>
+                       onclick="return false" @click="onClsGds(type.type_val)">{{type.type_name}}</a>
                 </li>
             </ul>
         </li>
@@ -67,7 +73,7 @@
             <ul class="sidebar-dropdown">
                 <li v-for="type in cls_me">
                     <a href="javascript:void(0)" class="withripple" target="myframe"
-                       @click="onClsMe(type.type_val)">{{type.type_name}}</a>
+                       onclick="return false" @click="onClsMe(type.type_val)">{{type.type_name}}</a>
                 </li>
             </ul>
         </li>
@@ -81,10 +87,10 @@
     <nav id="nav" class="navbar navbar-default navbar-fixed-top user">
         <div class="container-fluid layer clear-float">
             <!-- <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
-                <span class="hamb-top"></span>
-                <span class="hamb-middle"></span>
-                <span class="hamb-bottom"></span>
-            </button> -->
+            <span class="hamb-top"></span>
+            <span class="hamb-middle"></span>
+            <span class="hamb-bottom"></span>
+        </button> -->
             <ul class="nav navbar-nav pt12">
                 <span><img id="user-icon" src="Web/admin/img/admin.jpg" alt=""></span>
                 <strong class="ml20">{{user_id}}</strong>
@@ -103,24 +109,24 @@
 
     <!-- 侧边导航栏 -->
     <!-- <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-        <ul class="nav sidebar-nav">
-            <li class="sidebar-title">
-                <span>功能选择</span>
-            </li>
-            <li class="item">
-                <span>销售数据</span>
-            </li>
-            <li class="item">
-                <span>员工管理</span>
-            </li>
-            <li class="item">
-                <span>商品管理</span>
-            </li>
-            <li class="item">
-                <span>个人管理</span>
-            </li>
-        </ul>
-    </nav> -->
+    <ul class="nav sidebar-nav">
+        <li class="sidebar-title">
+            <span>功能选择</span>
+        </li>
+        <li class="item">
+            <span>销售数据</span>
+        </li>
+        <li class="item">
+            <span>员工管理</span>
+        </li>
+        <li class="item">
+            <span>商品管理</span>
+        </li>
+        <li class="item">
+            <span>个人管理</span>
+        </li>
+    </ul>
+</nav> -->
     <!-- 系统贴图 -->
     <div id="sys-img" class="layer"></div>
 
@@ -164,7 +170,7 @@
                 <div class="form-group">
                     <div id="graph-start-date" v-show="cnt_chs != 'season'" class='input-group date datetimepicker'>
                         <input v-model="st_date" onchange="onFigDate()" type='text' class="form-control"
-                               placeholder="开始日期" name="x-min" id="sale-cnt-date-start"/>
+                               placeholder="开始日期" name="x-min" id="sale-cnt-date-start" />
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -175,7 +181,7 @@
                 <div class="form-group">
                     <div id="graph-end-date" v-show="cnt_chs != 'season'" class='input-group date datetimepicker'>
                         <input v-model="ed_date" onchange="onFigDate()" type='text' class="form-control"
-                               placeholder="结束日期" name="x-max" id="sale-cnt-date-end"/>
+                               placeholder="结束日期" name="x-max" id="sale-cnt-date-end" />
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -203,16 +209,22 @@
         <div id="sale-graph" class="ml20 mr20 mt15 box-background-color"></div>
     </div>
 
-    <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'gds-cnt'"
+    <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'gds-cnt'" id="gds-cnt-relfig"
          class="layer mt15 mb3 box-border box-background-color box-shadow gds-cnt-fig">
-
         <span class="subtitle mt15 ml20">商品热度统计图</span>
+        <div id="arbor">
+            <div id="nav">
+                <a class="back" href="#"></a>
+            </div>
+            <canvas id="sitemap" width="800" height="400"></canvas>
+        </div>
+<!--        <canvas id="sitemap" width="1000" height="500"></canvas>-->
     </div>
 
     <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'gds-cnt'"
          class="layer mt15 mb3 box-border box-background-color box-shadow gds-cnt-list">
-
         <span class="subtitle mt15 ml20">商品热度统计表</span>
+        <table id="sale-gds-cnt-table" class="ml20 mr20 mt15"></table>
     </div>
 
 
@@ -224,9 +236,9 @@
 
         <ul id="time-option" class="nav nav-pills clear-float mt15 ml20">
             <!-- <li role="presentation" class="active"><a href="#">当日</a></li>
-        <li role="presentation"><a href="#">7天内</a></li>
-        <li role="presentation"><a href="#">30天内</a></li>
-        <li role="presentation"><a href="#">自定义</a></li> -->
+    <li role="presentation"><a href="#">7天内</a></li>
+    <li role="presentation"><a href="#">30天内</a></li>
+    <li role="presentation"><a href="#">自定义</a></li> -->
             <label class="mt15"><input type="radio" name='y' value="day" v-model="cnt_chs" checked="checked"
                                        onclick="onListMtdChs()" />当日</label>
             <label class="mt15 ml20"><input type="radio" name='y' value="week" v-model="cnt_chs"
@@ -241,7 +253,7 @@
                 <div class="form-group">
                     <div id="table-start-date" class='input-group date datetimepicker'>
                         <input type='text' v-model="st_date" onchange="onListDate()" class="form-control"
-                               placeholder="开始日期" id="list-st-date"/>
+                               placeholder="开始日期" id="list-st-date" />
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -253,7 +265,7 @@
                     <div id="table-end-date" class='input-group date datetimepicker'>
                         <!--v-show="v_user_cnt_list.cnt_chs == 'auto'"-->
                         <input type='text' v-model="ed_date" onchange="onListDate()" class="form-control"
-                               placeholder="结束日期" id="list-ed-date"/>
+                               placeholder="结束日期" id="list-ed-date" />
                         <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </span>
@@ -267,6 +279,9 @@
     <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'accnt-cnt'"
          class="layer mt15 mb3 box-border box-background-color box-shadow accnt-cnt-list">
         <span class="subtitle mt15 ml20">收银员记账统计</span>
+<!--        <div id="sale-accnt-cnt-graph" class="ml20 mr20 mt15 box-background-color"></div>-->
+        <div id="sale-accnt-cnt-graph" style="width:1000px; height:520px;"></div>
+
     </div>
 
     <div v-show="v_func.cls_chs == 'person' && v_func.type_chs == 'accnt-add'"
@@ -328,7 +343,8 @@
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">查看已有ID <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                    <li><a href="#" v-for="ele_mngr_id in mngr_id_lst" @click="onAccntDelLst(ele_mngr_id)">{{ele_mngr_id}}</a></li>
+                    <li><a href="#" v-for="ele_mngr_id in mngr_id_lst"
+                           @click="onAccntDelLst(ele_mngr_id)">{{ele_mngr_id}}</a></li>
                 </ul>
             </div><!-- /btn-group -->
         </div>
@@ -567,6 +583,29 @@
 <script src="Web/admin/js-ref/bootstrap-table.js"></script>
 <script src="Web/admin/js-ref/bootstrap-table-zh-CN.js"></script>
 <script src="Web/admin/js-ref/echarts.min.js"></script>
+<script src="Web/admin/js/jquery.address-1.4.min.js"></script>
+
+<script src="Web/admin/html/js/lib/arbor.js"></script>
+<script src="Web/admin/html/js/lib/arbor-tween.js"></script>
+<script src="Web/admin/html/js/lib/arbor-graphics.js"></script>
+<script src="Web/admin/html/site.js"></script>
+
+<script>
+    var w = parseInt($('#gds-cnt-relfig').css("width"));
+    var h = parseInt($('#gds-cnt-relfig').css("height"));
+    var x = (w - 100)+"px";
+    var y = (h - 100)+"px";
+    alert('x = '+x);
+    alert('y = '+y);
+    // var canvas = document.getElementById('sitemap');
+    // var canvas = $('#sitemap').get();
+    // alert(canvas);
+    // alert(canvas.width);
+    // canvas.width = 500;
+    // canvas.height = 100;
+    // $('#sitemap').css("width", "1080px").css("height", "432px");
+    // $('#sitemap').css("width", "100%");
+</script>
 <script>
     cmd_str = window.location.search.split('?')[1];
     // alert(cmd_str);
@@ -845,11 +884,10 @@
                         v_sale_cnt_val.month_sum = obj.vals[2];
                         v_sale_cnt_val.day_sum = obj.vals[3];
                         if (v_user_cnt_list.cnt_chs == 'day') {
-                            var true_vals = obj.vals.slice(4);
-                            var lst=[];
-                            alert('size = '+true_vals.length);
-                            for(var i = 0; i<true_vals.length;++i)
-                            {
+                            var true_vals = obj.vals.slice(5);
+                            var lst = [];
+                            alert('size = ' + true_vals.length);
+                            for (var i = 0; i < true_vals.length; ++i) {
                                 var val = true_vals[i];
                                 // alert(val.gds.type);
                                 lst.push({
@@ -871,11 +909,10 @@
                     }
                     case 14: {
                         var true_vals = obj.vals.slice(1);
-                        alert('week/month查询:'+'x = '+true_vals);//week/month查询
-                        var lst=[];
-                        alert('size = '+true_vals.length);
-                        for(var i = 0; i<true_vals.length;++i)
-                        {
+                        alert('week/month查询:' + 'x = ' + true_vals); //week/month查询
+                        var lst = [];
+                        alert('size = ' + true_vals.length);
+                        for (var i = 0; i < true_vals.length; ++i) {
                             var val = true_vals[i];
                             // alert(val.gds.type);
                             lst.push({
@@ -897,10 +934,9 @@
                     case 15: {
                         var true_vals = obj.vals.slice(1);
                         // alert('自定义auto查询:'+'x = '+true_vals);//自定义auto查询
-                        var lst=[];
-                        alert('size = '+true_vals.length);
-                        for(var i = 0; i<true_vals.length;++i)
-                        {
+                        var lst = [];
+                        alert('size = ' + true_vals.length);
+                        for (var i = 0; i < true_vals.length; ++i) {
                             var val = true_vals[i];
                             // alert(val.gds.type);
                             lst.push({
@@ -923,6 +959,34 @@
         });
     }
 
+    function pullAccntCntFig() {
+        alert("post start why");
+        $.post("accntCntPullFig", {
+            mngrid: "null"
+        }, function (result) {
+            alert(result);
+            var obj = JSON.parse(result);
+
+            /**
+             * obj:
+             *      stat:
+             *      x:['str--mngrid',]
+             *      y:['double',]
+             */
+            alert("x=\t" + obj.x);
+            alert("y=\t" + obj.y);
+
+            if (obj.stat != "success") {
+                v_accnt_upd_core.hints = '无法获取当前服务器的收银员信息！';
+                return;
+            } else {
+                presentChartAccnt(obj.x,obj.y);
+            }
+        });
+        alert("post end why.");
+    }
+
+
     function postMngrAdd() {
         alert("post start");
         $.post("mngrAdd", {
@@ -932,13 +996,13 @@
             alert(result);
             var obj = JSON.parse(result);
             if (obj.stat != "success") {
-                v_accnt_add_core.hints='添加收银员失败！';
+                v_accnt_add_core.hints = '添加收银员失败！';
                 return;
             } else {
-                v_accnt_add_core.hints='添加收银员成功！';
+                v_accnt_add_core.hints = '添加收银员成功！';
             }
-            v_accnt_add_core.mngr_id='';
-            v_accnt_add_core.passwd='';
+            v_accnt_add_core.mngr_id = '';
+            v_accnt_add_core.passwd = '';
         });
         alert("post end.");
     }
@@ -952,10 +1016,10 @@
             alert(result);
             var obj = JSON.parse(result);
             if (obj.stat != "success") {
-                v_accnt_upd_core.hints='修改收银员失败！';
+                v_accnt_upd_core.hints = '修改收银员失败！';
                 return;
             } else {
-                v_accnt_upd_core.hints='修改收银员成功！';
+                v_accnt_upd_core.hints = '修改收银员成功！';
             }
         });
         alert("post end.");
@@ -969,16 +1033,16 @@
             alert(result);
             var obj = JSON.parse(result);
             if (obj.stat != "success") {
-                v_accnt_del_core.hints='删除收银员失败！';
+                v_accnt_del_core.hints = '删除收银员失败！';
                 return;
             } else {
-                v_accnt_del_core.hints='删除收银员成功！';
+                v_accnt_del_core.hints = '删除收银员成功！';
             }
         });
         alert("post end.");
     }
 
-    function pullMngrPre(){
+    function pullMngrPre() {
         alert("post start");
         $.post("mngrPullPre", {
             mngrid: "null"
@@ -987,7 +1051,7 @@
             var obj = JSON.parse(result);
 
             if (obj.stat != "success") {
-                v_accnt_upd_core.hints='无法获取当前服务器的收银员信息！';
+                v_accnt_upd_core.hints = '无法获取当前服务器的收银员信息！';
                 return;
             } else {
                 // v_accnt_upd_core.mngr_id_lst=[];
@@ -998,7 +1062,7 @@
             }
 
             if (obj.stat != "success") {
-                v_accnt_del_core.hints='无法获取当前服务器的收银员信息！';
+                v_accnt_del_core.hints = '无法获取当前服务器的收银员信息！';
                 return;
             } else {
                 // v_accnt_del_core.mngr_id_lst=[];
@@ -1038,31 +1102,31 @@
     function postGdsAdd() {
         alert("post start");
         $.post("gdsAdd", {
-            gds:{
-                id:v_gds_add_core.gds_id,
-                name:v_gds_add_core.gds_name,
-                type:v_gds_add_core.gds_type,
-                prc:v_gds_add_core.gds_prc,
-                pic:v_gds_add_core.gds_pic,
-                cnt:v_gds_add_core.gds_cnt,
-                desc:v_gds_add_core.gds_desc
+            gds: {
+                id: v_gds_add_core.gds_id,
+                name: v_gds_add_core.gds_name,
+                type: v_gds_add_core.gds_type,
+                prc: v_gds_add_core.gds_prc,
+                pic: v_gds_add_core.gds_pic,
+                cnt: v_gds_add_core.gds_cnt,
+                desc: v_gds_add_core.gds_desc
             }
         }, function (result) {
             alert(result);
             var obj = JSON.parse(result);
             if (obj.stat != "success") {
-                v_gds_add_core.hints='添加商品失败！';
+                v_gds_add_core.hints = '添加商品失败！';
                 return;
             } else {
-                v_gds_add_core.hints='添加商品成功！';
+                v_gds_add_core.hints = '添加商品成功！';
             }
-            v_gds_add_core.gds_id=-1;
-            v_gds_add_core.gds_name='';
-            v_gds_add_core.gds_type='';
-            v_gds_add_core.gds_prc='';
-            v_gds_add_core.gds_pic='';
-            v_gds_add_core.gds_cnt='';
-            v_gds_add_core.gds_desc='';
+            v_gds_add_core.gds_id = -1;
+            v_gds_add_core.gds_name = '';
+            v_gds_add_core.gds_type = '';
+            v_gds_add_core.gds_prc = '';
+            v_gds_add_core.gds_pic = '';
+            v_gds_add_core.gds_cnt = '';
+            v_gds_add_core.gds_desc = '';
         });
         alert("post end.");
     }
@@ -1070,31 +1134,31 @@
     function postGdsUpd() {
         alert("post start");
         $.post("gdsUpdate", {
-            gds:{
-                id:v_gds_upd_core.gds_id,
-                name:v_gds_upd_core.gds_name,
-                type:v_gds_upd_core.gds_type,
-                prc:v_gds_upd_core.gds_prc,
-                pic:v_gds_upd_core.gds_pic,
-                cnt:v_gds_upd_core.gds_cnt,
-                desc:v_gds_upd_core.gds_desc
+            gds: {
+                id: v_gds_upd_core.gds_id,
+                name: v_gds_upd_core.gds_name,
+                type: v_gds_upd_core.gds_type,
+                prc: v_gds_upd_core.gds_prc,
+                pic: v_gds_upd_core.gds_pic,
+                cnt: v_gds_upd_core.gds_cnt,
+                desc: v_gds_upd_core.gds_desc
             }
         }, function (result) {
             alert(result);
             var obj = JSON.parse(result);
             if (obj.stat != "success") {
-                v_gds_upd_core.hints='更新商品失败！';
+                v_gds_upd_core.hints = '更新商品失败！';
                 return;
             } else {
-                v_gds_upd_core.hints='更新商品成功！';
+                v_gds_upd_core.hints = '更新商品成功！';
             }
-            v_gds_upd_core.gds_id=-1;
-            v_gds_upd_core.gds_name='';
-            v_gds_upd_core.gds_type='';
-            v_gds_upd_core.gds_prc='';
-            v_gds_upd_core.gds_pic='';
-            v_gds_upd_core.gds_cnt='';
-            v_gds_upd_core.gds_desc='';
+            v_gds_upd_core.gds_id = -1;
+            v_gds_upd_core.gds_name = '';
+            v_gds_upd_core.gds_type = '';
+            v_gds_upd_core.gds_prc = '';
+            v_gds_upd_core.gds_pic = '';
+            v_gds_upd_core.gds_cnt = '';
+            v_gds_upd_core.gds_desc = '';
         });
         alert("post end.");
     }
@@ -1102,73 +1166,70 @@
     function postGdsDel() {
         alert("post start");
         $.post("gdsDel", {
-            goodsid:v_gds_del_core.gds_id
+            goodsid: v_gds_del_core.gds_id
         }, function (result) {
             alert(result);
             var obj = JSON.parse(result);
             if (obj.stat != "success") {
-                v_gds_upd_core.hints='删除商品失败！';
+                v_gds_upd_core.hints = '删除商品失败！';
                 return;
             } else {
-                v_gds_upd_core.hints='删除商品成功！';
+                v_gds_upd_core.hints = '删除商品成功！';
             }
-            v_gds_upd_core.gds_id=-1;
-            v_gds_upd_core.gds_name='';
-            v_gds_upd_core.gds_type='';
-            v_gds_upd_core.gds_prc='';
-            v_gds_upd_core.gds_pic='';
-            v_gds_upd_core.gds_cnt='';
-            v_gds_upd_core.gds_desc='';
+            v_gds_upd_core.gds_id = -1;
+            v_gds_upd_core.gds_name = '';
+            v_gds_upd_core.gds_type = '';
+            v_gds_upd_core.gds_prc = '';
+            v_gds_upd_core.gds_pic = '';
+            v_gds_upd_core.gds_cnt = '';
+            v_gds_upd_core.gds_desc = '';
         });
         alert("post end.");
     }
 
-    function pullGdsPre(){
+    function pullGdsPre() {
         alert("post start");
-        if(v_func.type_chs == 'gds-upd')
-        {
+        if (v_func.type_chs == 'gds-upd') {
             $.post("gdsPullPre", {
-                goodsid:v_gds_upd_core.gds_id
+                goodsid: v_gds_upd_core.gds_id
             }, function (result) {
                 alert(result);
                 var obj = JSON.parse(result);
                 if (obj.stat != "success") {
-                    v_gds_upd_core.hints='无法获取当前服务器的商品信息！';
+                    v_gds_upd_core.hints = '无法获取当前服务器的商品信息！';
                     return;
                 } else {
-                    v_gds_upd_core.gds_id=obj.gds.id;
-                    v_gds_upd_core.gds_name=obj.gds.name;
-                    v_gds_upd_core.gds_type=obj.gds.type;
-                    v_gds_upd_core.gds_prc=obj.gds.prc;
-                    v_gds_upd_core.gds_pic=obj.gds.pic;
-                    v_gds_upd_core.gds_cnt=obj.gds.cnt;
-                    v_gds_upd_core.gds_desc=obj.gds.desc;
+                    v_gds_upd_core.gds_id = obj.gds.id;
+                    v_gds_upd_core.gds_name = obj.gds.name;
+                    v_gds_upd_core.gds_type = obj.gds.type;
+                    v_gds_upd_core.gds_prc = obj.gds.prc;
+                    v_gds_upd_core.gds_pic = obj.gds.pic;
+                    v_gds_upd_core.gds_cnt = obj.gds.cnt;
+                    v_gds_upd_core.gds_desc = obj.gds.desc;
                 }
             });
 
-        }else if(v_func.type_chs == 'gds-del')
-        {
+        } else if (v_func.type_chs == 'gds-del') {
             $.post("gdsPullPre", {
-                goodsid:v_gds_del_core.gds_id
+                goodsid: v_gds_del_core.gds_id
             }, function (result) {
                 alert(result);
                 var obj = JSON.parse(result);
                 if (obj.stat != "success") {
-                    v_gds_del_core.hints='无法获取当前服务器的商品信息！';
+                    v_gds_del_core.hints = '无法获取当前服务器的商品信息！';
                     return;
                 } else {
-                    v_gds_del_core.gds_id=obj.gds.id;
-                    v_gds_del_core.gds_name=obj.gds.name;
-                    v_gds_del_core.gds_type=obj.gds.type;
-                    v_gds_del_core.gds_prc=obj.gds.prc;
-                    v_gds_del_core.gds_pic=obj.gds.pic;
-                    v_gds_del_core.gds_cnt=obj.gds.cnt;
-                    v_gds_del_core.gds_desc=obj.gds.desc;
+                    v_gds_del_core.gds_id = obj.gds.id;
+                    v_gds_del_core.gds_name = obj.gds.name;
+                    v_gds_del_core.gds_type = obj.gds.type;
+                    v_gds_del_core.gds_prc = obj.gds.prc;
+                    v_gds_del_core.gds_pic = obj.gds.pic;
+                    v_gds_del_core.gds_cnt = obj.gds.cnt;
+                    v_gds_del_core.gds_desc = obj.gds.desc;
                 }
             });
 
-        }
-        else{
+        } else {
             alert('??');
         }
         alert("post end.");
@@ -1191,6 +1252,7 @@
             }
         });
     }
+
 
 </script>
 <script>
@@ -1332,7 +1394,7 @@
         setTimeout(() => {
             // alert("st:"+$('#sale-cnt-date-start').val());
             // alert("ed:"+$('#sale-cnt-date-end').val());
-        v_sale_cnt_fig.st_date =  $('#sale-cnt-date-start').val();
+            v_sale_cnt_fig.st_date = $('#sale-cnt-date-start').val();
         v_sale_cnt_fig.ed_date = $('#sale-cnt-date-end').val();
         if (v_sale_cnt_fig.cnt_chs == 'month') //month,season,type,name,id
         {
@@ -1405,18 +1467,18 @@
         // list-ed-date
         setTimeout(() => {
 
-            v_user_cnt_list.st_date =  $('#list-st-date').val();
-            v_user_cnt_list.ed_date = $('#list-ed-date').val();
-            if (v_user_cnt_list.cnt_chs == 'day') //month,season,type,name,id
-            {
-                pullAnalValByCmd(13, []);
-            } else if (v_user_cnt_list.cnt_chs == 'week') {
-                pullAnalValByCmd(14, ["week"]);
-            } else if (v_user_cnt_list.cnt_chs == 'month') {
-                pullAnalValByCmd(14, ["month"]);
-            } else if (v_user_cnt_list.cnt_chs == 'auto') {
-                pullAnalValByCmd(15, [v_user_cnt_list.st_date, v_user_cnt_list.ed_date]);
-            }
+            v_user_cnt_list.st_date = $('#list-st-date').val();
+        v_user_cnt_list.ed_date = $('#list-ed-date').val();
+        if (v_user_cnt_list.cnt_chs == 'day') //month,season,type,name,id
+        {
+            pullAnalValByCmd(13, []);
+        } else if (v_user_cnt_list.cnt_chs == 'week') {
+            pullAnalValByCmd(14, ["week"]);
+        } else if (v_user_cnt_list.cnt_chs == 'month') {
+            pullAnalValByCmd(14, ["month"]);
+        } else if (v_user_cnt_list.cnt_chs == 'auto') {
+            pullAnalValByCmd(15, [v_user_cnt_list.st_date, v_user_cnt_list.ed_date]);
+        }
     }, 200);
     }
 
@@ -1440,6 +1502,7 @@
     pullMngrPre();
     pullAnalFigByCmd(8, [v_sale_cnt_fig.st_date, v_sale_cnt_fig.ed_date]);
     pullAnalValByCmd(13, []);
+    pullAccntCntFig();
 </script>
 <script>
     $(".sidenav>li>a").click(function () {

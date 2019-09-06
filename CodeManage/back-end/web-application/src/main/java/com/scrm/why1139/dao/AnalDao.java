@@ -126,4 +126,29 @@ public class AnalDao
         return ret;
     }
 
+    public boolean goodsAnalyze(List<Integer> _gds1ID,List<Integer> _gds2ID,List<Double> _relNum,List<Integer> _gdsID,List<Integer> _buyCnt,List<Double> _cntNum)
+    {
+//        for(int i = 0;i < 20;++i)//edges
+//        {
+//            _gds1ID.add((int)(Math.random()*29+1));
+//            _gds2ID.add((int)(Math.random()*29+1));
+//            _relNum.add(Math.random()*2-1);
+//        }
+//
+//        for(int i = 0;i < 30;++i)//nodes
+//        {
+//            _gdsID.add(i+1);
+//            _cntNum.add(Math.random()*2-1);
+//            _buyCnt.add((int)(Math.random()*100+1));
+//        }
+//        return true;
+        return m_dataProcessor.goodsAnalyze(_gds1ID, _gds2ID, _relNum, _gdsID, _buyCnt, _cntNum);
+    }
+
+    public boolean mngrAnalyzeFig(List<String> _mngrID, List<String> _sale)
+{
+    return m_dataProcessor.mngrAnalyzeFig(_mngrID, _sale);
+}
+
+
 }

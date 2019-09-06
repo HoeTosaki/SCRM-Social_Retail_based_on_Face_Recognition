@@ -215,6 +215,8 @@ public class GoodsOperWeb {
                 }
                 else
                 {
+                    mp.put("stat", "success");
+                    JSONArray arrGds = new JSONArray();
                     JSONObject jsonGdsNew = new JSONObject();
                     jsonGdsNew.put("id",gds.getGoodsID());
                     jsonGdsNew.put("name",gds.getGoodsName());
@@ -223,7 +225,8 @@ public class GoodsOperWeb {
                     jsonGdsNew.put("cnt",gds.getGoodsCnt());
                     jsonGdsNew.put("prc",gds.getPrice());
                     jsonGdsNew.put("pic",gds.getPic());
-                    mp.put("gds",jsonGdsNew);
+                    arrGds.add(jsonGdsNew);
+                    mp.put("gds",arrGds);
                 }
                 break;
             }
@@ -237,6 +240,8 @@ public class GoodsOperWeb {
                 }
                 else
                 {
+                    mp.put("stat", "success");
+                    JSONArray arrGds = new JSONArray();
                     JSONObject jsonGdsNew = new JSONObject();
                     jsonGdsNew.put("id",gds.getGoodsID());
                     jsonGdsNew.put("name",gds.getGoodsName());
@@ -245,12 +250,14 @@ public class GoodsOperWeb {
                     jsonGdsNew.put("cnt",gds.getGoodsCnt());
                     jsonGdsNew.put("prc",gds.getPrice());
                     jsonGdsNew.put("pic",gds.getPic());
-                    mp.put("gds",jsonGdsNew);
+                    arrGds.add(jsonGdsNew);
+                    mp.put("gds",arrGds);
                 }
                 break;
             }
             case 2:
             {
+                mp.put("stat", "success");
                 String args0 = arrArgs.getString(0);//type
                 List<Goods> lstGds = m_accntService.findGoodsByGoodsType(args0);
                 if(lstGds == null || lstGds.isEmpty())
@@ -276,7 +283,6 @@ public class GoodsOperWeb {
                 }
                 break;
             }
-
         }
 
         JSONObject obj = new JSONObject(mp);

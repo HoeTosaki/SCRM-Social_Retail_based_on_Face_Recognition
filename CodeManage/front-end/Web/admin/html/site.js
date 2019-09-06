@@ -4,53 +4,6 @@
 // the arbor.js website
 //
 (function ($) {
-  // var trace = function(msg){
-  //   if (typeof(window)=='undefined' || !window.console) return
-  //   var len = arguments.length, args = [];
-  //   for (var i=0; i<len; i++) args.push("arguments["+i+"]")
-  //   eval("console.log("+args.join(",")+")")
-  // }  
-  var intersect_line_line = function (p1, p2, p3, p4) {
-    var denom = ((p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y));
-    if (denom === 0) return false // lines are parallel
-    var ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denom;
-    var ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denom;
-
-    if (ua < 0 || ua > 1 || ub < 0 || ub > 1) return false
-    return arbor.Point(p1.x + ua * (p2.x - p1.x), p1.y + ua * (p2.y - p1.y));
-  }
-
-  var intersect_line_box = function (p1, p2, boxTuple) {
-    var p3 = {
-        x: boxTuple[0],
-        y: boxTuple[1]
-      },
-      w = boxTuple[2],
-      h = boxTuple[3]
-
-    var tl = {
-      x: p3.x,
-      y: p3.y
-    };
-    var tr = {
-      x: p3.x + w,
-      y: p3.y
-    };
-    var bl = {
-      x: p3.x,
-      y: p3.y + h
-    };
-    var br = {
-      x: p3.x + w,
-      y: p3.y + h
-    };
-
-    return intersect_line_line(p1, p2, tl, tr) ||
-      intersect_line_line(p1, p2, tr, br) ||
-      intersect_line_line(p1, p2, br, bl) ||
-      intersect_line_line(p1, p2, bl, tl) ||
-      false
-  }
   var Renderer = function (elt) {
     var dom = $(elt)
     var canvas = dom.get(0)
@@ -98,191 +51,17 @@
         that.redraw()
       },
 
-      intersect_line_line: function (p1, p2, p3, p4) {
-        var denom = ((p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y));
-        if (denom === 0) return false // lines are parallel
-        var ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denom;
-        var ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denom;
-
-        if (ua < 0 || ua > 1 || ub < 0 || ub > 1) return false
-        return arbor.Point(p1.x + ua * (p2.x - p1.x), p1.y + ua * (p2.y - p1.y));
-      },
       redraw: function () {
-        var nodeBoxes = {}
-        gfx.clear();
-        sys.eachNode(function (node, pt) {
-          var w = Math.max(20, 20 + gfx.textWidth(node.name))
-          if (node.data.alpha === 0) return
-          if (node.data.shape == 'dot') {
-            nodeBoxes[node.name] = [pt.x - w / 2, pt.y - w / 2, w, w]
-          } else {
-            nodeBoxes[node.name] = [pt.x - w / 2, pt.y - 11, w, 22]
-          }
-        })
 
-        sys.eachEdge(function (edge, p1, p2) {
-          if (edge.source.data.alpha * edge.target.data.alpha == 0)
-            return
-          //gfx.line(p1, p2, {stroke:"#b2b19d", width:2, alpha:edge.target.data.alpha})
-          //ctx.fillStyle = "black";
-          //ctx.font = 'italic 13px sans-serif';
-          //ctx.fillText (edge.data.label, (p1.x + p2.x) / 2, (p1.y + p2.y) / 2); 
-
-          var weight = edge.data.weight
-          var color = edge.data.color
-
-          if (!color || ("" + color).match(/^[ \t]*$/)) color = null
-
-          // find the start point
-          var tail = intersect_line_box(p1, p2, nodeBoxes[edge.source.name])
-          var head = intersect_line_box(tail, p2, nodeBoxes[edge.target.name])
-          //head=p2;
-          //tail=p1;
-          //*
-          ctx.save()
-          ctx.beginPath()
-          ctx.lineWidth = (!isNaN(weight)) ? parseFloat(weight) : 1
-          ctx.strokeStyle = (color) ? color : "#cccccc"
-          ctx.fillStyle = "null"
-          ctx.moveTo(p1.x, p1.y)
-          ctx.lineTo(p2.x, p2.y)
-          ctx.closePath()
-          ctx.stroke()
-          ctx.restore()
-          //*/
-          // draw an arrowhead if this is a -> style edge
-          if (edge.data.directed) {
-            ctx.save()
-            // move to the head position of the edge we just drew
-            var wt = !isNaN(weight) ? parseFloat(weight) : 1
-            var arrowLength = 6 + wt
-            var arrowWidth = 2 + wt
-            ctx.fillStyle = (color) ? color : "#cccccc"
-            ctx.translate(head.x, head.y);
-            ctx.rotate(Math.atan2(head.y - tail.y, head.x - tail.x));
-
-            // delete some of the edge that's already there (so the point isn't hidden)
-            ctx.clearRect(-arrowLength / 2, -wt / 2, arrowLength / 2, wt)
-
-            // draw the chevron
-            ctx.beginPath();
-            ctx.moveTo(-arrowLength, arrowWidth);
-            ctx.lineTo(0, 0);
-            ctx.lineTo(-arrowLength, -arrowWidth);
-            ctx.lineTo(-arrowLength * 0.8, -0);
-            ctx.closePath();
-            ctx.fill();
-            ctx.restore()
-          }
-          //*/
-        })
-        sys.eachNode(function (node, pt) {
-          var w = Math.max(20, 20 + gfx.textWidth(node.name))
-          if (node.data.alpha === 0) return
-          if (node.data.shape == 'dot') {
-            gfx.oval(pt.x - w / 2, pt.y - w / 2, w, w, {
-              fill: node.data.color,
-              alpha: node.data.alpha
-            })
-            gfx.text(node.data.label, pt.x, pt.y + 7, {
-              color: "white",
-              align: "center",
-              font: "Arial",
-              size: 12
-            })
-            gfx.text(node.data.label, pt.x, pt.y + 7, {
-              color: "white",
-              align: "center",
-              font: "Arial",
-              size: 12
-            })
-          } else {
-            gfx.rect(pt.x - w / 2, pt.y - 8, w, 20, 4, {
-              fill: node.data.color,
-              alpha: node.data.alpha
-            })
-            gfx.text(node.data.label, pt.x, pt.y + 9, {
-              color: "white",
-              align: "center",
-              font: "Arial",
-              size: 12
-            })
-            gfx.text(node.data.label, pt.x, pt.y + 9, {
-              color: "white",
-              align: "center",
-              font: "Arial",
-              size: 12
-            })
-          }
-        })
-        that._drawVignette()
       },
 
-      _drawVignette: function () {
-        var w = canvas.width
-        var h = canvas.height
-        var r = 20
-
-        if (!_vignette) {
-          var top = ctx.createLinearGradient(0, 0, 0, r)
-          top.addColorStop(0, "#e0e0e0")
-          top.addColorStop(.7, "rgba(255,255,255,0)")
-
-          var bot = ctx.createLinearGradient(0, h - r, 0, h)
-          bot.addColorStop(0, "rgba(255,255,255,0)")
-          bot.addColorStop(1, "white")
-
-          _vignette = {
-            top: top,
-            bot: bot
-          }
-        }
-
-        // top
-        ctx.fillStyle = _vignette.top
-        ctx.fillRect(0, 0, w, r)
-
-        // bot
-        ctx.fillStyle = _vignette.bot
-        ctx.fillRect(0, h - r, w, r)
-      },
 
       switchMode: function (e) {
-        if (e.mode == 'hidden') {
-          dom.stop(true).fadeTo(e.dt, 0, function () {
-            if (sys) sys.stop()
-            $(this).hide()
-          })
-        } else if (e.mode == 'visible') {
-          dom.stop(true).css('opacity', 0).show().fadeTo(e.dt, 1, function () {
-            that.resize()
-          })
-          if (sys) sys.start()
-        }
+
       },
 
       switchSection: function (newSection) {
-        var parent = sys.getEdgesFrom(newSection)[0].source
-        var children = $.map(sys.getEdgesFrom(newSection), function (edge) {
-          return edge.target
-        })
 
-        sys.eachNode(function (node) {
-          if (node.data.shape == 'dot') return // skip all but leafnodes
-
-          var nowVisible = ($.inArray(node, children) >= 0)
-          var newAlpha = (nowVisible) ? 1 : 0
-          var dt = (nowVisible) ? .5 : .5
-          sys.tweenNode(node, dt, {
-            alpha: newAlpha
-          })
-
-          if (newAlpha == 1) {
-            node.p.x = parent.p.x + .05 * Math.random() - .025
-            node.p.y = parent.p.y + .05 * Math.random() - .025
-            node.tempMass = .001
-          }
-        })
       },
 
 
@@ -297,70 +76,17 @@
 
         var handler = {
           moved: function (e) {
-            var pos = $(canvas).offset();
-            _mouseP = arbor.Point(e.pageX - pos.left, e.pageY - pos.top)
-            nearest = sys.nearest(_mouseP);
-            if (!nearest.node) return false;
             return false
           },
           clicked: function (e) {
-            selected = (nearest.distance < 20) ? nearest : null
-            if (selected === null) {
-              return false;
-            }
-            var pos = $(canvas).offset();
-            _mouseP = arbor.Point(e.pageX - pos.left, e.pageY - pos.top)
-            ppoint = _mouseP;
-            nearest = dragged = sys.nearest(_mouseP);
-            if (dragged && dragged.node !== null) dragged.node.fixed = true
-
-            $(canvas).unbind('mousemove', handler.moved);
-            $(canvas).bind('mousemove', handler.dragged)
-            $(window).bind('mouseup', handler.dropped)
 
             return false
           },
           dragged: function (e) {
-            var old_nearest = nearest && nearest.node._id
-            var pos = $(canvas).offset();
-            var s = arbor.Point(e.pageX - pos.left, e.pageY - pos.top)
-
-            if (!nearest) return
-            if (dragged !== null && dragged.node !== null) {
-              var p = sys.fromScreen(s)
-              dragged.node.p = p
-            }
             return false
           },
 
           dropped: function (e) {
-            if (dragged === null || dragged.node === undefined) {
-              return false;
-            }
-            if (dragged.node !== null) dragged.node.fixed = false
-            dragged.node.tempMass = 1000
-            var popup; //
-            var pos = $(canvas).offset();
-            var s = arbor.Point(e.pageX - pos.left, e.pageY - pos.top);
-            moveleft = ppoint.x - s.x;
-            moveright = ppoint.y - s.y;
-            if (Math.abs(moveleft) < 5 && nearest.node.name != _section && nearest.node === selected.node) {
-              // _section = nearest.node.name
-              // that.switchSection(_section)
-              //alert($(".float_combox").html());
-              //  $(".float_combox").attr("style","position:absolute;top:"+e.pageY+"px;left:"+e.pageX+"px");
-              //alert(selected.node.label)
-              var cell = document.getElementById("relstable").rows[0].cells;
-              cell[0].innerHTML = "<input readonly='true' id='graphid' value='udh'/>"
-              $(".float_combox").attr("style", "position:absolute;top:" + e.pageY + "px;left:" + e.pageX + "px");
-            }
-
-            $(canvas).unbind('mousemove', handler.dragged)
-            $(window).unbind('mouseup', handler.dropped)
-            $(canvas).bind('mousemove', handler.moved);
-            dragged = null;
-            _mouseP = null;
-            selected = null
             return false
           }
         }
@@ -519,61 +245,61 @@
 
     constructGdsFig();
 
-    function addGdsNode(gds, num) {
+    function addGdsNode(gds, cnt, num) {
       if (num < -0.75) {
         sys.addNode(gds, {
-          label: '' + gds + '(' + num + ')',
+          label: '' + gds + '(' + cnt + ')',
           color: LEV.lev1,
           shape: "dot",
           alpha: 1
         });
       } else if (num < -0.5) {
         sys.addNode(gds, {
-          label: '' + gds + '(' + num + ')',
+          label: '' + gds + '(' + cnt + ')',
           color: LEV.lev2,
           shape: "dot",
           alpha: 1
         });
       } else if (num < -0.25) {
         sys.addNode(gds, {
-          label: '' + gds + '(' + num + ')',
+          label: '' + gds + '(' + cnt + ')',
           color: LEV.lev3,
           shape: "dot",
           alpha: 1
         });
       } else if (num < 0) {
         sys.addNode(gds, {
-          label: '' + gds + '(' + num + ')',
+          label: '' + gds + '(' + cnt + ')',
           color: LEV.lev4,
           shape: "dot",
           alpha: 1
         });
       } else if (num < 0.25) {
         sys.addNode(gds, {
-          label: '' + gds + '(' + num + ')',
+          label: '' + gds + '(' + cnt + ')',
           color: LEV.lev5,
           shape: "dot",
           alpha: 1
         });
       } else if (num < 0.5) {
         sys.addNode(gds, {
-          label: '' + gds + '(' + num + ')',
+          label: '' + gds + '(' + cnt + ')',
           color: LEV.lev6,
           shape: "dot",
           alpha: 1
         });
       } else if (num < 0.75) {
         sys.addNode(gds, {
-          label: '' + gds + '(' + num + ')',
+          label: '' + gds + '(' + cnt + ')',
           color: LEV.lev7,
           shape: "dot",
           alpha: 1
         });
       } else {
         sys.addNode(gds, {
-          label: '' + gds + '(' + num + ')',
+          label: '' + gds + '(' + cnt + ')',
           color: LEV.lev8,
-          shape: "bar",
+          shape: "dot",
           alpha: 1
         });
       }
@@ -625,11 +351,22 @@
     }
 
     function constructGdsFig() {
-      for (var i = 0; i < 30; ++i) {
+
+      var max = 30;
+
+      for (var i = 0; i < max; ++i) {
         var rd = Math.random() * 2 - 1;
-        addGdsNode('why' + rd, rd);
+        addGdsNode('why' + i, i, rd);
       }
 
+      // addGdsEdge('why1', 'why2', 0.5);
+
+      for (var i = 0; i < max; ++i) {
+        var rd = Math.random() * 2 - 1;
+        var gds1 = parseInt(Math.random() * (max - 1), 10) + 1;
+        var gds2 = parseInt(Math.random() * (max - 1), 10) + 1;
+        addGdsEdge('why' + gds1, 'why' + gds2, rd);
+      }
 
       // addGdsNode('why2', 13);
       // addGdsEdge('why1', 'why2', 100);

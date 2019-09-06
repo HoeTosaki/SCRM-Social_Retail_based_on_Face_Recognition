@@ -8,13 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.IOException;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
-public class DataProcessor {
-
+public class DataProcessor
+{
     private static DAMConfig m_dam = new DAMConfig();
 
     public boolean buyListAnalyzeFigForAdmin(int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
@@ -157,22 +159,89 @@ public class DataProcessor {
         return true;
     }
 
+    public boolean goodsAnalyze(List<Integer> _gds1ID,List<Integer> _gds2ID,List<Double> _relNum, List<Integer> _gdsID,List<Integer> _buyCnt, List<Double> _cntNum)
+    {
+        if(_gds1ID == null || _gds2ID == null || _relNum == null || _gdsID == null || _cntNum == null)
+            return false;
+
+        Process proc = m_dam.execPy("processor.py", ""+16);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+        String line;
+        try {
+//            while((line = br.readLine()) != null){
+//                System.out.println(line);
+//            }
+
+            for(int i = 0; i<30; i++) {
+                line = br.readLine();
+                System.out.println(line);
+                String[] arr = line.split(",");
+                _gdsID.add(Integer.parseInt(arr[0]));
+                _buyCnt.add(Integer.parseInt(arr[1]));
+                _cntNum.add(Double.parseDouble(arr[2]));
+            }
+            while((line = br.readLine()) != null){
+                System.out.println(line);
+                String[] arr = line.split(",");
+                _gds1ID.add(Integer.parseInt(arr[0]));
+                _gds2ID.add(Integer.parseInt(arr[1]));
+                _relNum.add(Double.parseDouble(arr[2]));
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean mngrAnalyzeFig(List<String> _mngrID, List<String> _sale)
+    {
+        if(_mngrID == null || _sale == null)
+            return false;
+
+        Process proc = m_dam.execPy("processor.py", ""+17);
+        BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+        String line = null;
+        try {
+            while((line = br.readLine()) != null) {
+				System.out.println(line);
+                String[] arr = line.split(",");
+                _mngrID.add(arr[0]);
+                _sale.add(arr[1]);
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+
 //    public static void main(String[] args)
 //    {
-//    	List<String> result = new ArrayList<String>();
-//		List<String> x = new ArrayList<String>();
-//		List<String> y = new ArrayList<String>();
-//		DataProcessor prcr = new DataProcessor();
-//		List<Object> pyArgs = new ArrayList<>();
-//        pyArgs.add("week");
-//        pyArgs.add("snacks");
-//        pyArgs.add("12");
-//        pyArgs.add("cnt");
-//        pyArgs.add("2019-08-15");
-//        pyArgs.add("2019-08-25");
-//        pyArgs.add("2019-05");
-//        pyArgs.add("2019-08");
-//        prcr.buyListAnalyzeValForUser("90", 5, 0, 100, result,  pyArgs);
-//        prcr.buyListAnalyzeValForAdmin("\\py\\main.py", 15, 0, 100, result, pyArgs);
-//		prcr.buyListAnalyzeValForAdmin(14, 0, 100, result, pyArgs);
+//        List<Double> result = new ArrayList<>();
+//        List<Integer> x = new ArrayList<>();
+//        List<Integer> y = new ArrayList<>();
+//        List<Integer> id = new ArrayList<>();
+//        List<Integer> buy_cnt = new ArrayList<>();
+//        List<Double> cnt_num = new ArrayList<>();
+//        DataProcessor prcr = new DataProcessor();
+////		List<Object> pyArgs = new ArrayList<>();
+////		pyArgs.add("week");
+////		pyArgs.add("snacks");
+////		pyArgs.add("12");
+////		pyArgs.add("cnt");
+////		pyArgs.add("2019-08-15");
+////		pyArgs.add("2019-08-25");
+////		pyArgs.add("2019-05");
+////		pyArgs.add("2019-08");
+////		prcr.buyListAnalyzeFigForUser("49", 0, 100, x, y, pyArgs);
+////		prcr.buyListAnalyzeValForAdmin("\\py\\main.py", 15, 0, 100, result, pyArgs);
+////		prcr.buyListAnalyzeValForAdmin(14, 0, 100, result, pyArgs);
+//        prcr.goodsAnalyze(x, y, result, id, buy_cnt, cnt_num);
+//    }
 }

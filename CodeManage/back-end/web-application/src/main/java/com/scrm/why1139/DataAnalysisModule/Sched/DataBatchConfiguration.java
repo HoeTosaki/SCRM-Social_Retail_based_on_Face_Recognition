@@ -122,6 +122,7 @@ public class DataBatchConfiguration {
         return list -> {
             List<String> ret = new CopyOnWriteArrayList<>();
             list.parallelStream().map(user->user.toCSV()).forEach(ret::add);
+//            ret.add(0,"user_id");
             FileSave.appendToCSV("t_user.csv",ret);
             for (User user : list) {
                 log.info("write data : " + user); //模拟 假装写数据 ,这里写真正写入数据的逻辑
@@ -190,6 +191,7 @@ public class DataBatchConfiguration {
         return list -> {
             List<String> ret = new CopyOnWriteArrayList<>();
             list.parallelStream().map(gds->gds.toCSV()).forEach(ret::add);
+//            ret.add(0,"goods_id,goods_type,goods_price,goods_cnt");
             FileSave.appendToCSV("t_goods.csv",ret);
             for (Goods gds : list) {
                 log.info("write data : " + gds); //模拟 假装写数据 ,这里写真正写入数据的逻辑
@@ -258,6 +260,7 @@ public class DataBatchConfiguration {
         return list -> {
             List<String> ret = new CopyOnWriteArrayList<>();
             list.parallelStream().map(buy->buy.toCSV()).forEach(ret::add);
+//            ret.add(0,"buy_id,user_id,mngr_id,goods_id,buy_cnt,buy_date");
             FileSave.appendToCSV("t_buy.csv",ret);
             for (Buy buy : list) {
                 log.info("write data : " + buy); //模拟 假装写数据 ,这里写真正写入数据的逻辑

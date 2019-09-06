@@ -160,6 +160,12 @@ body {
     border-top: 1px solid #D1D1D1;
 }
 
+#sale-accnt-cnt-graph{
+    height: 520px;
+    padding: 5% 5%;
+    border-top: 1px solid #D1D1D1;
+}
+
 #buy-list {
     height: 400px;
 }

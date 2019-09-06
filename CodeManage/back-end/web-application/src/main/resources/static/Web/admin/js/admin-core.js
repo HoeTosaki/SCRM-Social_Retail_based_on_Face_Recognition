@@ -31,8 +31,8 @@ var chartOption = {
 saleChart.setOption(chartOption);
 
 function presentChart(x,y){
-    // alert('present x = '+x);
-    // alert('present y = '+y);
+    alert('presentChart x = '+x);
+    alert('presentChart y = '+y);
 
     y_new = [];
     for(ys in y)
@@ -155,7 +155,9 @@ $('#buy-list-table').bootstrapTable({
     }
 });
 
-var TabelInit = function(vals){
+
+
+var buyTableInit = function(vals){
     var oTableInit = new Object();
     oTableInit.init=function(){
         $('#buy-list-table').bootstrapTable('load', vals);
@@ -165,10 +167,64 @@ var TabelInit = function(vals){
 
 function presentLog(vals) {
     // alert(vals[0]);
-    var oTable = TabelInit(vals);
+    var oTable = buyTableInit(vals);
     oTable.init();
 }
 
 // presentLog([{buy_date:"2019-08-01", user_id: "0", mngr_id: "0", goods_id: "0", buy_cnt: "1",
 //     goods_type: "123", goods_name: "123", goods_price: "1.00", total_pay: "1.00"}, {buy_date:"2019-08-20", user_id: "0", mngr_id: "0", goods_id: "0", buy_cnt: "1",
 //     goods_type: "123", goods_name: "123", goods_price: "1.00", total_pay: "1.00"}]);
+
+// 基于准备好的dom，初始化echarts实例
+var domele = document.getElementById('sale-accnt-cnt-graph');
+alert('domele:\t'+domele);
+var saleAccntChart = echarts.init(domele);
+alert('saleAccntChart:\t'+saleAccntChart);
+
+// 指定图表的配置项和数据
+var chartOptionAccnt = {
+    title: {
+        text: '收银员业绩图'
+    },
+    tooltip: {},
+    legend: {
+        // data:['销量']
+    },
+    xAxis: {
+        axisLabel:{
+            interval:0
+        }
+        // ,data: ["2019-01","2019-02","2019-03","2019-04","2019-05","2019-06"]
+        ,data: []
+    },
+    yAxis: [{
+        type : 'value'
+    }],
+    series: [{
+        // name: '销量',
+        type: 'bar'
+        // ,data: [5, 20, 36, 10, 10, 20]
+        ,data:[]
+    }]
+};
+
+saleAccntChart.setOption(chartOptionAccnt);
+
+function presentChartAccnt(x,y){
+    alert('presentAccnt x = '+x);
+    alert('presentAccnt y = '+y);
+
+    y_new = [];
+    for(ys in y)
+    {
+        y_new.push(Number(y[ys]));
+    }
+    // alert('present ynew = ' + y_new);
+    var option = {
+        xAxis:{data:x},
+        series:[{data:y_new}]
+    }
+    saleAccntChart.setOption(option);
+}
+
+// presentChartAccnt(['12why','13why','14why'],['12','13','14'])
