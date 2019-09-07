@@ -174,6 +174,28 @@ body {
 
 #buy-list-table {}
 
+#sale-accnt-cnt-graph-box{
+    height: 800px;
+}
+
+#sale-accnt-cnt-graph-box > #sale-accnt-cnt-graph-box-head{
+    height: 50px;
+}
+
+#sale-accnt-cnt-graph-box > #sale-accnt-cnt-graph{
+    boder-top: 1px solid #D1D1D1;
+}
+
+#accnt-add-core-title{
+    margin-right: 22%;
+    margin-left: 22%;
+}
+
+#add-id, #add-pswd{
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
 /*-------------------------------*/
 /*     Wrapper styles        */
 /*-------------------------------*/

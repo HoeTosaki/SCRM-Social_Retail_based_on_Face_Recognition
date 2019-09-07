@@ -31,9 +31,11 @@ var chartOption = {
 saleChart.setOption(chartOption);
 
 function presentChart(x,y){
-    // alert('present x = '+x);
-    // alert('present y = '+y);
-
+    // alert('presentChart x = '+x);
+    // alert('presentChart y = '+y);
+    saleChart.showLoading({
+        text:'加载中...'
+    });
     y_new = [];
     for(ys in y)
     {
@@ -44,6 +46,7 @@ function presentChart(x,y){
         xAxis:{data:x},
         series:[{data:y_new}]
     }
+    saleChart.hideLoading();
     saleChart.setOption(option);
 }
 
@@ -123,7 +126,8 @@ $('#buy-list-table').bootstrapTable({
         title: '商品id'
     },{
         field: 'buy_cnt',
-        title: '购买数量'
+        title: '购买数量',
+        sortable:true
     },{
         field: 'goods_type',
         title: '商品类别'
@@ -132,10 +136,12 @@ $('#buy-list-table').bootstrapTable({
         title: '商品名称'
     },{
         field: 'goods_price',
-        title: '价格'
+        title: '价格',
+        sortable:true
     },{
         field: 'total_pay',
-        title: '总付款'
+        title: '总付款',
+        sortable:true
     }],
     // toolbar: '#toolbar',
     cache: true,
@@ -146,29 +152,86 @@ $('#buy-list-table').bootstrapTable({
     search: true,
     strictSearch: false,
     showRefresh: true,
-    sidePagination: "server",
+    sidePagination: "client",
     pageSize: 5,
     onLoadSuccess: function () {
+        showTips("数据加载成功！")
     },
     onLoadError: function () {
         showTips("数据加载失败！");
     }
 });
 
-var TabelInit = function(vals){
+var buyTableInit = function(vals){
+    $('#buy-list-table').bootstrapTable('showLoading');
     var oTableInit = new Object();
     oTableInit.init=function(){
         $('#buy-list-table').bootstrapTable('load', vals);
+        $('#buy-list-table').bootstrapTable('hideLoading');
     };
     return oTableInit;
 }
 
 function presentLog(vals) {
-    // alert(vals[0]);
-    var oTable = TabelInit(vals);
+    var oTable = buyTableInit(vals);
     oTable.init();
 }
 
 // presentLog([{buy_date:"2019-08-01", user_id: "0", mngr_id: "0", goods_id: "0", buy_cnt: "1",
 //     goods_type: "123", goods_name: "123", goods_price: "1.00", total_pay: "1.00"}, {buy_date:"2019-08-20", user_id: "0", mngr_id: "0", goods_id: "0", buy_cnt: "1",
 //     goods_type: "123", goods_name: "123", goods_price: "1.00", total_pay: "1.00"}]);
+
+// 基于准备好的dom，初始化echarts实例
+var domele = document.getElementById('sale-accnt-cnt-graph');
+// alert('domele:\t'+domele);
+var saleAccntChart = echarts.init(domele);
+// alert('saleAccntChart:\t'+saleAccntChart);
+
+// 指定图表的配置项和数据
+var chartOptionAccnt = {
+    title: {
+        text: '收银员业绩图'
+    },
+    tooltip: {},
+    legend: {
+        // data:['销量']
+    },
+    xAxis: {
+        axisLabel:{
+            interval:0
+        }
+        // ,data: ["2019-01","2019-02","2019-03","2019-04","2019-05","2019-06"]
+        ,data: []
+    },
+    yAxis: [{
+        type : 'value'
+    }],
+    series: [{
+        // name: '销量',
+        type: 'bar'
+        // ,data: [5, 20, 36, 10, 10, 20]
+        ,data:[]
+    }]
+};
+
+saleAccntChart.setOption(chartOptionAccnt);
+
+function presentChartAccnt(x,y){
+    // alert('presentAccnt x = '+x);
+    // alert('presentAccnt y = '+y);
+    saleAccntChart.showLoading({
+        text:'加载中...'
+    });
+    y_new = [];
+    for(ys in y)
+    {
+        y_new.push(Number(y[ys]));
+    }
+    // alert('present ynew = ' + y_new);
+    var option = {
+        xAxis:{data:x},
+        series:[{data:y_new}]
+    }
+    saleAccntChart.hideLoading();
+    saleAccntChart.setOption(option);
+}
