@@ -1,7 +1,9 @@
 package com.scrm.why1139.service;
 
 import com.scrm.why1139.dao.BuyDao;
+import com.scrm.why1139.dao.OrderDao;
 import com.scrm.why1139.domain.Buy;
+import com.scrm.why1139.domain.Order;
 import com.scrm.why1139.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ import java.util.List;
 public class BuyService {
     @Autowired
     private BuyDao m_buyDao;
+    @Autowired
+    private OrderDao m_orderDao;
 
     /**
      * 获取购物记录的list
@@ -45,5 +49,39 @@ public class BuyService {
         m_buyDao.updateBuy(newBuy);
     }
 
+    public List<Order> findOrderByUserID(String  _strUserID)
+    {
+        return m_orderDao.findOrderByUserID(_strUserID,ConfigConst.ORDER_LIMIT);
+    }
 
+    public Order findOrderByOrderID(int  _nOrderID)
+    {
+        return m_orderDao.findOrderByOrderID(_nOrderID);
+    }
+
+    public List<Order> findOrder()
+    {
+        User user = new User();
+        return m_orderDao.findOrderWithUser(user,ConfigConst.ORDER_LIMIT);
+    }
+
+
+    public void removeOrderByOrderID(int _nOrderID)
+    {
+        Order order = new Order();
+        order.setOrderID(_nOrderID);
+        m_orderDao.delOrder(order);
+    }
+
+    public boolean addOrderLog(String _strUserID,int _nGoodsID,int _nCnt)
+    {
+        Order newOrder = new Order();
+        newOrder.setUserID(_strUserID);
+        newOrder.setGoodsID(_nGoodsID);
+        newOrder.setOrderCnt(_nCnt);
+        newOrder.setOrderDate(new Date().toString());
+        m_orderDao.updateOrder(newOrder);
+        return true;
+        //TODO:dead lock.
+    }
 }

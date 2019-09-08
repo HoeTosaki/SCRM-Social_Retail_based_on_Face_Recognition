@@ -7,6 +7,7 @@ import com.scrm.why1139.dao.BuyDao;
 import com.scrm.why1139.dao.GoodsDao;
 import com.scrm.why1139.domain.Buy;
 import com.scrm.why1139.domain.Goods;
+import com.scrm.why1139.domain.Order;
 import com.scrm.why1139.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,15 @@ public class UserService
         return m_manService.findUserByUserID(_strUserID);
     }
 
+    public List<User> findUserByRecgBio(String _imgrecg)
+    {
+        return m_manService.findUserByRecgBio(_imgrecg);
+    }
+
+    public boolean isUserRecgBioExist(User _user)
+    {
+        return m_manService.isUserRecgBioExist(_user);
+    }
 
     /**
      * 通过GoodsID获取Goods对象
@@ -75,6 +85,11 @@ public class UserService
     public List<Goods> findGoodsByGoodsType(String _strGoodsType)
     {
         return m_goodsService.findGoodsByGoodsType(_strGoodsType);
+    }
+
+    public List<Goods> findGoodsByFuzzy(String _strFuzzy)
+    {
+        return m_goodsService.findGoodsByFuzzy(_strFuzzy);
     }
 
     /**
@@ -146,9 +161,24 @@ public class UserService
      * @return 创建成功与否的boolean值
      * @author why
      */
-    public boolean creatNewUserByRecgBio(String _strUserID)
+    public boolean creatNewUserByRecgBio(String _strUserID,List<String> _imgrecg)
     {
-        return m_manService.creatNewUserByRecgBio(_strUserID);
+        return m_manService.creatNewUserByRecgBio(_strUserID,_imgrecg);
+    }
+
+    public boolean updateUserPasswd(User _user,String _strPasswd)
+    {
+        return m_manService.updateUserPasswd(_user, _strPasswd);
+    }
+
+    public boolean updateUserRecgBio(User _user,List<String> _imgrecg)
+    {
+        return m_manService.updateUserRecgBio(_user, _imgrecg);
+    }
+
+    public boolean updateUserID(User _user,String _strUserID)
+    {
+        return m_manService.updateUserID(_user, _strUserID);
     }
 
     public boolean getAnalyzeFigForUser(String _strUserID,int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
@@ -159,6 +189,16 @@ public class UserService
     public boolean getAnalyzeValForUser(String _strUserID,int _nCmd,int _nOffset, int _nLimit, List<Object> _vals,List<Object> _args)
     {
         return m_analService.getAnalyzeValForUser(_strUserID, _nCmd, _nOffset, _nLimit, _vals, _args);
+    }
+
+    public boolean addOrderLog(String _strUserID,int _nGoodsID,int _nCnt)
+    {
+        return m_buyService.addOrderLog(_strUserID, _nGoodsID, _nCnt);
+    }
+
+    public void removeOrderByOrderID(int _nOrderID)
+    {
+        m_buyService.removeOrderByOrderID(_nOrderID);
     }
 
     /**
@@ -175,6 +215,9 @@ public class UserService
         ret = _user.saveBioRef(_btBioRef);
         return ret;
     }
+
+
+
 
 //    public static void main(String s[])
 //    {

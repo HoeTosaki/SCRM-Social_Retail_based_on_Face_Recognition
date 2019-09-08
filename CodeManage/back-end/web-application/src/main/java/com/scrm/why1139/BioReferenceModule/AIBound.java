@@ -146,7 +146,7 @@ public class AIBound
         if(res.getInt("error_code") == 223120)
             return addUserFace(_strUserID,_strBase64);//user不存在
         else
-            return res.getInt("error_code") == 0;
+            return res.getInt("error_code") == 0 || res.getInt("error_code") == 18;
 //        {
 //            "face_token": "2fa64a88a9d5118916f9a303782a97d3",
 //                "location": {

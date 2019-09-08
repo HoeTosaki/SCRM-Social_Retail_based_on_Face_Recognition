@@ -1,9 +1,12 @@
 package com.scrm.why1139.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.scrm.why1139.domain.Goods;
+import com.scrm.why1139.domain.Mngr;
+import com.scrm.why1139.domain.Order;
 import com.scrm.why1139.domain.User;
 import com.scrm.why1139.service.AccntService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -200,5 +203,93 @@ public class AccntCtrl {
         System.out.println("send:"+strUserID);
         System.out.println("send:"+arrRet.toJSONString());
         return arrRet.toJSONString();
+    }
+
+    @RequestMapping(
+            value = {"/pullOrder"}
+    )
+    public String pullOrder(HttpServletRequest _req)
+    {
+        System.out.println("safe null");
+//        JSONObject objReq = JSONProc.parseReq(_req);
+        JSONObject objRet = new JSONObject();
+        List<Order> orderLst = m_accntService.findOrder();
+        if(orderLst == null || orderLst.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            objRet.put("stat","success");
+            JSONArray arrOrder = new JSONArray();
+            orderLst.stream().map(ord->{
+                JSONObject objOrd = new JSONObject();
+                objOrd.put("order_id",ord.getOrderID());
+                objOrd.put("user_id",ord.getUserID());
+                objOrd.put("order_cnt",ord.getOrderCnt());
+                int nGdsID = ord.getGoodsID();
+                Goods gds = m_accntService.findGoodsByGoodsID(nGdsID);
+                JSONObject objGds = new JSONObject();
+                if(gds == null || gds.isEmpty())
+                {
+                    objGds.put("name","undef");
+                    objGds.put("prc","-1.0");
+                    objGds.put("cnt","-1");
+                    objGds.put("pic","undef");
+                    objGds.put("desc","undef");
+                    objGds.put("id","-1");
+                    objGds.put("type","undef");
+                }
+                else
+                {
+                    objGds.put("name",gds.getGoodsName());
+                    objGds.put("prc",gds.getPrice());
+                    objGds.put("cnt",gds.getGoodsCnt());
+                    objGds.put("pic",gds.getPic());
+                    objGds.put("desc",gds.getGoodsDesc());
+                    objGds.put("id",gds.getGoodsID());
+                    objGds.put("type",gds.getGoodsType());
+                }
+                objOrd.put("gds",objGds);
+                return objOrd;
+            }).forEach(arrOrder::add);
+
+            objRet.put("order_lst",arrOrder);
+        }
+        System.out.println("控制器输出:\t"+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
+    @RequestMapping(
+            value = {"/summitOrder"}
+    )
+    public String summitOrder(HttpServletRequest _req)
+    {
+        JSONObject objReq = JSONProc.parseReq(_req);
+        System.out.println("控制器输入：\t"+ objReq.toJSONString());
+        JSONObject objRet = new JSONObject();
+
+        String strUserID = (String)(objReq.getJSONArray("user_id").get(0));
+        String strMngrID = (String)(objReq.getJSONArray("mngr_id").get(0));
+        int nOrderID = Integer.parseInt((String)(objReq.getJSONArray("order_id").get(0)));
+/**
+ *          user_id
+ *          order_id
+ *          mngr_id
+ */
+        User user = m_accntService.findUserByUserID(strUserID);
+        Mngr mngr = m_accntService.findMngrByMngrID(strMngrID);
+        Order order = m_accntService.findOrderByOrderID(nOrderID);
+
+        if(user == null || user.isEmpty() || mngr == null ||mngr.isEmpty() || order== null|| order.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            objRet.put("stat","success");
+            m_accntService.addBuyLog(mngr.getMngrID(),user.getUserID(),order.getGoodsID(),order.getOrderCnt());
+        }
+        System.out.println("控制器输出:\t"+objRet.toJSONString());
+        return objRet.toJSONString();
     }
 }

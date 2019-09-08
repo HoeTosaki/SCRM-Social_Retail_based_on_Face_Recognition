@@ -434,7 +434,7 @@ def cmd_16_function():
         j = i + 1
         while j < len(one_month_top_30_goods_id):
             rel_num = gds_similar_scaled[one_month_top_30_goods_id[i], one_month_top_30_goods_id[j]]
-            if rel_num > 2:
+            if rel_num > 1:
                 print("{},{},{}".format(one_month_top_30_goods_id[i], one_month_top_30_goods_id[j], rel_num))
             j += 1
 

@@ -88,7 +88,7 @@ public class Rcmder
     private List<Integer> listToListInt(String _strLst)
     {
         List<Integer> ret = new CopyOnWriteArrayList<>();
-        if (_strLst == null ||_strLst == "" || _strLst == "[]")
+        if (_strLst == null ||_strLst.equals("") || _strLst.equals("[]"))
             ;
         else
         {

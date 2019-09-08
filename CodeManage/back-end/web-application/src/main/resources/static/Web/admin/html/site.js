@@ -691,12 +691,12 @@
 
 
     function pullGdsHeatFig() {
-      alert("post heat start");
+      // alert("post heat start");
 
       $.post("goodsAnalPull", {
         mngrid:"default"
       }, function (result) {
-        alert(result);
+        // alert(result);
         /**
          * obj
          *    stat:success
@@ -720,7 +720,7 @@
 
         var obj = JSON.parse(result);
         if (obj.stat != "success") {
-          alert('商品关联数据获取失败。');
+          // alert('商品关联数据获取失败。');
           return;
         } else {
           // alert('obj:\t'+obj);
@@ -749,11 +749,11 @@
             addGdsEdge(obj.rel_lst[i].gds1_name,obj.rel_lst[i].gds2_name,obj.rel_lst[i].rel_num);
           }
 
-          alert('gds_type:\t'+obj.gds_lst[0].gds_type);
-          alert('gds_prc:\t'+obj.gds_lst[0].gds_prc);
-          alert('gds_name:\t'+obj.gds_lst[0].gds_name);
-          alert('gds_cnt:\t'+obj.gds_lst[0].gds_cnt);
-          alert('buy_cnt:\t'+obj.gds_lst[0].buy_cnt);
+          // alert('gds_type:\t'+obj.gds_lst[0].gds_type);
+          // alert('gds_prc:\t'+obj.gds_lst[0].gds_prc);
+          // alert('gds_name:\t'+obj.gds_lst[0].gds_name);
+          // alert('gds_cnt:\t'+obj.gds_lst[0].gds_cnt);
+          // alert('buy_cnt:\t'+obj.gds_lst[0].buy_cnt);
           var lst = [];
           for(var i = 0; i < obj.gds_lst.length;++i)
           {
@@ -766,11 +766,11 @@
               'buy_cnt':obj.gds_lst[i].buy_cnt
             });
           }
-          alert('lst'+lst);
+          // alert('lst'+lst);
           presentGds(lst);
         }
       });
-      alert("post heat end.");
+      // alert("post heat end.");
     }
 
     function constructGdsFig() {

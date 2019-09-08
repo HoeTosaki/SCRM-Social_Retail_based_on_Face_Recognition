@@ -19,6 +19,11 @@ ul {
     position: relative;
 }
 
+.center{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .fl {
     float: left;
 }
@@ -47,7 +52,7 @@ ul {
     margin-top: 15px;
 }
 
-.mt10 {
+.mt7 {
     margin-top: 7px;
 }
 
@@ -76,6 +81,18 @@ ul {
     display: inline-block;
     font-size: 20px;
     color: #979fa3;
+}
+
+.input-bar{
+    width: 40%;
+}
+
+.center-subtitle{
+    display: block;
+    font-size: 20px;
+    color: #979fa3;
+    width: 15%;
+    text-align: center;
 }
 
 /*-------------------------------*/
@@ -108,7 +125,7 @@ body {
 
 #sys-img {
     height: 110px;
-    background-image: url("../img/sys.jpg");
+    background-image: url("../img/sys.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -167,18 +184,17 @@ body {
 }
 
 #buy-list {
-    height: 400px;
+    height: 500px;
 }
 
 #buy-list #time-option {
     width: 80%;
 }
 
-#buy-list #time-option .date-box {
+#buy-list > #time-option > #start-date,
+#buy-list > #time-option > #end-date{
     width: 20%;
 }
-
-#buy-list-table {}
 
 /*-------------------------------*/
 /*     Wrapper styles        */
@@ -315,9 +331,9 @@ body {
     line-height: 44px;
 }
 
-/*-------------------------------*/
-/*       Hamburger-Cross         */
-/*-------------------------------*/
+/*!*-------------------------------*!*/
+/*!*       Hamburger-Cross         *!*/
+/*!*-------------------------------*!*/
 .hamburger {
     background: transparent;
     border: none;

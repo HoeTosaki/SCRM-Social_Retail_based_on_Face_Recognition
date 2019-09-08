@@ -2,7 +2,9 @@ package com.scrm.why1139.service;
 
 import com.scrm.why1139.dao.AnalDao;
 import com.scrm.why1139.dao.GoodsDao;
+import com.scrm.why1139.dao.OrderDao;
 import com.scrm.why1139.domain.Goods;
+import com.scrm.why1139.domain.Order;
 import com.scrm.why1139.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class GoodsService {
     private AnalDao m_analDao;
     @Autowired
     private GoodsDao m_goodsDao;
+    @Autowired
+    private OrderDao m_orderDao;
 
     /**
      * 获取商品推荐
@@ -69,6 +73,11 @@ public class GoodsService {
         return m_goodsDao.getGoodsByClass(_strGoodsType,ConfigConst.GOODS_LIMIT);
     }
 
+    public List<Goods> findGoodsByFuzzy(String _strFuzzy)
+    {
+        return m_goodsDao.findGoodsByFuzzy(_strFuzzy,ConfigConst.GOODS_LIMIT);
+    }
+
     public void updateGoods(Goods _gds)
     {
         m_goodsDao.updateGoods(_gds);
@@ -83,5 +92,6 @@ public class GoodsService {
     {
         m_goodsDao.insertGoods(_gds);
     }
+
 
 }

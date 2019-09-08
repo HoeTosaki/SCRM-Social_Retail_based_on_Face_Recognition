@@ -1,5 +1,6 @@
 package com.scrm.why1139.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dingxianginc.ctu.client.CaptchaClient;
@@ -7,6 +8,8 @@ import com.dingxianginc.ctu.client.model.CaptchaResponse;
 import com.scrm.why1139.BioReferenceModule.BioCertificater;
 import com.scrm.why1139.BioReferenceModule.BioSaver;
 import com.scrm.why1139.domain.Goods;
+import com.scrm.why1139.domain.Mngr;
+import com.scrm.why1139.domain.Order;
 import com.scrm.why1139.domain.User;
 import com.scrm.why1139.service.ConfigConst;
 import com.scrm.why1139.service.UserService;
@@ -275,18 +278,96 @@ public class UserCtrl {
         return obj.toJSONString();
     }
 
+    @RequestMapping(
+            value = {"/pullUserStat"}
+    )
+    public String pullUserStat(HttpServletRequest _req)
+    {
+        JSONObject objReq = JSONProc.parseReq(_req);
+        System.out.println("控制器输入：\t"+ objReq.toJSONString());
+        JSONObject objRet = new JSONObject();
+
+        String strUserIDVer = (String)(objReq.getJSONArray("user_id").get(0));
+
+        User user = m_userService.findUserByUserID(strUserIDVer);
+        if(user == null || user.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            objRet.put("stat","success");
+            String strUserName = user.getUserName();
+            String strUserID = user.getUserID();
+            String strPasswd = user.getPassword();
+            boolean hasRecgBio = m_userService.isUserRecgBioExist(user);
+            if(strUserName == null || strUserName.isEmpty())
+            {
+                objRet.put("name_stat","0");
+            }
+            else
+            {
+                objRet.put("name_stat","1");
+            }
+
+            if(strUserID == null || strUserID.isEmpty())
+            {
+                objRet.put("id_stat","0");
+            }
+            else
+            {
+                objRet.put("id_stat","1");
+            }
+
+            if(strPasswd == null || strPasswd.isEmpty())
+            {
+                objRet.put("passwd_stat","0");
+            }
+            else
+            {
+                objRet.put("passwd_stat","1");
+            }
+
+            if(!hasRecgBio)
+            {
+                objRet.put("recgbio_stat","0");
+            }
+            else
+            {
+                objRet.put("recgbio_stat","1");
+            }
+        }
+        System.out.println("控制器输出:\t"+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
+
+
+
     /**
      * 映射到updateRecgBio的Controller方法
      * @return 请求响应String
      * @author why
      */
     @RequestMapping(
-            value = {"/updateRecgBio"}
+            value = {"/updateUserID"}
     )
-    public String recgBioCer(HttpServletRequest _req, String imgrecg)
+    public String updateUserID(HttpServletRequest _req)
     {
-        System.out.println(imgrecg);
-        return "undefined";
+        JSONObject objReq = JSONProc.parseReq(_req);
+        JSONObject objRet = new JSONObject();
+        String strUserID = (String)(objReq.getJSONArray("userid").get(0));
+        String strNewUserID = (String)(objReq.getJSONArray("newuserid").get(0));
+        User user = m_userService.findUserByUserID(strUserID);
+        if(m_userService.updateUserID(user,strNewUserID))
+        {
+            objRet.put("stat","success");
+        }
+        else
+        {
+            objRet.put("stat","invalid");
+        }
+        System.out.println("控制器输出：\t"+objRet.toJSONString());
+        return objRet.toJSONString();
     }
 
     /**
@@ -299,7 +380,21 @@ public class UserCtrl {
     )
     public String updatePasswd(HttpServletRequest _req)
     {
-        return "undefined";
+        JSONObject objReq = JSONProc.parseReq(_req);
+        JSONObject objRet = new JSONObject();
+        String strUserID = (String)(objReq.getJSONArray("userid").get(0));
+        String strNewPasswd = (String)(objReq.getJSONArray("newpasswd").get(0));
+        User user = m_userService.findUserByUserID(strUserID);
+        if(m_userService.updateUserPasswd(user,strNewPasswd))
+        {
+            objRet.put("stat","success");
+        }
+        else
+        {
+            objRet.put("stat","invalid");
+        }
+        System.out.println("控制器输出：\t"+objRet.toJSONString());
+        return objRet.toJSONString();
     }
 
     /**
@@ -307,28 +402,27 @@ public class UserCtrl {
      * @return 请求响应String
      * @author why
      */
-    @RequestMapping(
-            value = {"/updatePasswdByRecgBio"}
-    )
-    public String updatePasswdByRecgBio(HttpServletRequest _req)
+    @RequestMapping(value = "/updateRecgBio", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateRecgBio(HttpServletResponse response, HttpServletRequest request, String imgrecg) throws Exception
     {
-        return "undefined";
+        JSONObject objReq = JSONProc.parseReq(request);
+        JSONObject objRet = new JSONObject();
+        String strUserID = (String)(objReq.getJSONArray("userid").get(0));
+        List<String> lstNewRecgBio = new CopyOnWriteArrayList<>();
+        lstNewRecgBio.add(imgrecg);
+        User user = m_userService.findUserByUserID(strUserID);
+        if(m_userService.updateUserRecgBio(user,lstNewRecgBio))
+        {
+            objRet.put("stat","success");
+        }
+        else
+        {
+            objRet.put("stat","invalid");
+        }
+        System.out.println("控制器输出：\t"+objRet.toJSONString());
+        return objRet.toJSONString();
     }
-
-    /**
-     * 映射到updateRecgBioByPasswd的Controller方法
-     * @return 请求响应String
-     * @author why
-     */
-    @RequestMapping(
-            value = {"/updateRecgBioByPasswd"}
-    )
-    public String updateRecgBioByPasswd(HttpServletRequest _req)
-    {
-        return "undefined";
-    }
-
-
 
     @ResponseBody
     @RequestMapping(
@@ -679,6 +773,34 @@ public class UserCtrl {
                 }
                 break;
             }
+            case 3:
+            {
+                mp.put("stat", "success");
+                String args0 = arrArgs.getString(0);//fuzzy
+                List<Goods> lstGds = m_userService.findGoodsByFuzzy(args0);
+                if(lstGds == null || lstGds.isEmpty())
+                {
+                    mp.put("stat", "invalid");
+                }
+                else
+                {
+                    JSONArray arrGds = new JSONArray();
+                    lstGds.parallelStream().map(gds->
+                    {
+                        JSONObject jsonGdsNew = new JSONObject();
+                        jsonGdsNew.put("id",gds.getGoodsID());
+                        jsonGdsNew.put("name",gds.getGoodsName());
+                        jsonGdsNew.put("type",gds.getGoodsType());
+                        jsonGdsNew.put("desc",gds.getGoodsDesc());
+                        jsonGdsNew.put("cnt",gds.getGoodsCnt());
+                        jsonGdsNew.put("prc",gds.getPrice());
+                        jsonGdsNew.put("pic",gds.getPic());
+                        return jsonGdsNew;
+                    }).forEach(arrGds::add);
+                    mp.put("gds",arrGds);
+                }
+                break;
+            }
         }
 
         JSONObject obj = new JSONObject(mp);
@@ -786,30 +908,19 @@ public class UserCtrl {
     public String loginRecgBio(HttpServletResponse response, HttpServletRequest request, String imgrecg) throws Exception
     {
         System.out.println(imgrecg);
-        List<String > lstUserID = BioCertificater.certificateUser(imgrecg);
-        Map<String,Object> mp = new ConcurrentHashMap<>();
-        if(lstUserID.size() == 0)
-        {
-            mp.put("stat","invalid1");
-        }
-        else
-        {
-            User user = m_userService.findUserByUserID(lstUserID.get(0));
-            if(user == null || user.isEmpty())
-            {
-                mp.put("stat","invalid2");
-            }
-            else
-            {
-                mp.put("stat","success");
-                mp.put("userid",user.getUserID());
-                mp.put("username",user.getUserName());
-            }
-        }
-
-        JSONObject obj = new JSONObject(mp);
-        System.out.println("ret:"+obj.toJSONString());
-        return obj.toJSONString();
+        List<User> lstUser = m_userService.findUserByRecgBio(imgrecg);
+        JSONObject objRet = new JSONObject();
+        JSONArray arrUser = new JSONArray();
+        lstUser.stream().map(user->{
+            JSONObject objUser = new JSONObject();
+            objUser.put("userid",user.getUserID());
+            objUser.put("username",user.getUserName());
+            return objUser;
+        }).forEach(arrUser::add);
+        objRet.put("stat","success");
+        objRet.put("user_lst",arrUser);
+        System.out.println(objRet.toJSONString());
+        return objRet.toJSONString();
     }
 
     /**
@@ -822,43 +933,91 @@ public class UserCtrl {
     )
     public String signUpRecgBio(HttpServletResponse response, HttpServletRequest request, String imgrecg) throws Exception
     {
-        Map<String,Object> mp = new ConcurrentHashMap<>();
+        JSONObject objReq = JSONProc.parseReq(request);
+        System.out.println("控制器接入：");
+        System.out.println(objReq.toJSONString());
+        System.out.println("控制器接入：end");
 
-        List<String > lstUserID = BioCertificater.certificateUser(imgrecg);
-        if(lstUserID.size() != 0)
+        JSONObject objRet = new JSONObject();
+        JSONArray arrArgs = new JSONArray();
+        if(objReq.keySet().contains("args"))
         {
-            mp.put("stat","invalid");
+            /* wechat resolve*/
+            arrArgs = JSONArray.parseArray(objReq.getJSONArray("args").get(0).toString());
+        }
+        else
+        {
+            /* controller resolve*/
+            arrArgs = objReq.getJSONArray("args[]");
+        }
+
+
+        List<User> lstUser = m_userService.findUserByRecgBio(arrArgs.getString(0));
+        if(lstUser.size() != 0)
+        {
+            objRet.put("stat","invalid");
             System.out.println("当前人脸已经被注册！");
         }
         else
         {
+            System.out.println("当前人脸未注册。");
             String strNewUserID = m_userService.createNewUserID(ConfigConst.ID_TRY_LIMIT);
+            System.out.println("创建新用户名，为:"+strNewUserID);
             List<String> lstImg = new CopyOnWriteArrayList<>();
-            lstImg.add(imgrecg);
-            if(BioSaver.saveUser(lstImg,strNewUserID,1))
+            for(int i = 0;i<arrArgs.size();++i)
             {
-                //在数据库中注册用户
-                if(m_userService.creatNewUserByRecgBio(strNewUserID))
-                {
-                    mp.put("stat","success");
-                    mp.put("userid",strNewUserID);
-                }
-                else
-                {
-                    mp.put("stat","invalid");
-                    System.out.println("数据库写入当前用户失败！用户id为"+strNewUserID);
-                    BioSaver.delUser(strNewUserID);
-                };
+                lstImg.add(arrArgs.getString(i));
+            }
+            if(m_userService.creatNewUserByRecgBio(strNewUserID,lstImg))
+            {
+                System.out.println("人脸注册成功，用户名是："+strNewUserID);
+                objRet.put("stat","success");
             }
             else
             {
-                mp.put("stat","invalid");
+                objRet.put("stat","invalid");
             }
         }
-        JSONObject obj = new JSONObject(mp);
-        System.out.println("ret:"+obj.toJSONString());
-        return obj.toJSONString();
+        System.out.println("ret:"+objRet.toJSONString());
+        return objRet.toJSONString();
     }
+
+    @RequestMapping(
+            value = {"/addOrder"}
+    )
+    public String addOrder(HttpServletRequest _req)
+    {
+        JSONObject objReq = JSONProc.parseReq(_req);
+        System.out.println("控制器输入：\t"+ objReq.toJSONString());
+        JSONObject objRet = new JSONObject();
+
+        String strUserID = (String)(objReq.getJSONArray("user_id").get(0));
+        int nGoodsID = Integer.parseInt((String)(objReq.getJSONArray("goods_id").get(0)));
+        int nCnt = Integer.parseInt((String)(objReq.getJSONArray("order_cnt").get(0)));
+
+        User user = m_userService.findUserByUserID(strUserID);
+        Goods gds = m_userService.findGoodsByGoodsID(nGoodsID);
+        if(user == null || user.isEmpty() || gds == null || gds.isEmpty() || gds.getGoodsCnt() < nCnt)
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            if(m_userService.addOrderLog(strUserID,nGoodsID,nCnt))
+            {
+                objRet.put("stat","success");
+            }
+            else
+            {
+                objRet.put("stat","invalid");
+            }
+        }
+        System.out.println("控制器输出:\t"+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
+
+
+
 
     /**
      * 映射到delRecgBio的Controller方法
@@ -873,7 +1032,4 @@ public class UserCtrl {
         //TODO:删除人脸信息的控制器逻辑。
         return "undefined";
     }
-
-
-
 }

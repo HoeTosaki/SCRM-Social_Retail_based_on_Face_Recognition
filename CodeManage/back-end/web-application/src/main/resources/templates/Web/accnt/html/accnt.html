@@ -9,6 +9,7 @@
     <meta name="keywords" content="" />
     <title>收银员操作平台</title>
     <!--    css样式-->
+    <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="Web/accnt/css/accnt-box-component.css" />
 
     <!--    前置js-->
@@ -16,152 +17,201 @@
 </head>
 
 <body>
-    <div class="container">
-        <div id="bl-main" class="bl-main">
-            <section>
-                <div class="bl-box">
-                    <h2 class="bl-icon bl-icon-about">客户识别</h2>
-                </div>
-                <div id="recg" class="bl-content">
-                    <div class="content-title">
-                        <h2>{{hints}}</h2>
-                    </div>
-                    <div class="content-interval"> </div>
-                    <div class="content-left">
-                        <input id="recg-input" v-model="inputuserid" type="text" placeholder="无人脸信息?在这里手动输入用户名（ID）">
-                        <p>当前用户识别状态：{{stat}}</p>
-                        <p>用户真实姓名：{{username}}</p>
-                        <p>用户名（ID）：{{userid}}</p>
-                    </div>
-                    <div class="content-right">
-                        <p>人脸信息识别指示：</p>
-                        <button id="recg-btn" class="btn-confirm" onclick="onClickRecg()">
-                            <p>识别</p>
-                        </button>
-                        <button class="btn-confirm" onclick="onClickSignUp()">
-                            <p>注册</p>
-                        </button>
-                        <video src="" width="230" height="230"></video>
-                        <canvas id="canvas" width="230" height="230"></canvas>
-                        <!-- <img src="Web/accnt/img/qrcode.jpg" alt="空信息"> -->
-                    </div>
-                </div>
-                <span class="bl-icon bl-icon-close"></span>
-            </section>
-
-            <section id="bl-work-section">
-                <div class="bl-box">
-                    <h2 class="bl-icon bl-icon-works">收银台</h2>
-                </div>
-                <div id="counter" class="bl-content">
-                    <div class="content-title">
-                        <h2>当前客户认证身份：{{userid}} -- {{username}}</h2>
-                    </div>
-                    <div class="content-interval"> </div>
-                    <div class="content-left">
-                        <input v-model="goodsidCmd" id="counter-input" type="text" placeholder="请输入要购买的商品（ID;个数）：">
-                        <p>
-                            <ul id="bl-work-items">
-                                <li v-for="buy in buylist" :data-panel="buy.pnl"><a href="#"><img
-                                            :src="buy.img" />商品名称：{{buy.name}}--商品id：{{buy.id}}--购买数量：{{buy.cnt}}--商品价格{{buy.prc}}</a>
-                                </li>
-                                <!-- <li data-panel="panel-1"><a href="#"><img src="Web/accnt/img/accnt-2.jpg" />商品1</a>
-                                </li>
-                                <li data-panel="panel-2"><a href="#"><img src="Web/accnt/img/accnt-2.jpg" />商品2</a>
-                                </li>
-                                <li data-panel="panel-3"><a href="#"><img src="Web/accnt/img/accnt-2.jpg" />商品3</a>
-                                </li> -->
-                            </ul>
-                        </p>
-                    </div>
-                    <div class="content-right">
-                        <p>您的购物统计：</p>
-                        <button id="counter-btnSum" class="btn-confirm" @click="countSumPrc">
-                            <p>点按以结算</p>
-                        </button>
-                        <button id="counter-btnPay" class="btn-confirm">
-                            <p>完成支付</p>
-                        </button>
-                        <p>{{hints}}</p>
-                        <p>当前商品总价为：{{sumprc}}</p>
-                        <p>请扫描二维码付款：</p>
-                        <img src="Web/accnt/img/qrcode.jpg" alt="此处加载收款二维码">
-                    </div>
-
-                </div>
-                <span class="bl-icon bl-icon-close"></span>
-            </section>
-            <section>
-                <div class="bl-box">
-                    <h2 class="bl-icon bl-icon-blog">商品推荐</h2>
-                </div>
-                <div id="recommend" class="bl-content">
-                    <div class="content-title">
-                        <h2>当前客户认证身份：{{userid}} -- {{username}}</h2>
-                    </div>
-                    <div class=" content-interval"> </div>
-                    <div class="content-text">
-                        <button id="recommend-btn" class="btn-confirm">
-                            <h2>刷新以获取最新推荐</h2>
-                        </button>
-                        <p>下面是为您推荐的商品：</p>
-                        <p>
-                            <ul id="bl-work-items">
-                                <li v-for="rcmd in rcmdlist" :data-panel="rcmd.pnl"><a href="#"><img
-                                            :src="rcmd.img" />商品名称：{{rcmd.name}}--商品id：{{rcmd.id}}--商品价格{{rcmd.prc}}</a>
-                                </li>
-                            </ul>
-                        </p>
-                    </div>
-                </div>
-                <span class="bl-icon bl-icon-close"></span>
-            </section>
-            <section>
-                <div class="bl-box">
-                    <h2 class="bl-icon bl-icon-contact">故障上报</h2>
-                </div>
-                <div class="bl-content">
-                    <h2>敬请期待（滑稽）</h2>
-                    <p>敬请期待（滑稽）</p>
-                </div>
-                <span class="bl-icon bl-icon-close"></span>
-            </section>
-            <!-- Panel items for the works -->
-            <div class="bl-panel-items" id="bl-panel-work-items">
-                <div data-panel="panel-1">
-                    <div>
-                        <img src="Web/accnt/img/accnt-1.jpg" />
-                        <h3>商品111</h3>
-                        <p>商品介绍</p>
-                    </div>
-                </div>
-                <div data-panel="panel-2">
-                    <div>
-                        <img src="Web/accnt/img/accnt-1.jpg" />
-                        <h3>商品2</h3>
-                        <p>商品介绍</p>
-                    </div>
-                </div>
-                <div data-panel="panel-3">
-                    <div>
-                        <img src="Web/accnt/img/accnt-1.jpg" />
-                        <h3>商品3</h3>
-                        <p>商品介绍</p>
-                    </div>
-                </div>
-                <nav>
-                    <span class="bl-next-work">&gt;下一件商品</span>
-                    <span class="bl-icon bl-icon-close"></span>
-                </nav>
+<div class="container">
+    <div id="bl-main" class="bl-main">
+        <section>
+            <div class="bl-box">
+                <h2 class="bl-icon bl-icon-about">客户识别</h2>
             </div>
-        </div>
-    </div><!-- /container -->
+            <div id="recg" class="bl-content">
+                <div class="content-title">
+                    <h2>{{hints}} 当前用户:{{userid}}</h2>
+                </div>
+                <div class="content-interval"> </div>
+                <div class="content-left">
+                    <input id="recg-input" v-model="inputuserid" type="text" placeholder="无人脸信息?在这里手动输入用户名（ID）">
+                    <!-- <p>当前用户识别状态：{{stat}}</p>
+                    <p>用户真实姓名：{{username}}</p>
+                    <p>用户名（ID）：{{userid}}</p> -->
+                    <ul>
+                        <li v-for="user in user_lst">
+                            <p>用户名:{{user.userid}} 真实姓名:{{user.username}}</p>
+                            <button @click="onChsUser(user.userid,user.username)">
+                                <p>确认</p>
+                            </button>
+                        </li>
+                        <!-- <li>
+                            <p>用户名:{{}} 真实姓名{{}}</p>
+                            <button>
+                                <p>确认</p>
+                            </button>
+                        </li>
+                        <li>
+                            <p>用户名:{{}} 真实姓名{{}}</p>
+                            <button>
+                                <p>确认</p>
+                            </button>
+                        </li> -->
+                    </ul>
+                </div>
+                <div class="content-right">
+                    <p>人脸信息识别指示：</p>
+                    <button id="recg-btn" class="btn-confirm" onclick="onClickRecg()">
+                        <p>识别</p>
+                    </button>
+                    <button class="btn-confirm" onclick="onClickSignUp()">
+                        <p>注册</p>
+                    </button>
+                    <video src="" width="230" height="230"></video>
+                    <canvas id="canvas" width="230" height="230"></canvas>
+                    <!-- <img src="Web/accnt/img/qrcode.jpg" alt="空信息"> -->
+                </div>
+            </div>
+            <span class="bl-icon bl-icon-close"></span>
+        </section>
 
-    <!--    后置js-->
-    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-    <script src="Web/accnt/js-ref/jquery.min.js"></script>
-    <script src="Web/accnt/js/accnt-box-boxlayout.js"></script>
-    <script src="Web/accnt/js/accnt-core.js"></script>
+        <section id="bl-work-section">
+            <div class="bl-box">
+                <h2 class="bl-icon bl-icon-works">收银台</h2>
+            </div>
+            <div id="counter" class="bl-content">
+                <div class="content-title">
+                    <h2>当前客户认证身份：{{userid}} -- {{username}}</h2>
+                </div>
+                <div class="content-interval"> </div>
+                <div class="content-left">
+                    <input v-model="goodsidCmd" id="counter-input" type="text" placeholder="请输入要购买的商品（ID;个数）：">
+                    <p>
+                    <ul id="bl-work-items">
+                        <li v-for="buy in buylist" :data-panel="buy.pnl"><a href="#"><img
+                                :src="buy.img" />商品名称：{{buy.name}}--商品id：{{buy.id}}--购买数量：{{buy.cnt}}--商品价格{{buy.prc}}</a>
+                        </li>
+                        <!-- <li data-panel="panel-1"><a href="#"><img src="Web/accnt/img/accnt-2.jpg" />商品1</a>
+                </li>
+                <li data-panel="panel-2"><a href="#"><img src="Web/accnt/img/accnt-2.jpg" />商品2</a>
+                </li>
+                <li data-panel="panel-3"><a href="#"><img src="Web/accnt/img/accnt-2.jpg" />商品3</a>
+                </li> -->
+                    </ul>
+                    </p>
+                </div>
+                <div class="content-right">
+                    <p>您的购物统计：</p>
+                    <button id="counter-btnSum" class="btn-confirm" @click="countSumPrc">
+                        <p>点按以结算</p>
+                    </button>
+                    <button id="counter-btnPay" class="btn-confirm">
+                        <p>完成支付</p>
+                    </button>
+                    <p>{{hints}}</p>
+                    <p>当前商品总价为：{{sumprc}}</p>
+                    <p>请扫描二维码付款：</p>
+                    <img src="Web/accnt/img/qrcode.jpg" alt="此处加载收款二维码">
+                </div>
+
+            </div>
+            <span class="bl-icon bl-icon-close"></span>
+        </section>
+        <section>
+            <div class="bl-box">
+                <h2 class="bl-icon bl-icon-blog">商品推荐</h2>
+            </div>
+            <div id="recommend" class="bl-content">
+                <div class="content-title">
+                    <h2>当前客户认证身份：{{userid}} -- {{username}}</h2>
+                </div>
+                <div class=" content-interval"> </div>
+                <div class="content-text">
+                    <button id="recommend-btn" class="btn-confirm">
+                        <h2>刷新以获取最新推荐</h2>
+                    </button>
+                    <p>下面是为您推荐的商品：</p>
+                    <p>
+                    <ul id="bl-work-items">
+                        <li v-for="rcmd in rcmdlist" :data-panel="rcmd.pnl"><a href="#"><img
+                                :src="rcmd.img" />商品名称：{{rcmd.name}}--商品id：{{rcmd.id}}--商品价格{{rcmd.prc}}</a>
+                        </li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <span class="bl-icon bl-icon-close"></span>
+        </section>
+        <section>
+            <div class="bl-box">
+                <h2 class="bl-icon bl-icon-contact">预约订单</h2>
+            </div>
+            <div id="order" class="bl-content">
+                <div class="content-title">
+                    <h2>当前预约订单客户：{{user_id}}</h2>
+                </div>
+                <div class="content-interval"> </div>
+                <div class="content-left">
+                    <p>
+                    <ul id="bl-work-items">
+                        <li v-for="ord in order_lst"><a href="#"><img
+                                :src="ord.img" />商品名称：{{ord.name}}--商品id：{{ord.id}}--购买数量：{{ord.cnt}}--商品价格{{ord.prc}}</a>
+                        </li>
+                        <!-- <li data-panel="panel-1"><a href="#"><img src="Web/accnt/img/accnt-2.jpg" />商品1</a>
+                </li>
+                <li data-panel="panel-2"><a href="#"><img src="Web/accnt/img/accnt-2.jpg" />商品2</a>
+                </li>
+                <li data-panel="panel-3"><a href="#"><img src="Web/accnt/img/accnt-2.jpg" />商品3</a>
+                </li> -->
+                    </ul>
+                    </p>
+                </div>
+                <div class="content-right">
+                    <p>预约结算：</p>
+                    <button v-show="btn_chs == 'finish'" id="order-btnPay" class="btn-confirm"
+                            @click="onOrderFinished()">
+                        <p>完成订单</p>
+                    </button>
+                    <button v-show="btn_chs == 'next'" class="btn-confirm" @click="onOrderNext()">
+                        <p>下一订单</p>
+                    </button>
+
+                    <p>{{hints}}</p>
+                </div>
+            </div>
+            <span class="bl-icon bl-icon-close"></span>
+        </section>
+        <!-- Panel items for the works -->
+        <div class="bl-panel-items" id="bl-panel-work-items">
+            <div data-panel="panel-1">
+                <div>
+                    <img src="Web/accnt/img/accnt-1.jpg" />
+                    <h3>商品111</h3>
+                    <p>商品介绍</p>
+                </div>
+            </div>
+            <div data-panel="panel-2">
+                <div>
+                    <img src="Web/accnt/img/accnt-1.jpg" />
+                    <h3>商品2</h3>
+                    <p>商品介绍</p>
+                </div>
+            </div>
+            <div data-panel="panel-3">
+                <div>
+                    <img src="Web/accnt/img/accnt-1.jpg" />
+                    <h3>商品3</h3>
+                    <p>商品介绍</p>
+                </div>
+            </div>
+            <nav>
+                <span class="bl-next-work">&gt;下一件商品</span>
+                <span class="bl-icon bl-icon-close"></span>
+            </nav>
+        </div>
+    </div>
+</div><!-- /container -->
+
+<!--    后置js-->
+<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+<script src="Web/accnt/js-ref/jquery.min.js"></script>
+<script src="Web/accnt/js/accnt-box-boxlayout.js"></script>
+<script src="Web/accnt/js/accnt-core.js"></script>
 </body>
 
 </html>

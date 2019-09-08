@@ -73,6 +73,13 @@ public class UserDao
                 new Object[]{_user.getUserName(),_user.getPassword(),_user.getBioRef(),_user.getUserID()});
     }
 
+    public void updateUser(User _user,String _strUserID)
+    {
+        m_jdbcTemp.update("UPDATE t_user SET user_name = ? , user_id = ? , password = ? , bio_ref = ? WHERE user_id = ? ",
+                new Object[]{_user.getUserName(),_strUserID,_user.getPassword(),_user.getBioRef(),_user.getUserID()});
+    }
+
+
     /**
      * 更新user信息，新记录将以insert形式更新，用于添加新用户。
      * @param _user in 待更新的user对象，遵循userID unique的编程假设。

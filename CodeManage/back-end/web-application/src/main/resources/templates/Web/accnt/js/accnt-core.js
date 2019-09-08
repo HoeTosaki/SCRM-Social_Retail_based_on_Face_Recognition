@@ -56,7 +56,7 @@ var counter = new Vue({
     methods: {
         countSumPrc: function () {
             var sum = 0;
-            for (var i = 0;i<this.buylist.length;++i) {
+            for (var i = 0; i < this.buylist.length; ++i) {
                 sum += this.buylist[i].prc * this.buylist[i].cnt;
             }
             this.sumprc = sum;
@@ -73,16 +73,46 @@ var recommend = new Vue({
     },
 });
 
+
+// "img": "../img/accnt-1.jpg",
+//     "name": "why",
+//     "id": 12,
+//     "cnt": 122,
+//     "prc": 12.3,
+//     "order_id": -1,
+//
+var v_order = new Vue({
+    el: "#order",
+    data: {
+        userid: '',
+        order_lst: [],
+        hints: '',
+        btn_chs: 'next'
+    }
+});
+
 /**
  * 页面元素的回调方法
  */
+function onOrderFinished() {
+    alert('finish');
+    summitOrder();
+    v_order.btn_chs = 'next';
+}
+
+function onOrderNext() {
+    alert('next');
+    pullOrder();
+    v_order.btn_chs = 'finish';
+}
+
 function onClickRecg() {
     alert("post recgBio");
     var videoEle = document.querySelector('video');
     canvas.getContext('2d').drawImage(videoEle, 0, 0, canvas.width, canvas.height);
 
-    var imgData=document.getElementById("canvas").toDataURL("image/png");
-    var data=imgData.substr(22);
+    var imgData = document.getElementById("canvas").toDataURL("image/png");
+    var data = imgData.substr(22);
 
     recg.recgImgData = data;
     // $.post('recorder/target/sc',{'sj':data});
@@ -113,8 +143,8 @@ function onClickSignUp() {
     var videoEle = document.querySelector('video');
     canvas.getContext('2d').drawImage(videoEle, 0, 0, canvas.width, canvas.height);
 
-    var imgData=document.getElementById("canvas").toDataURL("image/png");
-    var data=imgData.substr(22);
+    var imgData = document.getElementById("canvas").toDataURL("image/png");
+    var data = imgData.substr(22);
 
     recg.recgImgData = data;
 
@@ -178,13 +208,12 @@ $("#counter-btnPay").click(function (e) {
     //     lstAccntID.push(document.mngrid);
     //     lstGoodsCnt.push(buy.cnt);
     // }
-    for(var i = 0 ;i<counter.buylist.length;++i)
-    {
+    for (var i = 0; i < counter.buylist.length; ++i) {
         $.post("accntPay", {
-            userid:counter.userid,
-            accntid:document.mngrid,
-            goodsid:counter.buylist[i].id,
-            goodscnt:counter.buylist[i].cnt
+            userid: counter.userid,
+            accntid: document.mngrid,
+            goodsid: counter.buylist[i].id,
+            goodscnt: counter.buylist[i].cnt
         }, function (result) {
             alert(result);
             var obj = JSON.parse(result);
@@ -216,7 +245,7 @@ $("#counter-input").keyup(function (e) {
                     pnl: "panel-" + ind,
                     name: obj["name"],
                     id: obj["id"],
-                    img: "res/gdspic/"+obj["img"],
+                    img: "res/gdspic/" + obj["img"],
                     cnt: obj["cnt"],
                     prc: obj["prc"],
                     desc: obj["desc"]
@@ -265,7 +294,7 @@ $("#recommend-btn").click(function (e) {
                     pnl: "panel-" + (i + 1),
                     name: obj[i].name,
                     id: obj[i].id,
-                    img: "res/gdspic/"+obj[i].img,
+                    img: "res/gdspic/" + obj[i].img,
                     prc: obj[i].prc,
                     desc: obj[i].desc
                 };
@@ -280,20 +309,91 @@ $("#recommend-btn").click(function (e) {
  */
 
 var refreshCnter = function () {
-        counter.userid = recg.userid;
-        counter.username = recg.username;
-        counter.buylist = [];
-        counter.sumprc = 0;
-        counter.hints = "";
-        counter.goodsidCmd = "";
-    }
+    counter.userid = recg.userid;
+    counter.username = recg.username;
+    counter.buylist = [];
+    counter.sumprc = 0;
+    counter.hints = "";
+    counter.goodsidCmd = "";
+}
 
 
 
 var refreshRcmd = function () {
-        recommend.userid = recg.userid;
-        recommend.username = recg.username;
-        recommend.rcmdlist = [];
+    recommend.userid = recg.userid;
+    recommend.username = recg.username;
+    recommend.rcmdlist = [];
+}
+
+/**
+ * 通信方法
+ */
+
+function pullOrder() {
+    alert('pullorder');
+    $.post("pullOrder", {
+        userid: "null"
+    }, function (result) {
+        alert(result);
+        /**
+         * obj:
+         *      stat
+         *      order
+         *          order_id
+         *          user_id
+         *          gds
+         *          order_cnt
+         *          order_date
+         */
+        var obj = JSON.parse(result);
+        if (obj["stat"] == "invalid") {
+            v_order.hints = "当前无用户订单，请刷新再试。";
+            v_order.order_lst = [];
+            v_order.user_id = '';
+        } else {
+            v_order.userid = obj.user_id;
+            for (var i = 0; i < obj.gds.length; ++i) {
+                var objOrder = new Object();
+                objOrder.img = obj.gds[i].img;
+                objOrder.name = obj.gds[i].name;
+                objOrder.id = obj.gds[i].id;
+                objOrder.cnt = obj.gds[i].cnt;
+                objOrder.prc = obj.gds[i].prc;
+                objOrder.order_id = obj.gds[i].order_id;
+                v_order.order_lst.push(objOrder);
+            };
+        }
+    });
+    alert('pullorder end');
+}
+
+function summitOrder() {
+    alert('summit order');
+    for (var i = 0; i < v_order.order_lst.length; ++i) {
+        $.post("summitOrder", {
+            userid: v_order.user_id,
+            order_id: v_order.order_lst[i].order_id
+        }, function (result) {
+            alert(result);
+            /**
+             * obj:
+             *      stat
+             *      order
+             *          user_id
+             *          gds
+             *          order_cnt
+             *          order_date
+             */
+            var obj = JSON.parse(result);
+            if (obj["stat"] == "invalid") {
+                v_order.hints = "当前用户订单提交失败，请重试。";
+            } else {
+                v_order.hints = "当前用户订单提交提交成功，请服务下一用户。";
+            }
+        });
     }
+    v_order.order_lst = [];
+    v_order.user_id = '';
+    alert('summit order end');
 
-
+}

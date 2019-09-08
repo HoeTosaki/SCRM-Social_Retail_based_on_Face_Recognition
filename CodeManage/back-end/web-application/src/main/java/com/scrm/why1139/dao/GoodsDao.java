@@ -82,6 +82,38 @@ public class GoodsDao
         return goods;
     }
 
+    public List<Goods> findGoodsByFuzzy(String _strFuzzy,int _nLimit)
+    {
+        System.out.println("this is fuzzy query!");
+        List<Goods> lstGds = new CopyOnWriteArrayList<>();
+        String query="%";
+        for(int i=0;i<_strFuzzy.length();i++)
+        {
+            query = query + _strFuzzy.charAt(i) + "%";
+        }
+        m_jdbcTemp.query(" SELECT * FROM t_goods WHERE goods_name LIKE ? OR goods_type LIKE ?"
+                ,new Object[]{query,query},rs->
+                {
+                    int nHits = 0;
+                    do
+                    {
+                        Goods gds = new Goods();
+                        gds.setGoodsID(rs.getInt("goods_id"));
+                        gds.setPic(rs.getString("goods_pic"));
+                        gds.setGoodsCnt(rs.getInt("goods_cnt"));
+                        gds.setGoodsDesc(rs.getString("goods_desc"));
+                        gds.setGoodsName(rs.getString("goods_name"));
+                        gds.setGoodsType(rs.getString("goods_type"));
+                        gds.setPrice(rs.getDouble("goods_price"));
+                        lstGds.add(gds);
+                        ++nHits;
+                    }
+                    while(nHits < _nLimit && rs.next());
+                });
+        return lstGds;
+    }
+
+
     /**
      * 更新商品信息，新记录将以update形式更新，用于修改已有商品的信息。
      * @param _goods in 待更新的Goods对象，遵循GoodsID readonly的编程假设。

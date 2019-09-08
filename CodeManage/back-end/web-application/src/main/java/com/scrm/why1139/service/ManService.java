@@ -1,6 +1,7 @@
 package com.scrm.why1139.service;
 
 import com.scrm.why1139.BioReferenceModule.BioCertificater;
+import com.scrm.why1139.dao.BioDao;
 import com.scrm.why1139.dao.MngrDao;
 import com.scrm.why1139.dao.UserDao;
 import com.scrm.why1139.domain.Mngr;
@@ -8,9 +9,11 @@ import com.scrm.why1139.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import javax.swing.*;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 提供人员管理基础的Service类。
@@ -21,6 +24,9 @@ public class ManService
 {
     protected UserDao m_userDao;
     protected MngrDao m_mngrDao;
+
+    @Autowired
+    private BioDao m_bioDao;
 
     /**
      * setter注入
@@ -71,6 +77,14 @@ public class ManService
         return m_userDao.findUserByUserID(_strUserID);
     }
 
+    public List<User> findUserByRecgBio(String _imgrecg)
+    {
+        List<String> lstUserID = m_bioDao.certificateUser(_imgrecg);
+        List<User> lstUser = new CopyOnWriteArrayList<>();
+        lstUserID.stream().map(userid->m_userDao.findUserByUserID(userid)).forEach(lstUser::add);
+        return lstUser;
+    }
+
     /**
      * 通过Mngr的个人信息，获取在数据库中的匹配结果
      * @param _strMngrID in MngrID
@@ -82,6 +96,56 @@ public class ManService
     {
         int nMatchCnt = m_mngrDao.getMatchCount(_strMngrID,_strPassword);
         return nMatchCnt > 0;
+    }
+
+    public boolean updateUserPasswd(User _user,String _strPasswd)
+    {
+        if(checkString(_strPasswd))
+        {
+            User user = m_userDao.findUserByUserID(_user.getUserID());
+            if(user == null || user.isEmpty())
+            {
+                return false;
+            }
+            else
+            {
+                user.setPassword(_strPasswd);
+                m_userDao.updateUser(user);
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean updateUserRecgBio(User _user,List<String> _imgrecg)
+    {
+        User user = m_userDao.findUserByUserID(_user.getUserID());
+        if(user == null || user.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            return m_bioDao.saveUser(_imgrecg,_user.getUserID(),ConfigConst.BIO_ACC);
+        }
+    }
+
+    public boolean updateUserID(User _user,String _strUserID)
+    {
+        User user = m_userDao.findUserByUserID(_user.getUserID());
+        if(user == null ||user.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            m_userDao.updateUser(user,_strUserID);
+            m_bioDao.updateUserID(user.getUserID(),_strUserID);
+            return true;
+        }
     }
 
     /**
@@ -159,39 +223,28 @@ public class ManService
 
     /**
      * 通过人脸识别方式创建新用户，该操作将导致数据库中User记录的更新。
-     * TODO:目前由于密码和人脸信息的地位不等价，人脸信息的存储被放置在该方法的外侧
      * @param _strUserID in 用户ID
      * @return 创建成功与否的boolean值
      * @author why
      */
-    public boolean creatNewUserByRecgBio(String _strUserID)
+    public boolean creatNewUserByRecgBio(String _strUserID,List<String> _imgrecg)
     {
         if(!checkString(_strUserID))
             return false;
+        System.out.println("校验完毕，Man服务层执行人脸注册程序。");
         User newUser = new User();
         newUser.setUserName("");
         newUser.setUserID(_strUserID);
         newUser.setPassword("");
-        m_userDao.insertUser(newUser);
-        return true;
-    }
-
-    /**
-     * 根据生物特征信息获取User对象
-     * @param _btBioRef in BioRef
-     * @return User对象
-     * @author why
-     */
-    public User findUserByBioRef(String _btBioRef)
-    {
-        //TODO: need impl in future based on Face-Reg modules or some newest tech, ehh, you know.
-        List<String> strlstUserID = BioCertificater.certificateUser(_btBioRef);
-        if(strlstUserID.size() == 0)
-            return new User();
+        if(m_bioDao.saveUser(_imgrecg,_strUserID,ConfigConst.BIO_ACC))
+        {
+            System.out.println("人脸库更新完成，数据库插入用户数据");
+            m_userDao.insertUser(newUser);
+            return true;
+        }
         else
         {
-            User userBestFit = m_userDao.findUserByUserID(strlstUserID.get(0));
-            return userBestFit;
+            return false;
         }
     }
 
@@ -217,6 +270,11 @@ public class ManService
     public List<Mngr> getMngrAllForAdmin()
     {
         return m_mngrDao.getMngrAll(ConfigConst.ACCNT_ALL_LIMIT);
+    }
+
+    public boolean isUserRecgBioExist(User _user)
+    {
+        return m_bioDao.isUserExist(_user.getUserID());
     }
 
 

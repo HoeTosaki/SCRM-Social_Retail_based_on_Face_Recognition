@@ -5,10 +5,7 @@ import com.scrm.why1139.dao.AnalDao;
 import com.scrm.why1139.dao.BuyDao;
 import com.scrm.why1139.dao.GoodsDao;
 import com.scrm.why1139.dao.UserDao;
-import com.scrm.why1139.domain.Buy;
-import com.scrm.why1139.domain.Goods;
-import com.scrm.why1139.domain.Mngr;
-import com.scrm.why1139.domain.User;
+import com.scrm.why1139.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,9 +102,9 @@ public class AccntService
      * @return User对象
      * @author why
      */
-    public User findUserByBioRef(String _btBioRef)
+    public List<User> findUserByRecgBio(String _btBioRef)
     {
-        return m_manService.findUserByBioRef(_btBioRef);
+        return m_manService.findUserByRecgBio(_btBioRef);
     }
 
     /**
@@ -169,5 +166,25 @@ public class AccntService
     public List<Goods> getGoodsRcmdForUser(User _user)
     {
         return m_goodsService.getGoodsRcmdGeneralForUser(_user,0,ConfigConst.ACCNT_RCMD_LIMIT);
+    }
+
+    public List<Order> findOrderByUserID(String _strUserID)
+    {
+        return m_buyService.findOrderByUserID(_strUserID);
+    }
+
+    public Order findOrderByOrderID(int  _nOrderID)
+    {
+        return m_buyService.findOrderByOrderID(_nOrderID);
+    }
+
+    public List<Order> findOrder()
+    {
+        return m_buyService.findOrder();
+    }
+
+    public void removeOrderByOrderID(int _nOrderID)
+    {
+        m_buyService.removeOrderByOrderID(_nOrderID);
     }
 }

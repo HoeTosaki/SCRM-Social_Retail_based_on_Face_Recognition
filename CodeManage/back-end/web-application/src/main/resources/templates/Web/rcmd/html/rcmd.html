@@ -217,91 +217,91 @@
             type_chs: 'none',
             cls_foods: [{
                 type_name: '小吃类',
-                type_val: 'snacks'
+                type_val: '小吃类'
             },
                 {
                     type_name: '冷冻类',
-                    type_val: 'frozen'
+                    type_val: '冷冻类'
                 },
                 {
                     type_name: '饮料类',
-                    type_val: 'beverages'
+                    type_val: '饮料类'
                 },
                 {
                     type_name: '储藏室类',
-                    type_val: 'pantry'
+                    type_val: '储藏室类'
                 },
                 {
                     type_name: '肉品海鲜类',
-                    type_val: 'meat seafood'
+                    type_val: '肉品海鲜类'
                 },
                 {
                     type_name: '酒类',
-                    type_val: 'alcohol'
+                    type_val: '酒类'
                 },
                 {
                     type_name: '农产品类',
-                    type_val: 'produce'
+                    type_val: '农产品类'
                 }
             ],
             cls_breakfasts: [{
                 type_name: '熟食类',
-                type_val: 'deli'
+                type_val: '熟食类'
             },
                 {
                     type_name: '早餐类',
-                    type_val: 'breakfast'
+                    type_val: '早餐类'
                 },
                 {
                     type_name: '乳蛋类',
-                    type_val: 'dairy eggs'
+                    type_val: '乳蛋类'
                 },
                 {
                     type_name: '罐装食品类',
-                    type_val: 'canned goods'
+                    type_val: '罐装食品类'
                 },
                 {
                     type_name: '干货面团类',
-                    type_val: 'dry goods pasta'
+                    type_val: '干货面团类'
                 },
                 {
                     type_name: '烘培类',
-                    type_val: 'bakery'
+                    type_val: '烘培类'
                 }
             ],
             cls_daily: [{
                 type_name: '个人护理类',
-                type_val: 'personal care'
+                type_val: '个人护理类'
             },
                 {
                     type_name: '婴幼儿类',
-                    type_val: 'babies'
+                    type_val: '婴幼儿类'
                 },
                 {
                     type_name: '家居类',
-                    type_val: 'household'
+                    type_val: '家居类'
                 }
             ],
             cls_tools: [{
                 type_name: '杂货类',
-                type_val: 'missing'
+                type_val: '杂货类'
             },
                 {
                     type_name: '大型类',
-                    type_val: 'bulk'
+                    type_val: '大型类'
                 }
             ],
             cls_more: [{
                 type_name: '国际类',
-                type_val: 'international'
+                type_val: '国际类'
             },
                 {
                     type_name: '宠物类',
-                    type_val: 'pets'
+                    type_val: '宠物类'
                 },
                 {
                     type_name: '其他类',
-                    type_val: 'other'
+                    type_val: '其他类'
                 }
             ]
         }
@@ -494,7 +494,7 @@
     function pullGdsSearch(){
         alert("pullGdsSearch");
         v_gds_other.gds_lst = [];
-        for(var i = 0;i<3;++i)
+        for(var i = 0;i<4;++i)
         {
             $.post("userGdsQuery", {
                 userid: v_user.user_id,

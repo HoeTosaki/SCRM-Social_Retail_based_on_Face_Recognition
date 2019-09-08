@@ -86,11 +86,6 @@
     <!-- 顶部导航栏 -->
     <nav id="nav" class="navbar navbar-default navbar-fixed-top user">
         <div class="container-fluid layer clear-float">
-            <!-- <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
-            <span class="hamb-top"></span>
-            <span class="hamb-middle"></span>
-            <span class="hamb-bottom"></span>
-        </button> -->
             <ul class="nav navbar-nav pt12">
                 <span><img id="user-icon" src="Web/admin/img/admin.jpg" alt=""></span>
                 <strong class="ml20">{{user_id}}</strong>
@@ -102,33 +97,13 @@
                             setInterval("document.getElementById('time').innerHTML=new Date().toLocaleString();", 1000);
                         </script>
                     </span>
-                <span id="log-out" class="ml20">退出登录</span>
+<!--                <span id="log-out" class="ml20">退出登录</span>-->
             </ul>
         </div>
     </nav>
 
-    <!-- 侧边导航栏 -->
-    <!-- <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-    <ul class="nav sidebar-nav">
-        <li class="sidebar-title">
-            <span>功能选择</span>
-        </li>
-        <li class="item">
-            <span>销售数据</span>
-        </li>
-        <li class="item">
-            <span>员工管理</span>
-        </li>
-        <li class="item">
-            <span>商品管理</span>
-        </li>
-        <li class="item">
-            <span>个人管理</span>
-        </li>
-    </ul>
-</nav> -->
     <!-- 系统贴图 -->
-    <div id="sys-img" class="layer"></div>
+    <div id="sys-img" class="layer mt15"></div>
 
     <!-- 销售额数据 -->
     <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'sale-cnt'" id="sale-data-box"
@@ -154,7 +129,7 @@
         </ul>
     </div>
 
-    <!--    &lt;!&ndash; 销售额变化统计 &ndash;&gt;-->
+    <!--销售额变化统计-->
     <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'sale-cnt'" id="sale-graph-box"
          class="layer mt15 box-border box-shadow box-background-color sale-cnt-fig">
         <div id="sale-graph-box-head" class="clear-float">
@@ -166,7 +141,7 @@
                 <option value="type">按商品类别</option>
                 <option value="id">按商品id</option>
             </select>
-            <div class="col-sm-6 fl date-box mt10 ml20">
+            <div class="col-sm-6 fl date-box mt7 ml20">
                 <div class="form-group">
                     <div id="graph-start-date" v-show="cnt_chs != 'season'" class='input-group date datetimepicker'>
                         <input v-model="st_date" onchange="onFigDate()" type='text' class="form-control"
@@ -177,7 +152,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 fl date-box mt10 ml20">
+            <div class="col-sm-6 fl date-box mt7 ml20">
                 <div class="form-group">
                     <div id="graph-end-date" v-show="cnt_chs != 'season'" class='input-group date datetimepicker'>
                         <input v-model="ed_date" onchange="onFigDate()" type='text' class="form-control"
@@ -210,13 +185,16 @@
     </div>
 
     <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'gds-cnt'" id="gds-cnt-relfig"
-         class="layer mt15 mb3 box-border box-background-color box-shadow gds-cnt-fig">
+         class="layer mt15 mb3 gds-cnt-fig">
         <span class="subtitle mt15 ml20">商品热度统计图</span>
-        <div id="arbor">
+        <div id="arbor" class="mt15">
             <div id="nav">
                 <a class="back" href="#"></a>
             </div>
-            <canvas id="sitemap" width="800" height="400"></canvas>
+            <div id="sitemap-box">
+                <canvas id="sitemap" ></canvas>
+            </div>
+<!--            width="800" height="400"-->
         </div>
 <!--        <canvas id="sitemap" width="1000" height="500"></canvas>-->
     </div>
@@ -229,27 +207,22 @@
 
 
     <!--     购物记录-->
-    <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'user-cnt'"
+    <div id="buy-list" v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'user-cnt'"
          class="layer mt15 mb3 box-border box-background-color box-shadow user-cnt-list">
 
         <span class="subtitle mt15 ml20">购物记录</span>
 
         <ul id="time-option" class="nav nav-pills clear-float mt15 ml20">
-            <!-- <li role="presentation" class="active"><a href="#">当日</a></li>
-    <li role="presentation"><a href="#">7天内</a></li>
-    <li role="presentation"><a href="#">30天内</a></li>
-    <li role="presentation"><a href="#">自定义</a></li> -->
-            <label class="mt15"><input type="radio" name='y' value="day" v-model="cnt_chs" checked="checked"
+            <label class="mt15 fl"><input type="radio" name='y' value="day" v-model="cnt_chs" checked="checked"
                                        onclick="onListMtdChs()" />当日</label>
-            <label class="mt15 ml20"><input type="radio" name='y' value="week" v-model="cnt_chs"
+            <label class="mt15 ml20 fl"><input type="radio" name='y' value="week" v-model="cnt_chs"
                                             onclick="onListMtdChs()" />7天内</label>
-            <label class="mt15 ml20"><input type="radio" name='y' value="month" v-model="cnt_chs"
+            <label class="mt15 ml20 fl"><input type="radio" name='y' value="month" v-model="cnt_chs"
                                             onclick="onListMtdChs()" />30天内</label>
-            <label class="mt15 ml20"><input type="radio" name='y' value="auto" v-model="cnt_chs"
+            <label class="mt15 ml20 fl"><input type="radio" name='y' value="auto" v-model="cnt_chs"
                                             onclick="onListMtdChs()" />自定义</label>
 
-
-            <div class="col-sm-6 fl date-box">
+            <div id="start-date" class="col-sm-6 fl">
                 <div class="form-group">
                     <div id="table-start-date" class='input-group date datetimepicker'>
                         <input type='text' v-model="st_date" onchange="onListDate()" class="form-control"
@@ -260,7 +233,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 fl date-box">
+            <div id="end-date" class="col-sm-6 fl">
                 <div class="form-group">
                     <div id="table-end-date" class='input-group date datetimepicker'>
                         <!--v-show="v_user_cnt_list.cnt_chs == 'auto'"-->
@@ -276,24 +249,28 @@
         <table id="buy-list-table" class="ml20 mr20 mt15"></table>
     </div>
 
-    <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'accnt-cnt'"
+    <div id="sale-accnt-cnt-graph-box" v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'accnt-cnt'"
          class="layer mt15 mb3 box-border box-background-color box-shadow accnt-cnt-list">
-        <span class="subtitle mt15 ml20">收银员记账统计</span>
+<!--        -->
+        <div id="sale-accnt-cnt-graph-box-head">
+            <span class="subtitle mt15 ml20">收银员记账统计</span>
+        </div>
 <!--        <div id="sale-accnt-cnt-graph" class="ml20 mr20 mt15 box-background-color"></div>-->
-        <div id="sale-accnt-cnt-graph" style="width:1000px; height:520px;"></div>
-
+        <div id="sale-accnt-cnt-graph" style="width:1095px;height:550px; margin-top:15px; margin-left: 20px; margin-right: 20px;"></div>
+        <div style="width:1095px;height:50px;"></div>
     </div>
 
     <div v-show="v_func.cls_chs == 'person' && v_func.type_chs == 'accnt-add'"
          class="layer mt15 mb3 box-border box-background-color box-shadow accnt-add-core">
-        <span class="subtitle mt15 ml20">添加收银员</span>
-        <span class="subtitle mt15 ml20">{{hints}}</span>
-        <div class="input-group input-group-lg">
+
+        <span class="mt15 center-subtitle center">添加收银员</span>
+        <span class="subtitle mt15 ml20 fr">{{hints}}</span>
+        <div class="input-group input-group-lg input-bar mt15 center">
             <span class="input-group-addon" id="sizing-addon1">收银员ID:</span>
             <input type="text" v-model="mngr_id" class="form-control" placeholder="请输入一个新的收银员ID"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg input-bar mt15 mb3 center">
             <span class="input-group-addon" id="sizing-addon1">密码:</span>
             <input type="password" v-model="passwd" class="form-control" placeholder="请输入密码"
                    aria-describedby="sizing-addon1">
@@ -305,11 +282,11 @@
 
     <div v-show="v_func.cls_chs == 'person' && v_func.type_chs == 'accnt-upd'"
          class="layer mt15 mb3 box-border box-background-color box-shadow accnt-upd-core">
-        <span class="subtitle mt15 ml20">修改收银员资料</span>
-        <span class="subtitle mt15 ml20">{{hints}}</span>
-        <div class="input-group input-group-lg">
+        <span class="mt15 center-subtitle center">修改收银员资料</span>
+        <span class="subtitle mt15 ml20 fr">{{hints}}</span>
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">收银员ID:</span>
-            <input type="text" v-model="mngr_id" class="form-control" placeholder="请输入一个收银员ID："
+            <input type="text" v-model="mngr_id" class="form-control" placeholder="请输入一个收银员ID"
                    aria-describedby="sizing-addon1">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -320,7 +297,7 @@
                 </ul>
             </div><!-- /btn-group -->
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 mb3 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">密码:</span>
             <input type="password" v-mdoel="new_passwd" class="form-control" placeholder="请输入新的密码"
                    aria-describedby="sizing-addon1">
@@ -333,11 +310,11 @@
 
     <div v-show="v_func.cls_chs == 'person' && v_func.type_chs == 'accnt-del'"
          class="layer mt15 mb3 box-border box-background-color box-shadow accnt-del-core">
-        <span class="subtitle mt15 ml20">删除收银员</span>
-        <span class="subtitle mt15 ml20">{{hints}}</span>
-        <div class="input-group input-group-lg">
+        <span class="mt15 center-subtitle center">删除收银员</span>
+        <span class="subtitle mt15 ml20 fr">{{hints}}</span>
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">收银员ID:</span>
-            <input type="text" v-model="mngr_id" class="form-control" placeholder="请输入一个收银员ID："
+            <input type="text" v-model="mngr_id" class="form-control" placeholder="请输入一个收银员ID"
                    aria-describedby="sizing-addon1">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -348,9 +325,9 @@
                 </ul>
             </div><!-- /btn-group -->
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 mb3 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">收银员ID:</span>
-            <input type="text" v-model="mngr_id_again" class="form-control" placeholder="请再次输入该收银员ID，以确认"
+            <input type="text" v-model="mngr_id_again" class="form-control" placeholder="确认收银员ID"
                    aria-describedby="sizing-addon1">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default" onclick="onAccntDel()">提交删除</button>
@@ -360,39 +337,39 @@
 
     <div v-show="v_func.cls_chs == 'goods' && v_func.type_chs == 'gds-add'"
          class="layer mt15 mb3 box-border box-background-color box-shadow gds-add-core">
-        <span class="subtitle mt15 ml20">添加商品</span>
-        <span class="subtitle mt15 ml20">{{hints}}</span>
-        <div class="input-group input-group-lg">
+        <span class="center-subtitle center mt15">添加商品</span>
+        <span class="subtitle mt15 ml20 fr">{{hints}}</span>
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品ID:</span>
             <input type="text" v-model="gds_id" class="form-control" placeholder="请输入一个新的商品ID"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品名称:</span>
             <input type="text" v-model="gds_name" class="form-control" placeholder="请输入一个新的商品名称"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品图片:</span>
             <input type="text" v-model="gds_pic" class="form-control" placeholder="请填写一个新的商品图片路径"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品价格:</span>
             <input type="text" v-model="gds_prc" class="form-control" placeholder="请输入一个新的商品价格"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品数量:</span>
             <input type="text" v-model="gds_cnt" class="form-control" placeholder="请输入一个商品库存数量"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品类型:</span>
             <input type="text" v-model="gds_type" class="form-control" placeholder="请输入一个商品库存数量"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品描述:</span>
             <input type="text" v-model="gds_desc" class="form-control" placeholder="请输入商品描述"
                    aria-describedby="sizing-addon1">
@@ -424,39 +401,39 @@
 
     <div v-show="v_func.cls_chs == 'goods' && v_func.type_chs == 'gds-upd'"
          class="layer mt15 mb3 box-border box-background-color box-shadow gds-upd-core">
-        <span class="subtitle mt15 ml20">修改商品资料</span>
-        <span class="subtitle mt15 ml20">{{hints}}</span>
-        <div class="input-group input-group-lg">
+        <span class="center-subtitle center mt15">修改商品资料</span>
+        <span class="subtitle mt15 ml20 fr">{{hints}}</span>
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品ID:</span>
             <input type="text" v-model="gds_id" class="form-control" placeholder="请输入一个商品ID"
                    aria-describedby="sizing-addon1" onblur="onGdsUpdIDChange()">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品名称:</span>
             <input type="text" v-model="gds_name" class="form-control" placeholder="请输入一个商品名称"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品图片:</span>
             <input type="text" v-model="gds_pic" class="form-control" placeholder="请填写一个商品图片路径"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品价格:</span>
             <input type="text" v-model="gds_prc" class="form-control" placeholder="请输入一个商品价格"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg  mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品数量:</span>
             <input type="text" v-model="gds_cnt" class="form-control" placeholder="请输入一个商品库存数量"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品类型:</span>
             <input type="text" v-model="gds_type" class="form-control" placeholder="请输入一个商品类型"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品描述:</span>
             <input type="text" v-model="gds_desc" class="form-control" placeholder="请输入商品描述"
                    aria-describedby="sizing-addon1">
@@ -488,39 +465,39 @@
 
     <div v-show="v_func.cls_chs == 'goods' && v_func.type_chs == 'gds-del'"
          class="layer mt15 mb3 box-border box-background-color box-shadow gds-del-core">
-        <span class="subtitle mt15 ml20">删除商品</span>
-        <span class="subtitle mt15 ml20">{{hints}}</span>
-        <div class="input-group input-group-lg">
+        <span class="center-subtitle center mt15">删除商品</span>
+        <span class="subtitle mt15 ml20 fr">{{hints}}</span>
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品ID:</span>
             <input type="text" v-model="gds_id" class="form-control" placeholder="请输入一个商品ID"
                    aria-describedby="sizing-addon1" onblur="onGdsDelIDChange()">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品名称:</span>
             <input type="text" v-model="gds_name" class="form-control" placeholder="此处为商品名称"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品图片:</span>
             <input type="text" v-model="gds_pic" class="form-control" placeholder="此处为商品图片路径"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品价格:</span>
             <input type="text" v-model="gds_prc" class="form-control" placeholder="此处为商品价格"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品数量:</span>
             <input type="text" v-model="gds_cnt" class="form-control" placeholder="此处为商品库存数量"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品类型:</span>
             <input type="text" v-model="gds_type" class="form-control" placeholder="此处为商品类型"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">商品描述:</span>
             <input type="text" v-model="gds_desc" class="form-control" placeholder="此处为商品描述"
                    aria-describedby="sizing-addon1">
@@ -552,19 +529,19 @@
 
     <div v-show="v_func.cls_chs == 'me' && v_func.type_chs == 'edit-me'"
          class="layer mt15 mb3 box-border box-background-color box-shadow edit-me-core">
-        <span class="subtitle mt15 ml20">更改密码</span>
-        <span class="subtitle mt15 ml20">{{hints}}</span>
-        <div class="input-group input-group-lg">
+        <span class="center-subtitle center mt15 ml20">更改密码</span>
+        <span class="subtitle mt15 ml20 fr">{{hints}}</span>
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">ID:</span>
             <input type="text" v-model="mngr_id" class="form-control" placeholder="管理员ID："
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">旧密码:</span>
             <input type="password" v-model="old_passwd" class="form-control" placeholder="请输入原来的密码"
                    aria-describedby="sizing-addon1">
         </div>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg mt15 mb3 input-bar center">
             <span class="input-group-addon" id="sizing-addon1">新密码:</span>
             <input type="password" v-model="new_passwd" class="form-control" placeholder="请输入新的密码"
                    aria-describedby="sizing-addon1">
@@ -595,8 +572,8 @@
     var h = parseInt($('#gds-cnt-relfig').css("height"));
     var x = (w - 100)+"px";
     var y = (h - 100)+"px";
-    alert('x = '+x);
-    alert('y = '+y);
+    // alert('x = '+x);
+    // alert('y = '+y);
     // var canvas = document.getElementById('sitemap');
     // var canvas = $('#sitemap').get();
     // alert(canvas);
@@ -693,7 +670,7 @@
         data: {
             cnt_chs: 'month', //month,season,type,name,id
             st_date: '2019-01',
-            ed_date: '2019-02',
+            ed_date: '2019-09',
             sch_txt: '',
             mtd_chs: 'sale' //sale,cnt
         }
@@ -713,8 +690,8 @@
         el: '.user-cnt-list',
         data: {
             cnt_chs: 'day', //day,week,month,auto
-            st_date: '2019-02-01',
-            ed_date: '2019-03-01',
+            st_date: '2019-08-01',
+            ed_date: '2019-09-01',
             buy_lst: [{
                 buy_date: '',
                 user_id: '',
@@ -824,7 +801,7 @@
             mngrid: v_user.user_id,
             cmd: cmd,
             offset: 0,
-            limit: 10,
+            limit: 100,
             args: args
         }, function (result) {
             // alert(result);
@@ -869,7 +846,7 @@
             mngrid: v_user.user_id,
             cmd: cmd,
             offset: 0,
-            limit: 10,
+            limit: 100,
             args: args
         }, function (result) {
             // alert(result);
@@ -886,7 +863,7 @@
                         if (v_user_cnt_list.cnt_chs == 'day') {
                             var true_vals = obj.vals.slice(5);
                             var lst = [];
-                            alert('size = ' + true_vals.length);
+                            // alert('size = ' + true_vals.length);
                             for (var i = 0; i < true_vals.length; ++i) {
                                 var val = true_vals[i];
                                 // alert(val.gds.type);
@@ -909,9 +886,9 @@
                     }
                     case 14: {
                         var true_vals = obj.vals.slice(1);
-                        alert('week/month查询:' + 'x = ' + true_vals); //week/month查询
+                        // alert('week/month查询:' + 'x = ' + true_vals); //week/month查询
                         var lst = [];
-                        alert('size = ' + true_vals.length);
+                        // alert('size = ' + true_vals.length);
                         for (var i = 0; i < true_vals.length; ++i) {
                             var val = true_vals[i];
                             // alert(val.gds.type);
@@ -935,7 +912,7 @@
                         var true_vals = obj.vals.slice(1);
                         // alert('自定义auto查询:'+'x = '+true_vals);//自定义auto查询
                         var lst = [];
-                        alert('size = ' + true_vals.length);
+                        // alert('size = ' + true_vals.length);
                         for (var i = 0; i < true_vals.length; ++i) {
                             var val = true_vals[i];
                             // alert(val.gds.type);
@@ -960,11 +937,11 @@
     }
 
     function pullAccntCntFig() {
-        alert("post start why");
+        // alert("post start why");
         $.post("accntCntPullFig", {
             mngrid: "null"
         }, function (result) {
-            alert(result);
+            // alert(result);
             var obj = JSON.parse(result);
 
             /**
@@ -973,8 +950,8 @@
              *      x:['str--mngrid',]
              *      y:['double',]
              */
-            alert("x=\t" + obj.x);
-            alert("y=\t" + obj.y);
+            // alert("x=\t" + obj.x);
+            // alert("y=\t" + obj.y);
 
             if (obj.stat != "success") {
                 v_accnt_upd_core.hints = '无法获取当前服务器的收银员信息！';
@@ -983,7 +960,7 @@
                 presentChartAccnt(obj.x,obj.y);
             }
         });
-        alert("post end why.");
+        // alert("post end why.");
     }
 
 
@@ -1043,11 +1020,11 @@
     }
 
     function pullMngrPre() {
-        alert("post start");
+        // alert("post start");
         $.post("mngrPullPre", {
             mngrid: "null"
         }, function (result) {
-            alert(result);
+            // alert(result);
             var obj = JSON.parse(result);
 
             if (obj.stat != "success") {
@@ -1096,7 +1073,7 @@
             //     }
             // }
         });
-        alert("post end.");
+        // alert("post end.");
     }
 
     function postGdsAdd() {
@@ -1356,12 +1333,12 @@
     }
 
     function onGdsUpdIDChange() {
-        alert(v_gds_upd_core.gds_id);
+        // alert(v_gds_upd_core.gds_id);
         pullGdsPre();
     }
 
     function onGdsDelIDChange() {
-        alert(v_gds_del_core.gds_id);
+        // alert(v_gds_del_core.gds_id);
         pullGdsPre();
     }
 </script>

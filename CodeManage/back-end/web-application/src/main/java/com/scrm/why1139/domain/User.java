@@ -20,6 +20,9 @@ public class User implements Serializable
 
     private Resource m_resBioRef;
 
+
+    private String m_imgrecg;
+
     public static final String RES_PATH="src/main/resources/static/res/bioref/";
 
     private boolean m_isEmpty;//描述当前对象是否被修改过。
@@ -233,5 +236,16 @@ public class User implements Serializable
     public boolean isEmpty()
     {
         return m_isEmpty;
+    }
+
+    public String getM_imgrecg()
+    {
+        return m_imgrecg;
+    }
+
+    public void setM_imgrecg(String m_imgrecg)
+    {
+        m_isEmpty = false;
+        this.m_imgrecg = m_imgrecg;
     }
 }
