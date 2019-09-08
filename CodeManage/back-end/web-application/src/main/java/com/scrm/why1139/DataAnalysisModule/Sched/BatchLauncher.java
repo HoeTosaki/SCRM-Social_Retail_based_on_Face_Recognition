@@ -30,10 +30,13 @@ public class BatchLauncher
         System.out.println("batch start");
         try
         {
-            JobParameters jobParameters = new JobParametersBuilder()
-                    .addDate("date", new Date())
-                    .toJobParameters();
-            jobLauncher.run(dataHandleJob, jobParameters);
+            FileSave.cleanCSV("t_user.csv");
+            FileSave.cleanCSV("t_goods.csv");
+            FileSave.cleanCSV("t_buy.csv");
+//            JobParameters jobParameters = new JobParametersBuilder()
+//                    .addDate("date", new Date())
+//                    .toJobParameters();
+//            jobLauncher.run(dataHandleJob, jobParameters);
         }
         catch (Exception e)
         {

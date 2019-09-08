@@ -7,6 +7,7 @@ import com.dingxianginc.ctu.client.CaptchaClient;
 import com.dingxianginc.ctu.client.model.CaptchaResponse;
 import com.scrm.why1139.BioReferenceModule.BioCertificater;
 import com.scrm.why1139.BioReferenceModule.BioSaver;
+import com.scrm.why1139.DataAnalysisModule.Sched.BatchLauncher;
 import com.scrm.why1139.domain.Goods;
 import com.scrm.why1139.domain.Mngr;
 import com.scrm.why1139.domain.Order;
@@ -1016,8 +1017,63 @@ public class UserCtrl {
         return objRet.toJSONString();
     }
 
+    @RequestMapping(
+            value = {"/pullOrderByUser"}
+    )
+    public String pullOrderByUser(HttpServletRequest _req)
+    {
+        JSONObject objReq = JSONProc.parseReq(_req);
+        JSONObject objRet = new JSONObject();
+        String strUserID = (String)(objReq.getJSONArray("user_id").get(0));
+        List<Order> orderLst = m_userService.findOrderByUserID(strUserID);
+        if(orderLst == null || orderLst.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            objRet.put("stat","success");
+            JSONArray arrOrder = new JSONArray();
+            orderLst.stream().map(ord->{
+                JSONObject objOrd = new JSONObject();
+                objOrd.put("order_id",ord.getOrderID());
+                objOrd.put("user_id",ord.getUserID());
+                objOrd.put("order_cnt",ord.getOrderCnt());
+                int nGdsID = ord.getGoodsID();
+                Goods gds = m_userService.findGoodsByGoodsID(nGdsID);
+                JSONObject objGds = new JSONObject();
+                if(gds == null || gds.isEmpty())
+                {
+                    objGds.put("name","undef");
+                    objGds.put("prc","-1.0");
+                    objGds.put("cnt","-1");
+                    objGds.put("pic","undef");
+                    objGds.put("desc","undef");
+                    objGds.put("id","-1");
+                    objGds.put("type","undef");
+                }
+                else
+                {
+                    objGds.put("name",gds.getGoodsName());
+                    objGds.put("prc",gds.getPrice());
+                    objGds.put("cnt",gds.getGoodsCnt());
+                    objGds.put("pic",gds.getPic());
+                    objGds.put("desc",gds.getGoodsDesc());
+                    objGds.put("id",gds.getGoodsID());
+                    objGds.put("type",gds.getGoodsType());
+                }
+                objOrd.put("gds",objGds);
+                return objOrd;
+            }).forEach(arrOrder::add);
 
+            objRet.put("order_lst",arrOrder);
+        }
+        System.out.println("控制器输出:\t"+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
 
+    @Autowired
+    private BatchLauncher m_batchLauncher;
 
     /**
      * 映射到delRecgBio的Controller方法
@@ -1029,6 +1085,9 @@ public class UserCtrl {
     )
     public String delRecgBio(HttpServletRequest _req) throws Exception
     {
+        System.out.println("start data extract");
+        m_batchLauncher.testRun();
+        System.out.println("end data extract");
         //TODO:删除人脸信息的控制器逻辑。
         return "undefined";
     }

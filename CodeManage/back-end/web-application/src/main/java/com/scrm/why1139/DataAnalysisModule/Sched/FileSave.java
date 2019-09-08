@@ -1,11 +1,19 @@
 package com.scrm.why1139.DataAnalysisModule.Sched;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
 
 public class FileSave
 {
+    public static void cleanCSV(String _filename)
+    {
+        System.out.println("del file:\t"+_filename);
+        File file = new File("anal_data/"+_filename);
+        System.out.println("del res:\t" + file.delete());
+    }
+
     public static boolean appendToCSV(String _filename, List<String> _lstDataRow)
     {
         boolean isSucc = false;

@@ -201,6 +201,12 @@ public class UserService
         m_buyService.removeOrderByOrderID(_nOrderID);
     }
 
+
+    public List<Order> findOrderByUserID(String  _strUserID)
+    {
+        return m_buyService.findOrderByUserID(_strUserID);
+    }
+
     /**
      * 存储用户的生物信息
      * @param _user in user对象
