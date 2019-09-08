@@ -547,28 +547,27 @@
         <div>
             <h3>{{hints}}</h3>
         </div>
-        <div id="basic-info" style="height: 100px;">
-            <span>基本硬件信息</span>
-            <ul style="list-style: none;clear: both;">
-                <li style="float: left;">
+        <div id="sys-info">
+            <ul class="clear-float">
+                <li class="fl ml20">
                     <span>上次开机时间：</span>
                     <span>{{last_bt_time}}</span>
                 </li>
-                <li style="float: left;">
+                <li class="fl ml20">
                     <span>CPU逻辑数量：</span>
                     <span>{{lgc_num}}</span>
                 </li>
-                <li style="float: left;">
+                <li class="fl ml20">
                     <span>CPU物理核心数量：</span>
                     <span>{{phc_num}}</span>
                 </li>
-                <li style="float: left;">
+                <li class="fl ml20">
                     <span>内存总量：</span>
-                    <span>{{mem_sum}}</span><i>G</i>
+                    <span>{{mem_sum}}</span><span>G</span>
                 </li>
-                <li style="float: left;">
+                <li class="fl ml20">
                     <span>磁盘总量：</span>
-                    <span>{{disk_sum}}</span><i>G</i>
+                    <span>{{disk_sum}}</span><span>G</span>
                 </li>
             </ul>
         </div>
