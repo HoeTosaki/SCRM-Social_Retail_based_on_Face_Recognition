@@ -1,11 +1,14 @@
 package com.scrm.why1139.DataAnalysisModule;
 
+import org.springframework.stereotype.Repository;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+@Repository
 public class DAMConfig
 {
     private boolean m_isDBAccess = false;

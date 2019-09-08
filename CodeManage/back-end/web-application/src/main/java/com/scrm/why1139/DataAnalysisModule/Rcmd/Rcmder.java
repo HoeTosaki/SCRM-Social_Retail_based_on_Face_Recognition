@@ -80,10 +80,17 @@ public class Rcmder
         return ret;
     }
 
-    public void doModeling()
+    public void doModelingUser()
     {
         m_dam.execPy("RcmdUserCF_HOMO.py");
     }
+
+    public void doModelingGds()
+    {
+        m_dam.execPy("RcmdGdsCF_HOMO.py");
+    }
+
+
 
     private List<Integer> listToListInt(String _strLst)
     {

@@ -216,9 +216,9 @@ public class DataProcessor
         return true;
     }
 
-    public boolean serverMonitor(int _nCmd, List<String>... _infos)
+    public boolean serverMonitor(int _nCmd, List<String> _info)
     {
-        if(_infos == null)
+        if(_info == null)
             return false;
         Process proc = m_dam.execPy("monitor.py", ""+_nCmd);
         BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
@@ -229,28 +229,28 @@ public class DataProcessor
                 {
                     line = br.readLine();
                     System.out.println(line);
-                    _infos[0].add(line);
+                    _info.add(line);
                 }
             else if(_nCmd == 19)
                 for(int i = 0; i<3; i++)
                 {
                     line = br.readLine();
                     System.out.println(line);
-                    _infos[0].add(line);
+                    _info.add(line);
                 }
             else if(_nCmd == 20)
                 for(int i = 0; i<3; i++)
                 {
                     line = br.readLine();
                     System.out.println(line);
-                    _infos[i].add(line);
+                    _info.add(line);
                 }
             else if(_nCmd == 21)
                 for(int i = 0; i<2; i++)
                 {
                     line = br.readLine();
                     System.out.println(line);
-                    _infos[i].add(line);
+                    _info.add(line);
                 }
             else
                 return false;
@@ -264,34 +264,34 @@ public class DataProcessor
     }
 
 
-    public static void main(String[] args)
-    {
-        List<Double> result = new ArrayList<>();
-        List<Integer> x = new ArrayList<>();
-        List<Integer> y = new ArrayList<>();
-        List<Integer> id = new ArrayList<>();
-        List<Integer> buy_cnt = new ArrayList<>();
-        List<Double> cnt_num = new ArrayList<>();
-        List<String> mngr_ids = new ArrayList<>();
-        List<String> mngr_sales = new ArrayList<>();
-        List<String> server_info = new ArrayList<>();
-        List<String> server_info2 = new ArrayList<>();
-        List<String> server_info3 = new ArrayList<>();
-
-        DataProcessor prcr = new DataProcessor();
-//		List<Object> pyArgs = new ArrayList<>();
-//		pyArgs.add("week");
-//		pyArgs.add("snacks");
-//		pyArgs.add("12");
-//		pyArgs.add("cnt");
-//		pyArgs.add("2019-08-15");
-//		pyArgs.add("2019-08-25");
-//		pyArgs.add("2019-05");
-//		pyArgs.add("2019-08");
-//		prcr.buyListAnalyzeFigForUser("49", 0, 100, x, y, pyArgs);
-//		prcr.buyListAnalyzeValForAdmin("\\py\\main.py", 15, 0, 100, result, pyArgs);
-//		prcr.buyListAnalyzeValForAdmin(14, 0, 100, result, pyArgs);
-//		prcr.mngrAnalyzeFig(mngr_ids, mngr_sales);
-        prcr.serverMonitor(20, server_info, server_info2, server_info3);
-    }
+//    public static void main(String[] args)
+//    {
+//        List<Double> result = new ArrayList<>();
+//        List<Integer> x = new ArrayList<>();
+//        List<Integer> y = new ArrayList<>();
+//        List<Integer> id = new ArrayList<>();
+//        List<Integer> buy_cnt = new ArrayList<>();
+//        List<Double> cnt_num = new ArrayList<>();
+//        List<String> mngr_ids = new ArrayList<>();
+//        List<String> mngr_sales = new ArrayList<>();
+//        List<String> server_info = new ArrayList<>();
+//        List<String> server_info2 = new ArrayList<>();
+//        List<String> server_info3 = new ArrayList<>();
+//
+//        DataProcessor prcr = new DataProcessor();
+////		List<Object> pyArgs = new ArrayList<>();
+////		pyArgs.add("week");
+////		pyArgs.add("snacks");
+////		pyArgs.add("12");
+////		pyArgs.add("cnt");
+////		pyArgs.add("2019-08-15");
+////		pyArgs.add("2019-08-25");
+////		pyArgs.add("2019-05");
+////		pyArgs.add("2019-08");
+////		prcr.buyListAnalyzeFigForUser("49", 0, 100, x, y, pyArgs);
+////		prcr.buyListAnalyzeValForAdmin("\\py\\main.py", 15, 0, 100, result, pyArgs);
+////		prcr.buyListAnalyzeValForAdmin(14, 0, 100, result, pyArgs);
+////		prcr.mngrAnalyzeFig(mngr_ids, mngr_sales);
+//        prcr.serverMonitor(20, server_info, server_info2, server_info3);
+//    }
 }

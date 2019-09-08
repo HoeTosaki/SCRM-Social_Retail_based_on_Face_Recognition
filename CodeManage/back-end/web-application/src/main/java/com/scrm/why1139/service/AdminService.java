@@ -141,9 +141,29 @@ public class AdminService
         m_monitorService.dataExtract();
     }
 
+    public void dataTransfer()
+    {
+        m_monitorService.dataTransfer();
+    }
+
     public void dataModeling(int _nCmd)
     {
         m_monitorService.dataModeling(_nCmd);
+    }
+
+    public boolean monitorBaseInfo(List<String> _info)
+    {
+        return m_monitorService.monitorBaseInfo(_info);
+    }
+
+    public boolean monitorMach(List<String> _info)
+    {
+        return m_monitorService.monitorMach(_info);
+    }
+
+    public boolean monitorFig(List<String> _info)
+    {
+        return m_monitorService.monitorFig(_info);
     }
 
 }

@@ -581,6 +581,14 @@
         <button @click="onDataExtract()">
             <h3>数据抽取</h3>
         </button>
+        <button @click="onDataTransfer()">
+            <h3>数据转移</h3>
+        </button>
+        <button @click="onDataRefresh()">
+            <h3>刷新</h3>
+        </button>
+<!--        adminDataTransfer-->
+
     </div>
 
     <div v-show="v_func.cls_chs == 'models'"
@@ -980,18 +988,33 @@
         diskybpChart.setOption(diskybpOption, true);
     }
     setInterval(function() {
-        var address = "/sys/info/cpuUsedPerc";
-        $.get(address, "", function(data) {
-            cpuybpOption.series[0].data[0].value = data[0];
-            cpuybpChart.setOption(cpuybpOption, true);
-            memybpOption.series[0].data[0].value = data[1];
-            memybpChart.setOption(memybpOption, true);
-            diskybpOption.series[0].data[0].value = data[2];
-            diskybpChart.setOption(diskybpOption, true);
+        var address = "adminMonitorMach";
+        $.post(address, {
+            mngrid:cmd_str
+        }, function(res) {
+            var data = JSON.parse(res);
+            if(data.stat == 'success')
+            {
+                // alert("mach data:\t"+data);
+                // alert("mach data:\t"+data.stat);
+                // alert("mach data.cpu_use:\t"+data.cpu_use);
+                // alert("mach data.mem_use:\t"+data.mem_use);
+                // alert("mach data.disk_use:\t"+data.disk_use);
+                cpuybpOption.series[0].data[0].value = data.cpu_use;
+                cpuybpChart.setOption(cpuybpOption, true);
+                memybpOption.series[0].data[0].value = data.mem_use;
+                memybpChart.setOption(memybpOption, true);
+                diskybpOption.series[0].data[0].value = data.disk_use;
+                diskybpChart.setOption(diskybpOption, true);
+            }
+            else
+            {
+                alert('net shutdown');
+            }
         })
     }, 1000);
 
-    //	内存使用情况代码
+    //	磁盘使用情况代码
     var diskzxtDom = document.getElementById("disk-zxt");
     var diskzxtChart = echarts.init(diskzxtDom);
     diskzxtoption = {
@@ -1039,7 +1062,7 @@
                 }]
         },
         xAxis: {
-            data: ['2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00']
+            data: ['2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00']
         },
         yAxis: {
             splitLine: {show: true}
@@ -1049,6 +1072,8 @@
             name: '磁盘读取速度',
             type: 'line',
             color: 'blue',
+            showSymbol: true,
+            animation: false,
             data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         },
             {
@@ -1056,6 +1081,7 @@
                 type: 'line',
                 color:'red',
                 showSymbol: true,
+                animation: false,
                 data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             }
         ]
@@ -1066,19 +1092,7 @@
         diskzxtChart.setOption(diskzxtoption, true);
     }
 
-
-    setInterval(function() {
-        var address = "/sys/info/memoryUsedPerc";
-        $.get(address, "", function(data) {
-            diskzxtoption.series.data = data;
-            diskzxtChart.setOption(diskzxtoption, true);
-        })
-    }, 1000);
-
-</script>
-
-<script type="text/javascript">
-    //	内存使用情况代码
+    //	网络上行速率代码
     var netzxtDom = document.getElementById("net-zxt");
     var netzxtChart = echarts.init(netzxtDom);
     netzxtoption = {
@@ -1096,7 +1110,7 @@
                 formatter: function (params) {
                     var msg = "";
                     if(params.seriesData.length>0){
-                        msg = params.value+': '+ params.seriesData[0].data +"KB/s";
+                        msg = params.value+': '+ params.seriesData[0].data +"KB/s"
                     }
                     return msg;
                 }
@@ -1120,7 +1134,8 @@
             name: '网络发送速率',
             type: 'line',
             color: 'purple',
-            data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            animation: false
         }
         ]
     };
@@ -1130,20 +1145,71 @@
         netzxtChart.setOption(netzxtoption, true);
     }
 
-    function presentNetSendRate(data) {
-        setInterval(function() {
-            if(netzxtoption.xAxis.data.length == 20)
-                netzxtoption.xAxis.data.shift();
-            netzxtoption.xAxis.data.push(data.datetime);
-            // if(netzxtoption.series[0].data.length == 20)
-            // 	netzxtoption.series[0].data.shift();
-            netzxtoption.series[0].data.push(data.rate);
-            netzxtChart.setOption(netzxtoption, true);
-        }, 1000);
-    }
 
-    presentNetSendRate({datetime:'2019-09-08 12:00:00', rate:'123'})
+    setInterval(function() {
+        // diskzxtoption.xAxis.data.shift();
+        // diskzxtoption.series[0].data.shift();
+        // diskzxtoption.series[1].data.shift();
+        // netzxtoption.xAxis.data.shift();
+        // netzxtoption.series[0].data.shift();
+        //
+        // // data.disk_time
+        // diskzxtoption.xAxis.data.push(new Date());
+        // // data.disk_read_rate
+        // diskzxtoption.series[0].data.push(Math.random());
+        // // data.disk_write_rate
+        // diskzxtoption.series[1].data.push(Math.random());
+        // diskzxtChart.setOption(diskzxtoption, true);
+        // // data.net_time
+        // netzxtoption.xAxis.data.push(new Date());
+        // // data.net_rate
+        // netzxtoption.series[0].data.push(Math.random());
+        // netzxtChart.setOption(netzxtoption, true);
+
+        $.post("adminMonitorFig", {
+            mngrid:cmd_str
+        }, function(res) {
+            var data = JSON.parse(res);
+            if(data.stat == 'success')
+            {
+                // alert("data:\t"+data);
+                // alert("data.disk_time:\t"+data.disk_time);
+                // alert("data.disk_read:\t"+data.disk_read);
+                // alert("data.net_time:\t"+data.net_time);
+                // alert("data.net_send:\t"+data.net_send);
+
+                diskzxtoption.xAxis.data.shift();
+                diskzxtoption.series[0].data.shift();
+                diskzxtoption.series[1].data.shift();
+                netzxtoption.xAxis.data.shift();
+                netzxtoption.series[0].data.shift();
+
+                // data.disk_time
+                diskzxtoption.xAxis.data.push(data.disk_time);
+                // data.disk_read_rate
+                diskzxtoption.series[0].data.push(data.disk_read);
+                // data.disk_write_rate
+                diskzxtoption.series[1].data.push(data.disk_write);
+                diskzxtChart.setOption(diskzxtoption, true);
+                // data.net_time
+                netzxtoption.xAxis.data.push(data.net_time);
+                // data.net_rate
+                netzxtoption.series[0].data.push(data.net_send);
+                netzxtChart.setOption(netzxtoption, true);
+            }
+            else
+            {
+                alert('net shutdown.');
+            }
+
+        })
+    }, 1000);
+
+
+    // presentRate({datetime:'2019-09-08 12:00:00', rate:Math.random()});
 </script>
+
+
 
 <script>
     function pullAnalFigByCmd(cmd, args) {
@@ -1613,6 +1679,57 @@
             }
         });
     }
+
+    function postDataTransfer() {
+        alert("post start");
+        $.post("adminDataTransfer", {
+            mngrid: cmd_str
+        }, function (result) {
+            alert(result);
+            var obj = JSON.parse(result);
+            if (obj.stat != "success") {
+                v_model_info_core.hints = '数据转移请求被拒绝';
+                return;
+            } else {
+                v_model_info_core.hints = '数据转移请求被受理';
+            }
+        });
+    }
+
+
+
+    function pullMonitorBaseInfo()
+    {
+        // var v_model_info_core = new Vue({
+        //     el: '.model-info-core',
+        //     data: {
+        //         hints: 'hints...',
+        //         last_bt_time:'time',
+        //         lgc_num:10,
+        //         phc_num:4,
+        //         mem_sum:16,
+        //         disk_sum:128
+        //     }
+        // });
+        alert("post start");
+        $.post("adminMonitorBaseInfo", {
+            mngrid: cmd_str
+        }, function (result) {
+            alert(result);
+            var obj = JSON.parse(result);
+            if (obj.stat != "success") {
+                v_model_info_core.hints = '请求被拒绝';
+                return;
+            } else {
+                 v_model_info_core.last_bt_time = obj.bt_time;
+                v_model_info_core.lgc_num = obj.lgc_num;
+                v_model_info_core.phc_num = obj.phc_num;
+                v_model_info_core.mem_sum = obj.mem_sum;
+                v_model_info_core.disk_sum = obj.disk_sum;
+            }
+        });
+    }
+
 </script>
 <script>
     // 全局script
@@ -1877,12 +1994,26 @@
         }
     }, 200);
     }
+
+    function onDataRefresh()
+    {
+        alert("refresh");
+        pullMonitorBaseInfo();
+    }
+
+    function onDataTransfer()
+    {
+        alert('transfer');
+        postDataTransfer();
+    }
+
 </script>
 <script>
     pullMngrPre();
     pullAnalFigByCmd(8, [v_sale_cnt_fig.st_date, v_sale_cnt_fig.ed_date]);
     pullAnalValByCmd(13, []);
     pullAccntCntFig();
+    pullMonitorBaseInfo();
 </script>
 <script>
     $(".sidenav>li>a").click(function () {

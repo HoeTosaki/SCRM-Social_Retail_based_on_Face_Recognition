@@ -14,6 +14,12 @@ public class FileSave
         System.out.println("del res:\t" + file.delete());
     }
 
+    public static boolean isCSVExist(String _filename)
+    {
+        File file = new File("anal_data/"+_filename);
+        return file.exists();
+    }
+
     public static boolean appendToCSV(String _filename, List<String> _lstDataRow)
     {
         boolean isSucc = false;

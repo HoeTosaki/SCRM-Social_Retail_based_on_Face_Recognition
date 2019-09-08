@@ -22,6 +22,8 @@ def get_basic_info():
 
 
 def get_real_time_hardware_info():
+    pt.cpu_percent()
+    time.sleep(1)
     print(pt.cpu_percent())  # 获取当前CPU利用率
     print(pt.virtual_memory().percent)  # 获取当前内存占用率
     print(pt.disk_usage('/').percent)  # 获取当前磁盘占用率

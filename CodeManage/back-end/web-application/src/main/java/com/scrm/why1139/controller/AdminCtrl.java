@@ -812,4 +812,154 @@ public class AdminCtrl {
         System.out.println("ret:"+objRet.toJSONString());
         return objRet.toJSONString();
     }
+
+    @ResponseBody
+    @RequestMapping(
+            value = {"/adminDataTransfer"}/*,
+            produces = "application/json;charset=UTF-8"*/
+    )
+    public String adminDataTransfer(HttpServletRequest _req)
+    {
+        JSONObject objReq = JSONProc.parseReq(_req);
+        JSONObject objRet = new JSONObject();
+        System.out.println(objReq.toJSONString());
+        String strMngrID = (String) (objReq.getJSONArray("mngrid").get(0));
+        Mngr mngr = m_adminService.findMngrByMngrID(strMngrID);
+        if(mngr == null || mngr.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            m_adminService.dataTransfer();
+            objRet.put("stat","success");
+        }
+        System.out.println("ret:"+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = {"/adminMonitorBaseInfo"}/*,
+            produces = "application/json;charset=UTF-8"*/
+    )
+    public String adminMonitorBaseInfo(HttpServletRequest _req)
+    {
+        JSONObject objReq = JSONProc.parseReq(_req);
+        JSONObject objRet = new JSONObject();
+        System.out.println(objReq.toJSONString());
+        String strMngrID = (String) (objReq.getJSONArray("mngrid").get(0));
+        Mngr mngr = m_adminService.findMngrByMngrID(strMngrID);
+        if(mngr == null || mngr.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            List<String> info = new CopyOnWriteArrayList<>();
+            if(m_adminService.monitorBaseInfo(info))
+            {
+                StringBuffer sb = new StringBuffer();
+                info.stream().map(str->"ww$"+str+"$ww").forEachOrdered(sb::append);
+                System.out.println("base:\t"+sb.toString());
+
+                objRet.put("stat","success");
+                objRet.put("bt_time",info.get(0));
+                objRet.put("lgc_num",info.get(1));
+                objRet.put("phc_num",info.get(2));
+                objRet.put("mem_sum",info.get(3));
+                objRet.put("disk_sum",info.get(4));
+            }
+            else
+            {
+                objRet.put("stat","invalid");
+            }
+        }
+        System.out.println("ret:"+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = {"/adminMonitorMach"}/*,
+            produces = "application/json;charset=UTF-8"*/
+    )
+    public String adminMonitorMach(HttpServletRequest _req)
+    {
+//        System.out.println("enter Mach");
+        JSONObject objReq = JSONProc.parseReq(_req);
+        JSONObject objRet = new JSONObject();
+        System.out.println(objReq.toJSONString());
+        String strMngrID = (String) (objReq.getJSONArray("mngrid").get(0));
+        Mngr mngr = m_adminService.findMngrByMngrID(strMngrID);
+        if(mngr == null || mngr.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            List<String> info = new CopyOnWriteArrayList<>();
+            if(m_adminService.monitorMach(info))
+            {
+                StringBuffer sb = new StringBuffer();
+                info.stream().map(str->"ww$"+str+"$ww").forEachOrdered(sb::append);
+                System.out.println("mach:\t"+sb.toString());
+
+
+                objRet.put("stat","success");
+                objRet.put("cpu_use",info.get(0));
+                objRet.put("mem_use",info.get(1));
+                objRet.put("disk_use",info.get(2));
+            }
+            else
+            {
+                objRet.put("stat","invalid");
+            }
+        }
+        System.out.println("ret:"+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = {"/adminMonitorFig"}/*,
+            produces = "application/json;charset=UTF-8"*/
+    )
+    public String adminMonitorFig(HttpServletRequest _req)
+    {
+        JSONObject objReq = JSONProc.parseReq(_req);
+        JSONObject objRet = new JSONObject();
+        System.out.println(objReq.toJSONString());
+        String strMngrID = (String) (objReq.getJSONArray("mngrid").get(0));
+        Mngr mngr = m_adminService.findMngrByMngrID(strMngrID);
+        if(mngr == null || mngr.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            List<String> info = new CopyOnWriteArrayList<>();
+            if(m_adminService.monitorFig(info))
+            {
+                StringBuffer sb = new StringBuffer();
+                info.stream().map(str->"ww$"+str+"$ww").forEachOrdered(sb::append);
+                System.out.println("ctrl:\t"+sb.toString());
+
+                objRet.put("stat","success");
+                objRet.put("disk_time",info.get(0));
+                objRet.put("disk_read",info.get(1));
+                objRet.put("disk_write",info.get(2));
+                objRet.put("net_time",info.get(3));
+                objRet.put("net_send",info.get(4));
+            }
+            else
+            {
+                objRet.put("stat","invalid");
+            }
+        }
+        System.out.println("ret:"+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
+
+
 }
