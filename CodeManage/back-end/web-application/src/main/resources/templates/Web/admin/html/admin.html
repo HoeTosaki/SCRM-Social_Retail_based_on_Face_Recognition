@@ -33,8 +33,8 @@
             </a>
             <ul class="sidebar-dropdown">
                 <li v-for="type in cls_sale">
-                    <a href="javascript:void(0)" class="withripple" target="myframe"
-                       onclick="return false" @click="onClsSale(type.type_val)">{{type.type_name}}</a>
+                    <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                       @click="onClsSale(type.type_val)">{{type.type_name}}</a>
                 </li>
             </ul>
         </li>
@@ -46,8 +46,8 @@
             </a>
             <ul class="sidebar-dropdown">
                 <li v-for="type in cls_person">
-                    <a href="javascript:void(0)" class="withripple" target="myframe"
-                       onclick="return false" @click="onClsPerson(type.type_val)">{{type.type_name}}</a>
+                    <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                       @click="onClsPerson(type.type_val)">{{type.type_name}}</a>
                 </li>
             </ul>
         </li>
@@ -59,8 +59,21 @@
             </a>
             <ul class="sidebar-dropdown">
                 <li v-for="type in cls_goods">
-                    <a href="javascript:void(0)" class="withripple" target="myframe"
-                       onclick="return false" @click="onClsGds(type.type_val)">{{type.type_name}}</a>
+                    <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                       @click="onClsGds(type.type_val)">{{type.type_name}}</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="withripple hover" href="javascript:;">
+                <i class="icon icon-article"></i>
+                <span class="sidespan">数据模型维护</span>
+                <i class="iright pull-right">&gt;</i>
+            </a>
+            <ul class="sidebar-dropdown">
+                <li v-for="type in cls_models">
+                    <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                       @click="onClsModels(type.type_val)">{{type.type_name}}</a>
                 </li>
             </ul>
         </li>
@@ -72,8 +85,8 @@
             </a>
             <ul class="sidebar-dropdown">
                 <li v-for="type in cls_me">
-                    <a href="javascript:void(0)" class="withripple" target="myframe"
-                       onclick="return false" @click="onClsMe(type.type_val)">{{type.type_name}}</a>
+                    <a href="javascript:void(0)" class="withripple" target="myframe" onclick="return false"
+                       @click="onClsMe(type.type_val)">{{type.type_name}}</a>
                 </li>
             </ul>
         </li>
@@ -97,7 +110,7 @@
                             setInterval("document.getElementById('time').innerHTML=new Date().toLocaleString();", 1000);
                         </script>
                     </span>
-<!--                <span id="log-out" class="ml20">退出登录</span>-->
+                <!--                <span id="log-out" class="ml20">退出登录</span>-->
             </ul>
         </div>
     </nav>
@@ -192,11 +205,11 @@
                 <a class="back" href="#"></a>
             </div>
             <div id="sitemap-box">
-                <canvas id="sitemap" ></canvas>
+                <canvas id="sitemap"></canvas>
             </div>
-<!--            width="800" height="400"-->
+            <!--            width="800" height="400"-->
         </div>
-<!--        <canvas id="sitemap" width="1000" height="500"></canvas>-->
+        <!--        <canvas id="sitemap" width="1000" height="500"></canvas>-->
     </div>
 
     <div v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'gds-cnt'"
@@ -214,13 +227,13 @@
 
         <ul id="time-option" class="nav nav-pills clear-float mt15 ml20">
             <label class="mt15 fl"><input type="radio" name='y' value="day" v-model="cnt_chs" checked="checked"
-                                       onclick="onListMtdChs()" />当日</label>
+                                          onclick="onListMtdChs()" />当日</label>
             <label class="mt15 ml20 fl"><input type="radio" name='y' value="week" v-model="cnt_chs"
-                                            onclick="onListMtdChs()" />7天内</label>
+                                               onclick="onListMtdChs()" />7天内</label>
             <label class="mt15 ml20 fl"><input type="radio" name='y' value="month" v-model="cnt_chs"
-                                            onclick="onListMtdChs()" />30天内</label>
+                                               onclick="onListMtdChs()" />30天内</label>
             <label class="mt15 ml20 fl"><input type="radio" name='y' value="auto" v-model="cnt_chs"
-                                            onclick="onListMtdChs()" />自定义</label>
+                                               onclick="onListMtdChs()" />自定义</label>
 
             <div id="start-date" class="col-sm-6 fl">
                 <div class="form-group">
@@ -251,12 +264,13 @@
 
     <div id="sale-accnt-cnt-graph-box" v-show="v_func.cls_chs == 'sales' && v_func.type_chs == 'accnt-cnt'"
          class="layer mt15 mb3 box-border box-background-color box-shadow accnt-cnt-list">
-<!--        -->
+        <!--        -->
         <div id="sale-accnt-cnt-graph-box-head">
             <span class="subtitle mt15 ml20">收银员记账统计</span>
         </div>
-<!--        <div id="sale-accnt-cnt-graph" class="ml20 mr20 mt15 box-background-color"></div>-->
-        <div id="sale-accnt-cnt-graph" style="width:1095px;height:550px; margin-top:15px; margin-left: 20px; margin-right: 20px;"></div>
+        <!--        <div id="sale-accnt-cnt-graph" class="ml20 mr20 mt15 box-background-color"></div>-->
+        <div id="sale-accnt-cnt-graph"
+             style="width:1095px;height:550px; margin-top:15px; margin-left: 20px; margin-right: 20px;"></div>
         <div style="width:1095px;height:50px;"></div>
     </div>
 
@@ -527,6 +541,68 @@
         </div>
     </div>
 
+    <div v-show="v_func.cls_chs == 'models'"
+         class="layer mt15 mb3 box-border box-background-color box-shadow model-info-core">
+        <span class="subtitle mt15 ml20">模型信息</span>
+        <div>
+            <h3>{{hints}}</h3>
+        </div>
+        <div id="basic-info" style="height: 100px;">
+            <span>基本硬件信息</span>
+            <ul style="list-style: none;clear: both;">
+                <li style="float: left;">
+                    <span>上次开机时间：</span>
+                    <span>{{last_bt_time}}</span>
+                </li>
+                <li style="float: left;">
+                    <span>CPU逻辑数量：</span>
+                    <span>{{lgc_num}}</span>
+                </li>
+                <li style="float: left;">
+                    <span>CPU物理核心数量：</span>
+                    <span>{{phc_num}}</span>
+                </li>
+                <li style="float: left;">
+                    <span>内存总量：</span>
+                    <span>{{mem_sum}}</span><i>G</i>
+                </li>
+                <li style="float: left;">
+                    <span>磁盘总量：</span>
+                    <span>{{disk_sum}}</span><i>G</i>
+                </li>
+            </ul>
+        </div>
+        <button @click="onDataModelUser()">
+            <h3>构建用户偏好模型</h3>
+        </button>
+        <button @click="onDataModelGds()">
+            <h3>构建商品关联模型</h3>
+        </button>
+        <button @click="onDataExtract()">
+            <h3>数据抽取</h3>
+        </button>
+    </div>
+
+    <div v-show="v_func.cls_chs == 'models'"
+         class="layer mt15 mb3 box-border box-background-color box-shadow model-mach-core">
+        <span class="subtitle mt15 ml20">运行信息</span>
+        <div id="ybp" style="text-align: center;">
+            <div id="cpu-ybp" style="height: 300px; width: 300px; display: inline-block;"></div>
+            <div id="mem-ybp" style="height: 300px; width: 300PX;display: inline-block;"></div>
+            <div id="disk-ybp" style="height: 300px; width: 300PX;display: inline-block;"></div>
+        </div>
+    </div>
+
+    <div v-show="v_func.cls_chs == 'models'"
+         class="layer mt15 mb3 box-border box-background-color box-shadow model-fig-core">
+        <span class="subtitle mt15 ml20">扩展信息</span>
+        <div>
+            <div id="disk-zxt" style="height: 600px; width: 600PX;"></div>
+            <div id="net-zxt" style="height: 600px; width: 600PX;"></div>
+        </div>
+    </div>
+
+
     <div v-show="v_func.cls_chs == 'me' && v_func.type_chs == 'edit-me'"
          class="layer mt15 mb3 box-border box-background-color box-shadow edit-me-core">
         <span class="center-subtitle center mt15 ml20">更改密码</span>
@@ -570,8 +646,8 @@
 <script>
     var w = parseInt($('#gds-cnt-relfig').css("width"));
     var h = parseInt($('#gds-cnt-relfig').css("height"));
-    var x = (w - 100)+"px";
-    var y = (h - 100)+"px";
+    var x = (w - 100) + "px";
+    var y = (h - 100) + "px";
     // alert('x = '+x);
     // alert('y = '+y);
     // var canvas = document.getElementById('sitemap');
@@ -598,7 +674,7 @@
     var v_func = new Vue({
         el: '.func',
         data: {
-            cls_chs: 'sales', //me(个人信息维护),person（人员信息维护）,goods（商品信息维护）,sales（销售分析）
+            cls_chs: 'sales', //me(个人信息维护),person（人员信息维护）,goods（商品信息维护）.models(数据模型维护),sales（销售分析）
             type_chs: 'sale-cnt',
             cls_sale: [{
                 type_name: '销售情况统计',
@@ -643,6 +719,10 @@
                     type_val: 'gds-del'
                 }
             ],
+            cls_models: [{
+                type_name: '模型状态审查',
+                type_val: 'models',
+            }],
             cls_me: [{
                 type_name: '编辑资料',
                 type_val: 'edit-me'
@@ -782,6 +862,30 @@
         }
     });
 
+    var v_model_info_core = new Vue({
+        el: '.model-info-core',
+        data: {
+            hints: 'hints...',
+            last_bt_time:'time',
+            lgc_num:10,
+            phc_num:4,
+            mem_sum:16,
+            disk_sum:128
+        }
+    });
+
+    var v_model_mach_core = new Vue({
+        el: '.model-mach-core',
+        data: {}
+    });
+
+    var v_model_fig_core = new Vue({
+        el: '.model-fig-core',
+        data: {}
+    });
+
+
+
     var v_edit_me_core = new Vue({
         el: '.edit-me-core',
         data: {
@@ -794,6 +898,253 @@
 
     v_user.user_id = cmd_str;
 </script>
+
+<script>
+    // 	cpu仪表盘相关代码
+    var cpuybpDom = document.getElementById("cpu-ybp");
+    var cpuybpChart = echarts.init(cpuybpDom);
+    cpuybpOption = {
+        title: {
+            text: 'CPU利用率'
+        },
+        tooltip : {
+            formatter : "{b} : {c}%"
+        },
+        series : [ {
+            name : 'CPU利用率',
+            type : 'gauge',
+            detail : {
+                formatter : '{value}%'
+            },
+            data : [ {
+                value : 19,
+                name : 'CPU利用率'
+            } ]
+        } ]
+    };
+    if (cpuybpOption && typeof cpuybpOption === "object") {
+        cpuybpChart.setOption(cpuybpOption, true);
+    }
+
+    // 	内存仪表盘相关代码
+    var memybpDom = document.getElementById("mem-ybp");
+    var memybpChart = echarts.init(memybpDom);
+    memybpOption = {
+        title: {
+            text: '内存利用率'
+        },
+        tooltip : {
+            formatter : "{b} : {c}%"
+        },
+
+        series : [ {
+            name : '内存利用率',
+            type : 'gauge',
+            detail : {
+                formatter : '{value}%'
+            },
+            data : [ {
+                value : 33,
+                name : '内存利用率'
+            } ]
+        } ]
+    };
+    if (memybpOption && typeof memybpOption === "object") {
+        memybpChart.setOption(memybpOption, true);
+    }
+
+    // 	磁盘仪表盘相关代码
+    var diskybpDom = document.getElementById("disk-ybp");
+    var diskybpChart = echarts.init(diskybpDom);
+    diskybpOption = {
+        title: {
+            text: '磁盘利用率'
+        },
+        tooltip : {
+            formatter : "{b} : {c}%"
+        },
+
+        series : [ {
+            name : '磁盘利用率',
+            type : 'gauge',
+            detail : {
+                formatter : '{value}%'
+            },
+            data : [ {
+                value : 28,
+                name : '磁盘利用率'
+            } ]
+        } ]
+    };
+    if (diskybpOption && typeof diskybpOption === "object") {
+        diskybpChart.setOption(diskybpOption, true);
+    }
+    setInterval(function() {
+        var address = "/sys/info/cpuUsedPerc";
+        $.get(address, "", function(data) {
+            cpuybpOption.series[0].data[0].value = data[0];
+            cpuybpChart.setOption(cpuybpOption, true);
+            memybpOption.series[0].data[0].value = data[1];
+            memybpChart.setOption(memybpOption, true);
+            diskybpOption.series[0].data[0].value = data[2];
+            diskybpChart.setOption(diskybpOption, true);
+        })
+    }, 1000);
+
+    //	内存使用情况代码
+    var diskzxtDom = document.getElementById("disk-zxt");
+    var diskzxtChart = echarts.init(diskzxtDom);
+    diskzxtoption = {
+
+        // visualMap: [{
+        //     show: true,
+        //     type: 'continuous',
+        //     seriesIndex: [0,1],
+        //     color: ['red', 'blue'],
+        //     min: 0,
+        //     max: 10000
+        // }],
+        axisPointer: {
+            label: {
+                formatter: function (params) {
+                    var msg = "";
+                    if(params.seriesData.length>0){
+                        msg = params.value+': '+ params.seriesData[0].data +"KB/s";
+                    }
+                    return msg;
+                }
+            }
+        },
+        title: [{
+            left: 'center',
+            text: '磁盘读写速率（KB/s）实时分析图'
+        }],
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend:{
+            right: 'right',
+            data:[
+                {
+                    name:'磁盘读取速度',
+                    textStyle:{
+                        color: 'blue'
+                    }
+                },
+                {
+                    name:'磁盘写入速度',
+                    textStyle:{
+                        color: 'red'
+                    }
+                }]
+        },
+        xAxis: {
+            data: ['2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00','2019-09-08 00:00:00']
+        },
+        yAxis: {
+            splitLine: {show: true}
+            // 	max:8191
+        },
+        series: [{
+            name: '磁盘读取速度',
+            type: 'line',
+            color: 'blue',
+            data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        },
+            {
+                name: '磁盘写入速度',
+                type: 'line',
+                color:'red',
+                showSymbol: true,
+                data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            }
+        ]
+    };
+
+
+    if (diskzxtoption && typeof diskzxtoption === "object") {
+        diskzxtChart.setOption(diskzxtoption, true);
+    }
+
+
+    setInterval(function() {
+        var address = "/sys/info/memoryUsedPerc";
+        $.get(address, "", function(data) {
+            diskzxtoption.series.data = data;
+            diskzxtChart.setOption(diskzxtoption, true);
+        })
+    }, 1000);
+
+</script>
+
+<script type="text/javascript">
+    //	内存使用情况代码
+    var netzxtDom = document.getElementById("net-zxt");
+    var netzxtChart = echarts.init(netzxtDom);
+    netzxtoption = {
+
+        // visualMap: [{
+        //     show: true,
+        //     type: 'continuous',
+        //     seriesIndex: [0,1],
+        //     color: ['red', 'blue'],
+        //     min: 0,
+        //     max: 10000
+        // }],
+        axisPointer: {
+            label: {
+                formatter: function (params) {
+                    var msg = "";
+                    if(params.seriesData.length>0){
+                        msg = params.value+': '+ params.seriesData[0].data +"KB/s";
+                    }
+                    return msg;
+                }
+            }
+        },
+        title: [{
+            left: 'center',
+            text: '网络发送速率（KB/s）实时分析图'
+        }],
+        tooltip: {
+            trigger: 'axis'
+        },
+        xAxis: {
+            data: ['2019-09-08 00:00:01','2019-09-08 00:00:02','2019-09-08 00:00:03','2019-09-08 00:00:04','2019-09-08 00:00:05','2019-09-08 00:00:06','2019-09-08 00:00:07','2019-09-08 00:00:08','2019-09-08 00:00:09','2019-09-08 00:00:10','2019-09-08 00:00:11','2019-09-08 00:00:12','2019-09-08 00:00:13','2019-09-08 00:00:14','2019-09-08 00:00:15','2019-09-08 00:00:16','2019-09-08 00:00:17','2019-09-08 00:00:18','2019-09-08 00:00:19','2019-09-08 00:00:20']
+        },
+        yAxis: {
+            splitLine: {show: true}
+            // 	max:8191
+        },
+        series: [{
+            name: '网络发送速率',
+            type: 'line',
+            color: 'purple',
+            data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        }
+        ]
+    };
+
+
+    if (netzxtoption && typeof netzxtoption === "object") {
+        netzxtChart.setOption(netzxtoption, true);
+    }
+
+    function presentNetSendRate(data) {
+        setInterval(function() {
+            if(netzxtoption.xAxis.data.length == 20)
+                netzxtoption.xAxis.data.shift();
+            netzxtoption.xAxis.data.push(data.datetime);
+            // if(netzxtoption.series[0].data.length == 20)
+            // 	netzxtoption.series[0].data.shift();
+            netzxtoption.series[0].data.push(data.rate);
+            netzxtChart.setOption(netzxtoption, true);
+        }, 1000);
+    }
+
+    presentNetSendRate({datetime:'2019-09-08 12:00:00', rate:'123'})
+</script>
+
 <script>
     function pullAnalFigByCmd(cmd, args) {
         // // alert('why send');
@@ -957,7 +1308,7 @@
                 v_accnt_upd_core.hints = '无法获取当前服务器的收银员信息！';
                 return;
             } else {
-                presentChartAccnt(obj.x,obj.y);
+                presentChartAccnt(obj.x, obj.y);
             }
         });
         // alert("post end why.");
@@ -1230,7 +1581,38 @@
         });
     }
 
+    function postDataModel(nCmd) {
+        alert("post start");
+        $.post("adminDataModeling", {
+            mngrid: cmd_str,
+            cmd: nCmd
+        }, function (result) {
+            alert(result);
+            var obj = JSON.parse(result);
+            if (obj.stat != "success") {
+                v_model_info_core.hints = '建模请求被拒绝';
+                return;
+            } else {
+                v_model_info_core.hints = '建模请求被受理';
+            }
+        });
+    }
 
+    function postDataExtract() {
+        alert("post start");
+        $.post("adminDataExtract", {
+            mngrid: cmd_str
+        }, function (result) {
+            alert(result);
+            var obj = JSON.parse(result);
+            if (obj.stat != "success") {
+                v_model_info_core.hints = '数据抽取请求被拒绝';
+                return;
+            } else {
+                v_model_info_core.hints = '数据抽取请求被受理';
+            }
+        });
+    }
 </script>
 <script>
     // 全局script
@@ -1273,6 +1655,12 @@
         // } else if (val == 'gds-del') {
 
         // }
+    }
+
+    function onClsModels(val) {
+        alert('val=\t' + val);
+        v_func.cls_chs = 'models';
+        v_func.type_chs = val;
     }
 
     function onClsMe(val) {
@@ -1340,6 +1728,21 @@
     function onGdsDelIDChange() {
         // alert(v_gds_del_core.gds_id);
         pullGdsPre();
+    }
+
+    function onDataModelUser() {
+        alert('data model user');
+        postDataModel(0);
+    }
+
+    function onDataModelGds() {
+        alert('data model gds');
+        postDataModel(1);
+    }
+
+    function onDataExtract() {
+        alert('data model extract');
+        postDataExtract(0);
     }
 </script>
 <script>

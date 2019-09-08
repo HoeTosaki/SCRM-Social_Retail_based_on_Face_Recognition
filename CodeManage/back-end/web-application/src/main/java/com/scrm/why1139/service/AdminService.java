@@ -27,6 +27,8 @@ public class AdminService
     private ManService m_manService;
     @Autowired
     private GoodsService m_goodsService;
+    @Autowired
+    private MonitorService m_monitorService;
 
     public boolean getBuyListAnalyzeFigForAdmin(int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
     {
@@ -134,6 +136,14 @@ public class AdminService
         return m_analService.getMngrAnalyzeFigForAdmin(_mngr, _sale);
     }
 
+    public void dataExtract()
+    {
+        m_monitorService.dataExtract();
+    }
 
+    public void dataModeling(int _nCmd)
+    {
+        m_monitorService.dataModeling(_nCmd);
+    }
 
 }

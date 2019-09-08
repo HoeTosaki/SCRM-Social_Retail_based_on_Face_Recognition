@@ -761,4 +761,55 @@ public class AdminCtrl {
         System.out.println("ret:"+obj.toJSONString());
         return obj.toJSONString();
     }
+
+    @ResponseBody
+    @RequestMapping(
+            value = {"/adminDataModeling"}/*,
+            produces = "application/json;charset=UTF-8"*/
+    )
+    public String adminDataModeling(HttpServletRequest _req)
+    {
+        JSONObject objReq = JSONProc.parseReq(_req);
+        JSONObject objRet = new JSONObject();
+        System.out.println(objReq.toJSONString());
+        String strMngrID = (String) (objReq.getJSONArray("mngrid").get(0));
+        Mngr mngr = m_adminService.findMngrByMngrID(strMngrID);
+        int nCmd = Integer.parseInt((String) (objReq.getJSONArray("cmd").get(0)));
+        if(mngr == null || mngr.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            m_adminService.dataModeling(nCmd);
+            objRet.put("stat","success");
+        }
+        System.out.println("ret:"+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = {"/adminDataExtract"}/*,
+            produces = "application/json;charset=UTF-8"*/
+    )
+    public String adminDataExtract(HttpServletRequest _req)
+    {
+        JSONObject objReq = JSONProc.parseReq(_req);
+        JSONObject objRet = new JSONObject();
+        System.out.println(objReq.toJSONString());
+        String strMngrID = (String) (objReq.getJSONArray("mngrid").get(0));
+        Mngr mngr = m_adminService.findMngrByMngrID(strMngrID);
+        if(mngr == null || mngr.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            m_adminService.dataExtract();
+            objRet.put("stat","success");
+        }
+        System.out.println("ret:"+objRet.toJSONString());
+        return objRet.toJSONString();
+    }
 }

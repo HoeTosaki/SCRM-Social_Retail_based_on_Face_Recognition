@@ -169,13 +169,9 @@ public class DataProcessor
         BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
         String line;
         try {
-//            while((line = br.readLine()) != null){
-//                System.out.println(line);
-//            }
-
             for(int i = 0; i<30; i++) {
                 line = br.readLine();
-                System.out.println(line);
+                System.out.println(line + "__________" + i);
                 String[] arr = line.split(",");
                 _gdsID.add(Integer.parseInt(arr[0]));
                 _buyCnt.add(Integer.parseInt(arr[1]));
@@ -206,7 +202,7 @@ public class DataProcessor
         String line = null;
         try {
             while((line = br.readLine()) != null) {
-				System.out.println(line);
+//				System.out.println(line);
                 String[] arr = line.split(",");
                 _mngrID.add(arr[0]);
                 _sale.add(arr[1]);
@@ -220,28 +216,82 @@ public class DataProcessor
         return true;
     }
 
+    public boolean serverMonitor(int _nCmd, List<String>... _infos)
+    {
+        if(_infos == null)
+            return false;
+        Process proc = m_dam.execPy("monitor.py", ""+_nCmd);
+        BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+        String line = null;
+        try {
+            if(_nCmd == 18)
+                for(int i = 0; i<5; i++)
+                {
+                    line = br.readLine();
+                    System.out.println(line);
+                    _infos[0].add(line);
+                }
+            else if(_nCmd == 19)
+                for(int i = 0; i<3; i++)
+                {
+                    line = br.readLine();
+                    System.out.println(line);
+                    _infos[0].add(line);
+                }
+            else if(_nCmd == 20)
+                for(int i = 0; i<3; i++)
+                {
+                    line = br.readLine();
+                    System.out.println(line);
+                    _infos[i].add(line);
+                }
+            else if(_nCmd == 21)
+                for(int i = 0; i<2; i++)
+                {
+                    line = br.readLine();
+                    System.out.println(line);
+                    _infos[i].add(line);
+                }
+            else
+                return false;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            System.out.println(e);
+            return false;
+        }
 
-//    public static void main(String[] args)
-//    {
-//        List<Double> result = new ArrayList<>();
-//        List<Integer> x = new ArrayList<>();
-//        List<Integer> y = new ArrayList<>();
-//        List<Integer> id = new ArrayList<>();
-//        List<Integer> buy_cnt = new ArrayList<>();
-//        List<Double> cnt_num = new ArrayList<>();
-//        DataProcessor prcr = new DataProcessor();
-////		List<Object> pyArgs = new ArrayList<>();
-////		pyArgs.add("week");
-////		pyArgs.add("snacks");
-////		pyArgs.add("12");
-////		pyArgs.add("cnt");
-////		pyArgs.add("2019-08-15");
-////		pyArgs.add("2019-08-25");
-////		pyArgs.add("2019-05");
-////		pyArgs.add("2019-08");
-////		prcr.buyListAnalyzeFigForUser("49", 0, 100, x, y, pyArgs);
-////		prcr.buyListAnalyzeValForAdmin("\\py\\main.py", 15, 0, 100, result, pyArgs);
-////		prcr.buyListAnalyzeValForAdmin(14, 0, 100, result, pyArgs);
-//        prcr.goodsAnalyze(x, y, result, id, buy_cnt, cnt_num);
-//    }
+        return true;
+    }
+
+
+    public static void main(String[] args)
+    {
+        List<Double> result = new ArrayList<>();
+        List<Integer> x = new ArrayList<>();
+        List<Integer> y = new ArrayList<>();
+        List<Integer> id = new ArrayList<>();
+        List<Integer> buy_cnt = new ArrayList<>();
+        List<Double> cnt_num = new ArrayList<>();
+        List<String> mngr_ids = new ArrayList<>();
+        List<String> mngr_sales = new ArrayList<>();
+        List<String> server_info = new ArrayList<>();
+        List<String> server_info2 = new ArrayList<>();
+        List<String> server_info3 = new ArrayList<>();
+
+        DataProcessor prcr = new DataProcessor();
+//		List<Object> pyArgs = new ArrayList<>();
+//		pyArgs.add("week");
+//		pyArgs.add("snacks");
+//		pyArgs.add("12");
+//		pyArgs.add("cnt");
+//		pyArgs.add("2019-08-15");
+//		pyArgs.add("2019-08-25");
+//		pyArgs.add("2019-05");
+//		pyArgs.add("2019-08");
+//		prcr.buyListAnalyzeFigForUser("49", 0, 100, x, y, pyArgs);
+//		prcr.buyListAnalyzeValForAdmin("\\py\\main.py", 15, 0, 100, result, pyArgs);
+//		prcr.buyListAnalyzeValForAdmin(14, 0, 100, result, pyArgs);
+//		prcr.mngrAnalyzeFig(mngr_ids, mngr_sales);
+        prcr.serverMonitor(20, server_info, server_info2, server_info3);
+    }
 }
