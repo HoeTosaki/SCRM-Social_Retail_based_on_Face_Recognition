@@ -116,7 +116,7 @@ function postLoginRecgBio() {
         if (obj["stat"] != "success") {
             login.hints = "人脸信息识别失败，请重试。";
             document.loginReq = -1;
-            window.jumpTarget = "login-face";
+            window.jumpTarget = "loginFace";
         } else {
             login.hints = "用户识别完成,请核对是否正确";
             login.userid = obj["userid"];

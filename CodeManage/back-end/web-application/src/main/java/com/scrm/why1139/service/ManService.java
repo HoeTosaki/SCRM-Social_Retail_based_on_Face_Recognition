@@ -1,6 +1,5 @@
 package com.scrm.why1139.service;
 
-import com.scrm.why1139.BioReferenceModule.BioCertificater;
 import com.scrm.why1139.dao.BioDao;
 import com.scrm.why1139.dao.MngrDao;
 import com.scrm.why1139.dao.UserDao;
@@ -10,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import javax.swing.*;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
