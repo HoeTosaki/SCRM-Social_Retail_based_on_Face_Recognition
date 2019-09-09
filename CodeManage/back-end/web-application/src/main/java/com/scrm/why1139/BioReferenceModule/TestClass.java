@@ -29,12 +29,12 @@ public class TestClass
         List<String> lstPic = new CopyOnWriteArrayList<>();
         lstPic.add(lk1);
         lstPic.add(lk2);
-        System.out.println("尝试存入两张用户照片，要求成功率100%：\t"+BioSaver.saveUser(lstPic,"liukai1234",1));
-        System.out.println("尝试使用用户的其他照片验证：\t"+BioCertificater.certificateUser(lk3));
-        System.out.println("尝试删除用户的人脸信息：\t"+BioSaver.delUser("liukai1234"));
-        System.out.println("尝试重新验证用户的人脸：\t"+BioCertificater.certificateUser(lk3));
-        System.out.println("尝试重新验证用户的人脸：\t"+BioCertificater.certificateUser(lk2));
-        System.out.println("尝试重新验证用户的人脸：\t"+BioCertificater.certificateUser(lk1));
+        System.out.println("尝试存入两张用户照片，要求成功率100%：\t"+ BioSaverRR.saveUser(lstPic,"liukai1234",1));
+        System.out.println("尝试使用用户的其他照片验证：\t"+ BioCertificaterRR.certificateUser(lk3));
+        System.out.println("尝试删除用户的人脸信息：\t"+ BioSaverRR.delUser("liukai1234"));
+        System.out.println("尝试重新验证用户的人脸：\t"+ BioCertificaterRR.certificateUser(lk3));
+        System.out.println("尝试重新验证用户的人脸：\t"+ BioCertificaterRR.certificateUser(lk2));
+        System.out.println("尝试重新验证用户的人脸：\t"+ BioCertificaterRR.certificateUser(lk1));
     }
 
     /**

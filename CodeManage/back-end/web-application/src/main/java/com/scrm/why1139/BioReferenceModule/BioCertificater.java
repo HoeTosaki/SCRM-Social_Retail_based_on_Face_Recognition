@@ -1,21 +1,30 @@
 package com.scrm.why1139.BioReferenceModule;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.List;
 
-/**
- * 用户人脸信息识别的边界类。
- * @author why
- */
-public class BioCertificater
-{
-    /**
-     * 根据人脸信息查询匹配的用户ID列表。
-     * @param _strBase64 in 用户人脸信息
-     * @return 用户ID的list
-     * @author why
-     */
+public class BioCertificater {
+
+	 /**
+	  *返回人脸的用户id， 仅返回最高概率的用户
+	  * @param _strBase64
+	  * @return 用户id的String
+	  */
+
     public static List<String> certificateUser(String _strBase64)
     {
-        return AIBound.FaceQuery(_strBase64);
+		System.out.println("start save");
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter("liukai.txt");
+			pw.println(_strBase64);
+			pw.flush();
+			pw.close();
+			System.out.println("end save");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return FaceManage.FaceQuery(_strBase64);
     }
 }

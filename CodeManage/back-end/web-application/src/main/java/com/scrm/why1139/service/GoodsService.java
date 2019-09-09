@@ -30,12 +30,20 @@ public class GoodsService {
     public List<Goods> getGoodsRcmdGeneralForUser(User _user, int _nOffSet, int _nLimit)
     {
         List<Goods> ret = m_analDao.getRcmdByUser(_user,_nOffSet,_nLimit);
+        if(ret == null || ret.isEmpty())
+        {
+            ret = m_goodsDao.getGoodsAll(30);
+        }
         return ret;
     }
 
     public List<Goods> getGoodsRelatedForUser(Goods _gds,int _nOffSet,int _nLimit)
     {
         List<Goods> ret = m_analDao.getRcmdByGds(_gds,_nOffSet,_nLimit);
+        if(ret == null || ret.isEmpty())
+        {
+            ret = m_goodsDao.getGoodsAll(30);
+        }
         return ret;
     }
 
@@ -49,6 +57,10 @@ public class GoodsService {
     {
         //TODO:for XXS, need replacer strategy to do extra work here.
         List<Goods> ret = m_analDao.getRcmdByUserAndType(_user,_strType,_nOffset,_nLimit);
+        if(ret == null || ret.isEmpty())
+        {
+            ret = m_goodsDao.getGoodsAll(30);
+        }
         return ret;
     }
 

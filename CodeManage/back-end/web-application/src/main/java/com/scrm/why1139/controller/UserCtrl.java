@@ -1,15 +1,11 @@
 package com.scrm.why1139.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dingxianginc.ctu.client.CaptchaClient;
 import com.dingxianginc.ctu.client.model.CaptchaResponse;
-import com.scrm.why1139.BioReferenceModule.BioCertificater;
-import com.scrm.why1139.BioReferenceModule.BioSaver;
 import com.scrm.why1139.DataAnalysisModule.Sched.BatchLauncher;
 import com.scrm.why1139.domain.Goods;
-import com.scrm.why1139.domain.Mngr;
 import com.scrm.why1139.domain.Order;
 import com.scrm.why1139.domain.User;
 import com.scrm.why1139.service.ConfigConst;
@@ -912,14 +908,23 @@ public class UserCtrl {
         List<User> lstUser = m_userService.findUserByRecgBio(imgrecg);
         JSONObject objRet = new JSONObject();
         JSONArray arrUser = new JSONArray();
-        lstUser.stream().map(user->{
-            JSONObject objUser = new JSONObject();
-            objUser.put("userid",user.getUserID());
-            objUser.put("username",user.getUserName());
-            return objUser;
-        }).forEach(arrUser::add);
-        objRet.put("stat","success");
-        objRet.put("user_lst",arrUser);
+
+        if(lstUser == null || lstUser.isEmpty())
+        {
+            objRet.put("stat","invalid");
+        }
+        else
+        {
+            lstUser.stream().map(user->{
+                JSONObject objUser = new JSONObject();
+                objUser.put("userid",user.getUserID());
+                objUser.put("username",user.getUserName());
+                return objUser;
+            }).forEach(arrUser::add);
+            objRet.put("stat","success");
+            objRet.put("user_lst",arrUser);
+        }
+
         System.out.println(objRet.toJSONString());
         return objRet.toJSONString();
     }

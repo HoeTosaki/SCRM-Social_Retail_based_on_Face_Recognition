@@ -1,8 +1,9 @@
 package com.scrm.why1139.dao;
 
-import com.scrm.why1139.BioReferenceModule.AIBound;
 import com.scrm.why1139.BioReferenceModule.BioCertificater;
+import com.scrm.why1139.BioReferenceModule.BioCertificaterRR;
 import com.scrm.why1139.BioReferenceModule.BioSaver;
+import com.scrm.why1139.BioReferenceModule.BioSaverRR;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class BioDao {
      */
     public boolean saveUser(List<String> _strlstBase64,String _strUserID,double _dbAcc)
     {
-        return BioSaver.saveUser(_strlstBase64, _strUserID, _dbAcc);
+        return BioSaverRR.saveUser(_strlstBase64, _strUserID, _dbAcc);
     }
 
     /**
