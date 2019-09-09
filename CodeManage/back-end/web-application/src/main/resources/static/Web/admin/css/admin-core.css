@@ -196,8 +196,35 @@ body {
     width: 20%;
 }
 
-#sys-info{
+#sys-info-box{
     height: 100px;
+}
+
+#sys-info-box > ul{
+    margin-left: -20px;
+}
+
+#sys-info-box > ul > li > span.prop-name {
+    font-size: 16px;
+    color: #298df8;
+}
+
+#sys-info-box > ul > li > span.prop-val {
+    font-size: 16px;
+    color: #f40;
+}
+
+#real-time-graph{
+    text-align: center;
+    height: 400px;
+    border-top: 1px solid #D1D1D1;
+}
+
+#real-time-graph > #disk-zxt,
+#real-time-graph > #net-zxt{
+    display: inline-block;
+    height: 400px;
+    width: 500px;
 }
 
 /*-------------------------------*/

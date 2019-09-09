@@ -544,30 +544,30 @@
     <div v-show="v_func.cls_chs == 'models'"
          class="layer mt15 mb3 box-border box-background-color box-shadow model-info-core">
         <span class="subtitle mt15 ml20">模型信息</span>
-        <div>
-            <h3>{{hints}}</h3>
-        </div>
-        <div id="sys-info">
+        <!--        <div>-->
+        <!--            <h3>{{hints}}</h3>-->
+        <!--        </div>-->
+        <div id="sys-info-box">
             <ul class="clear-float">
-                <li class="fl ml20">
-                    <span>上次开机时间：</span>
-                    <span>{{last_bt_time}}</span>
+                <li class="fl mt15">
+                    <span class="prop-name">上次开机时间：</span>
+                    <span class="prop-val">{{last_bt_time}}</span>
                 </li>
-                <li class="fl ml20">
-                    <span>CPU逻辑数量：</span>
-                    <span>{{lgc_num}}</span>
+                <li class="fl mt15 ml20">
+                    <span class="prop-name">CPU逻辑数量：</span>
+                    <span class="prop-val">{{lgc_num}}</span>
                 </li>
-                <li class="fl ml20">
-                    <span>CPU物理核心数量：</span>
-                    <span>{{phc_num}}</span>
+                <li class="fl mt15 ml20">
+                    <span class="prop-name">CPU物理核心数量：</span>
+                    <span class="prop-val">{{phc_num}}</span>
                 </li>
-                <li class="fl ml20">
-                    <span>内存总量：</span>
-                    <span>{{mem_sum}}</span><span>G</span>
+                <li class="fl mt15 ml20">
+                    <span class="prop-name">内存总量：</span>
+                    <span class="prop-val">{{mem_sum}}G</span>
                 </li>
-                <li class="fl ml20">
-                    <span>磁盘总量：</span>
-                    <span>{{disk_sum}}</span><span>G</span>
+                <li class="fl mt15 ml20">
+                    <span class="prop-name">磁盘总量：</span>
+                    <span class="prop-val">{{disk_sum}}G</span>
                 </li>
             </ul>
         </div>
@@ -586,7 +586,7 @@
         <button @click="onDataRefresh()">
             <h3>刷新</h3>
         </button>
-<!--        adminDataTransfer-->
+        <!--        adminDataTransfer-->
 
     </div>
 
@@ -603,9 +603,9 @@
     <div v-show="v_func.cls_chs == 'models'"
          class="layer mt15 mb3 box-border box-background-color box-shadow model-fig-core">
         <span class="subtitle mt15 ml20">扩展信息</span>
-        <div>
-            <div id="disk-zxt" style="height: 600px; width: 600PX;"></div>
-            <div id="net-zxt" style="height: 600px; width: 600PX;"></div>
+        <div id="real-time-graph" class="mt15 ml20 mr20">
+            <div id="disk-zxt" class="mt15"></div>
+            <div id="net-zxt" class="mt15"></div>
         </div>
     </div>
 
