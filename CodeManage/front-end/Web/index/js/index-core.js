@@ -8,10 +8,10 @@ $(function () {
         angleInc: 15,
         neighbor: 15,
         // if it should be closed by default
-        initclosed: true,
+        initclosed: false,
         // index of the element that when clicked, triggers the open/close function
         // by default there is no such element
-        closeIdx: 11
+        closeIdx: 10
     });
 
 });
