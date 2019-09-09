@@ -73,6 +73,6 @@ public class Buy {
 
     public String toCSV()
     {
-        return this.getBuy_id()+","+this.getUser_id()+","+this.getMngr_id()+","+this.getGoods_id()+","+this.getBuy_cnt()+","+this.getBuy_date();
+        return this.getBuy_id()+","+this.getUser_id()+","+this.getMngr_id()+","+this.getGoods_id()+","+this.getBuy_date()+","+this.getBuy_cnt();
     }
 }

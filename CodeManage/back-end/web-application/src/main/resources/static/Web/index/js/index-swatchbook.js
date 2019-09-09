@@ -4,7 +4,7 @@
  *
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
- * 
+ *
  * Copyright 2012, Codrops
  * http://www.codrops.com
  */
@@ -27,7 +27,7 @@
 
 	$.SwatchBook.defaults = {
 		// index of initial centered item
-		center: 6,
+		center: 5,
 		// number of degrees that is between each item
 		angleInc: 8,
 		speed: 700,
@@ -166,8 +166,8 @@
 				var rotateVal = i < idx ?
 					self.options.angleInc * (i - idx) :
 					i - idx === 1 ?
-					self.options.proximity :
-					self.options.proximity + (i - idx - 1) * self.options.neighbor;
+						self.options.proximity :
+						self.options.proximity + (i - idx - 1) * self.options.neighbor;
 
 				var transformStr = 'rotate(' + rotateVal + 'deg)';
 
