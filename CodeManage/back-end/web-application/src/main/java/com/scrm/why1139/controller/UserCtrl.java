@@ -258,9 +258,6 @@ public class UserCtrl {
      * 映射到signUpCheckToken的Controller方法
      * @return 请求响应String
      * @author 王浩宇
-     *
-     *
-     *
      * * @date 9.1
      */
     @ResponseBody
@@ -493,7 +490,7 @@ public class UserCtrl {
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/userValQuery"}, method = RequestMethod.POST/*,
+            value = {"/userValQuery"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String userValQuery(HttpServletRequest _req)
@@ -621,7 +618,7 @@ public class UserCtrl {
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/userFigQuery"}, method = RequestMethod.POST/*,
+            value = {"/userFigQuery"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String userFigQuery(HttpServletRequest _req)
@@ -755,12 +752,13 @@ public class UserCtrl {
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/userGdsQuery"}, method = RequestMethod.POST/*,
+            value = {"/userGdsQuery"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String userGdsQuery(HttpServletRequest _req)
     {
         JSONObject jsonObj = JSONProc.parseReq(_req);
+        System.out.println("控制器输入：\t"+jsonObj.toJSONString());
         String strUserID = (String) (jsonObj.getJSONArray("userid").get(0));
         int nCmd = Integer.parseInt((String) (jsonObj.getJSONArray("cmd").get(0)));
 

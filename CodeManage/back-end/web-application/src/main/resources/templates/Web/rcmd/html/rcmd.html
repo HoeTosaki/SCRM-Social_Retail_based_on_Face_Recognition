@@ -111,18 +111,18 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">功能 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"></a></li>
-                        <li><a href="#">个人主页</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">退出登录</a></li>
-                        <li><a href="#">切换账号</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">回到首页</a></li>
+<!--                <li class="dropdown">-->
+<!--                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"-->
+<!--                       aria-expanded="false">功能 <span class="caret"></span></a>-->
+<!--                    <ul class="dropdown-menu">-->
+<!--                        <li><a href="#"></a></li>-->
+<!--                        <li><a href="#">个人主页</a></li>-->
+<!--                        <li role="separator" class="divider"></li>-->
+<!--                        <li><a href="#">退出登录</a></li>-->
+<!--                        <li><a href="#">切换账号</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+                <li><a href="index">回到首页</a></li>
             </ul>
             <div class="navbar-form navbar-right">
                 <div class="form-group">
@@ -493,14 +493,14 @@
                     objGds.type = obj.gds_lst[i].type;
                     objGds.index = obj.gds_lst[i].type;
                     objGds.cnt = obj.gds_lst[i].cnt;
-                    objGds.id = obj.gds_lst[i].id
+                    // objGds.id = obj.gds_lst[i].id
                     if (i < 5) {
                         v_gds_best.gds_lst[i].name = objGds.name;
                         v_gds_best.gds_lst[i].prc = objGds.prc;
                         v_gds_best.gds_lst[i].pic = objGds.pic;
                         v_gds_best.gds_lst[i].cnt = objGds.cnt;
                         v_gds_best.gds_lst[i].type = objGds.type;
-                        v_gds_best.gds_lst[i].id = objGds.id;
+                        // v_gds_best.gds_lst[i].id = objGds.id;
                     } else {
                         v_gds_other.gds_lst.push(objGds);
                     }
@@ -533,14 +533,14 @@
                     objGds.type = obj.gds_lst[i].type;
                     objGds.index = obj.gds_lst[i].type;
                     objGds.cnt = obj.gds_lst[i].cnt;
-                    objGds.id = obj.gds_lst[i].id
+                    // objGds.id = obj.gds_lst[i].id
                     if (i < 5) {
                         v_gds_best.gds_lst[i].name = objGds.name;
                         v_gds_best.gds_lst[i].prc = objGds.prc;
                         v_gds_best.gds_lst[i].pic = objGds.pic;
                         v_gds_best.gds_lst[i].cnt = objGds.cnt;
                         v_gds_best.gds_lst[i].type = objGds.type;
-                        v_gds_best.gds_lst[i].id = objGds.id;
+                        // v_gds_best.gds_lst[i].id = objGds.id;
                     } else {
                         v_gds_other.gds_lst.push(objGds);
                     }
@@ -580,7 +580,7 @@
                         objGds.prc = obj.gds[i].prc;
                         objGds.type = obj.gds[i].type;
                         objGds.cnt = obj.gds[i].cnt;
-                        objGds.id = obj.gds_lst[i].id
+                        // objGds.id = obj.gds_lst[i].id
                         v_gds_other.gds_lst.push(objGds);
                     }
                 }
