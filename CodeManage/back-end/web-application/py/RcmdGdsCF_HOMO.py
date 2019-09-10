@@ -8,7 +8,7 @@ t_user = pd.read_csv(sys.argv[1] + "/py/anal_data/t_user.csv", names=user_field_
     "user_id": str
 })
 
-goods_field_names = ['goods_id', 'goods_type', 'goods_name', 'goods_price', 'goods_cnt']
+goods_field_names = ['goods_id', 'goods_type', 'goods_price', 'goods_cnt']
 t_goods = pd.read_csv(sys.argv[1] + "/py/anal_data/t_goods.csv", names=goods_field_names)
 
 buy_list_field_name = ['buy_id', 'user_id', 'mngr_id', 'goods_id', 'buy_date', 'buy_cnt']

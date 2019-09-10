@@ -103,9 +103,12 @@ public class DataProcessor
         BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
         String line = null;
         try {
+            System.out.println(System.getProperty("file.encoding"));
             while((line = br.readLine()) != null)
             {
-//				System.out.println(line);
+                System.out.println("******"+line+"*******");
+                line = new String(line.getBytes("gb2312"), "utf-8");
+				System.out.println("----------"+line+"----------------");
                 String[] x_y = line.split(",");
                 _x.add(x_y[0]);
                 _y.add(x_y[1]);
