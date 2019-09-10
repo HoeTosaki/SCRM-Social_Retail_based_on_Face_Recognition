@@ -59,7 +59,10 @@ one_month_hot_goods_list = one_month_hot_goods_list.to_period('D')
 
 
 def cmd_0_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
+    if str(all_user_buy_list['user_id'].dtype) == 'int64':
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[4])]
+    else:
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
     date = today_date - time_offset[sys.argv[5]] + timedelta(1)
     some_user_one_week_or_month_buy_list = some_user_buy_list[today_date: date]
     some_user_one_week_or_month_buy_list = some_user_one_week_or_month_buy_list.resample('D').sum()
@@ -79,7 +82,10 @@ def cmd_0_function():
 
 
 def cmd_1_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
+    if str(all_user_buy_list['user_id'].dtype) == 'int64':
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[4])]
+    else:
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
     start_date = time.strftime(sys.argv[5])
     end_date = time.strftime(sys.argv[6])
     some_user_specific_time_list = some_user_buy_list[end_date: start_date]
@@ -99,7 +105,10 @@ def cmd_1_function():
 
 
 def cmd_2_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
+    if str(all_user_buy_list['user_id'].dtype) == 'int64':
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[4])]
+    else:
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
     some_user_monthly_buy_list = some_user_buy_list.resample('M').sum()
     some_user_monthly_buy_list = some_user_monthly_buy_list.to_period('M')
     some_user_monthly_buy_list = some_user_monthly_buy_list.reset_index()
@@ -121,7 +130,10 @@ def cmd_2_function():
 
 
 def cmd_3_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
+    if str(all_user_buy_list['user_id'].dtype) == 'int64':
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[4])]
+    else:
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
     some_user_seasonly_buy_list = some_user_buy_list.resample('Q').sum()
     some_user_seasonly_buy_list = some_user_seasonly_buy_list.to_period('Q')
     some_user_seasonly_buy_list = some_user_seasonly_buy_list.reset_index()
@@ -144,7 +156,10 @@ def cmd_3_function():
 
 
 def cmd_4_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
+    if str(all_user_buy_list['user_id'].dtype) == 'int64':
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[4])]
+    else:
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
     some_user_goods_type_cost = some_user_buy_list.groupby('goods_type')
     some_user_goods_type_cost = some_user_goods_type_cost['total_pay'].agg(np.sum)
     some_user_goods_type_cost_dict = {'goods_type': some_user_goods_type_cost.index,
@@ -157,7 +172,12 @@ def cmd_4_function():
 
 
 def cmd_5_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[5]]
+    if str(all_user_buy_list['user_id'].dtype) == 'int64':
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[5])]
+        today_some_user_buy_list = today_all_user_buy_list.loc[today_all_user_buy_list['user_id'] == int(sys.argv[5])]
+    else:
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[5]]
+        today_some_user_buy_list = today_all_user_buy_list.loc[today_all_user_buy_list['user_id'] == sys.argv[5]]
     this_year_buy_list = some_user_buy_list.resample('Y').sum()
     this_year_buy_list = this_year_buy_list.tail(1)
     this_year_buy_list = this_year_buy_list.reset_index()
@@ -175,7 +195,10 @@ def cmd_5_function():
 
 
 def cmd_6_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[5]]
+    if str(all_user_buy_list['user_id'].dtype) == 'int64':
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[5])]
+    else:
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[5]]
     date = today_date - time_offset[sys.argv[6]]
     one_week_or_month_some_user_buy_list = some_user_buy_list[today_date:date]
     one_week_or_month_some_user_buy_list = one_week_or_month_some_user_buy_list.reset_index()
@@ -199,7 +222,10 @@ def cmd_6_function():
 
 
 def cmd_7_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[5]]
+    if str(all_user_buy_list['user_id'].dtype) == 'int64':
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[5])]
+    else:
+        some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[5]]
     start_date = time.strftime(sys.argv[6])
     end_date = time.strftime(sys.argv[7])
     specific_time_some_user_buy_list = some_user_buy_list[end_date:start_date]
