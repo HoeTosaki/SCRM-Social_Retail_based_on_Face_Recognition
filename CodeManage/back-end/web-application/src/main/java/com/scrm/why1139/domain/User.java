@@ -9,8 +9,7 @@ import java.util.Optional;
 
 /**
  * 用于描述User信息的Domain类。
- * @author 王浩宇
- * @date 9.3
+ * @author why
  */
 public class User implements Serializable
 {
@@ -30,8 +29,7 @@ public class User implements Serializable
 
     /**
      * User存储的简易测试类。
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public static void main(String s[])
     {
@@ -45,8 +43,7 @@ public class User implements Serializable
 
     /**
      * User的默认构造函数
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public User()
     {
@@ -59,8 +56,7 @@ public class User implements Serializable
      * @param _strUserID in UserID
      * @param _strPassword in User密码
      * @param _pthBioRef in User生物特征信息的存储路径
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public User(String _strUserName, String _strUserID, String _strPassword, String _pthBioRef)
     {
@@ -74,8 +70,7 @@ public class User implements Serializable
     /**
      * 获取UserName
      * @return UserName
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public String getUserName()
     {
@@ -85,8 +80,7 @@ public class User implements Serializable
     /**
      * 设置UserName
      * @param _strUserName in UserName
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setUserName(String _strUserName)
     {
@@ -98,8 +92,7 @@ public class User implements Serializable
     /**
      * 获取UserID
      * @return UserID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public String getUserID()
     {
@@ -109,8 +102,7 @@ public class User implements Serializable
     /**
      * 设置UserID
      * @param _strUserID in UserID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setUserID(String _strUserID)
     {
@@ -122,8 +114,7 @@ public class User implements Serializable
     /**
      * 获取User密码
      * @return User密码
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public String getPassword()
     {
@@ -133,8 +124,7 @@ public class User implements Serializable
     /**
      * 设置User密码
      * @param _strPassword in User密码
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setPassword(String _strPassword)
     {
@@ -146,8 +136,7 @@ public class User implements Serializable
     /**
      * 获取User生物信息存储路径
      * @return 存储路径的字符串
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public String getBioRef()
     {
@@ -157,8 +146,7 @@ public class User implements Serializable
     /**
      * 设置User的生物信息路径
      * @param _pthBioRef in 生物信息路径
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setBioRef(String _pthBioRef)
     {
@@ -170,8 +158,7 @@ public class User implements Serializable
     /**
      * 判断当前指定路径的生物信息文件是否存在。
      * @return 文件存在性的boolean值
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public boolean isBioRefExists()
     {
@@ -181,8 +168,7 @@ public class User implements Serializable
     /**
      * 加载User生物信息内容到内存
      * @return 生物信息二进制流
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public byte[] loadBioRef()
     {
@@ -219,8 +205,7 @@ public class User implements Serializable
      * 存储内存中的生物信息流到硬盘
      * @param _btBioRef in 二进制流
      * @return 存储通告结果的boolean值
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public boolean saveBioRef(byte[] _btBioRef)
     {
@@ -248,28 +233,16 @@ public class User implements Serializable
         return ret;
     }
 
-    /**
-     * 判断当前对象是否为空
-     * @return 逻辑值
-     */
     public boolean isEmpty()
     {
         return m_isEmpty;
     }
 
-    /**
-     * 获取人脸信息
-     * @return String
-     */
     public String getM_imgrecg()
     {
         return m_imgrecg;
     }
 
-    /**
-     * 设置人脸信息
-     * @param m_imgrecg in 人脸信息
-     */
     public void setM_imgrecg(String m_imgrecg)
     {
         m_isEmpty = false;

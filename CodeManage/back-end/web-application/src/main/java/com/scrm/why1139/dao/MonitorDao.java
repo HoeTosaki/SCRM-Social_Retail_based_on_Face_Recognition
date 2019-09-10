@@ -12,11 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-/**
- * 用于持久化Monitor信息的Dao类。
- * @author 王浩宇
- * @date 8.29
- */
 @Repository
 public class MonitorDao
 {
@@ -29,28 +24,18 @@ public class MonitorDao
     @Autowired
     private Rcmder m_rcmder;
 
-    /**
-     * 执行数据抽取
-     */
     public void dataExtract()
     {
         System.out.println("do data extract...");
         m_batchLauncher.testRun();
     }
 
-    /**
-     * 执行数据转移
-     */
     public void dataTransfer()
     {
         System.out.println("do data transfer...");
         m_damConfig.enableDBAccess();
     }
 
-    /**
-     * 执行数据建模
-     * @param _nCmd
-     */
     public void dataModeling(int _nCmd)
     {
         switch (_nCmd)
@@ -70,12 +55,6 @@ public class MonitorDao
         }
     }
 
-    /**
-     * 执行系统状态检测
-     * @param _nCmd in 指令
-     * @param _info out 信息列表
-     * @return 逻辑值
-     */
     public boolean serverMonitor(int _nCmd, List<String> _info)
     {
 //        switch (_nCmd)

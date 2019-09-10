@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * JOB监听器类
- * @author why
+ * Created by EalenXie on 2018/9/10 15:09.
+ * 一个简单的JOB listener
  */
 @Component
 public class JobListener implements JobExecutionListener {
@@ -23,20 +23,12 @@ public class JobListener implements JobExecutionListener {
 
     private long startTime;
 
-    /**
-     * Job执行前的处理方法
-     * @param jobExecution in jobExecution
-     */
     @Override
     public void beforeJob(JobExecution jobExecution) {
         startTime = System.currentTimeMillis();
         log.info("job before " + jobExecution.getJobParameters());
     }
 
-    /**
-     * Job执行后的处理方法
-     * @param jobExecution in jobExecution
-     */
     @Override
     public void afterJob(JobExecution jobExecution) {
         log.info("JOB STATUS : {}", jobExecution.getStatus());

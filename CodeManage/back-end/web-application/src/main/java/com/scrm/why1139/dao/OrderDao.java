@@ -9,11 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/**
- * 用于持久化Order信息的Dao类。
- * @author 王浩宇
- * @date 9.2
- */
 @Repository
 public class OrderDao {
     private JdbcTemplate m_jdbcTemp;
@@ -21,8 +16,7 @@ public class OrderDao {
     /**
      * setter注入
      * @param _jdbcTemp in
-     * @author 王浩宇
-     * @date 9.2
+     * @author why
      */
     @Autowired
     public void setJdbcTemp(JdbcTemplate _jdbcTemp)
@@ -31,12 +25,6 @@ public class OrderDao {
 //        this.m_jdbcTemp = Optional.ofNullable(_jdbcTemp).orElseThrow();
     }
 
-    /**
-     * 通过用户ID获取订单
-     * @param _strUserID in 用户ID
-     * @param _nLimit in 长度限制
-     * @return Order列表
-     */
     public List<Order> findOrderByUserID(String _strUserID, int _nLimit)
     {
 
@@ -66,8 +54,7 @@ public class OrderDao {
      * @param _nGoodsID in 商品ID
      * @param _nLimit in 最大可查询的记录数，当数据库内存储记录数大于该参数值时才有效。
      * @return 购物记录Order的列表
-     * @author 王浩宇
-     * @date 9.2
+     * @author why
      */
     public List<Order> findOrderByGoodsID(int _nGoodsID,int _nLimit)
     {
@@ -93,12 +80,6 @@ public class OrderDao {
         return lstOrder;
     }
 
-    /**
-     * 为指定用户获取订单
-     * @param _user in 用户ID
-     * @param _nLimit in 长度限制
-     * @return Order列表
-     */
     public List<Order> findOrderWithUser(User _user,int _nLimit)
     {
         m_jdbcTemp.query(" SELECT * FROM t_order LIMIT 1"
@@ -110,11 +91,8 @@ public class OrderDao {
         return findOrderByUserID(_user.getUserID(),_nLimit);
     }
 
-    /**
-     * 通过订单号获取订单
-     * @param _nOrderID in 订单号
-     * @return Order对象
-     */
+
+
     public Order findOrderByOrderID(int _nOrderID)
     {
         Order order = new Order();
@@ -133,8 +111,7 @@ public class OrderDao {
     /**
      * 更新当前的购物记录。新记录将以insert形式更新。
      * @param _order in 每个Order记录遵循时间戳unique的编程假设。
-     * @author 王浩宇
-     * @date 9.2
+     * @author why
      */
     public void updateOrder(Order _order)
     {
@@ -142,13 +119,8 @@ public class OrderDao {
                 new Object[]{_order.getUserID(),_order.getGoodsID(),_order.getOrderDate(),_order.getOrderCnt()});
     }
 
-    /**
-     * 删除订单
-     * @param _order in 订单Order对象
-     */
     public void delOrder(Order _order)
     {
-        System.out.println("del order:\t"+_order.getOrderID());
         m_jdbcTemp.update("DELETE FROM t_order WHERE order_id=?",new Object[]{_order.getOrderID()});
     }
 }

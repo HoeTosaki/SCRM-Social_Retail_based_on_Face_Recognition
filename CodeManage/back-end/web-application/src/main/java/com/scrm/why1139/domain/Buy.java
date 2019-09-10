@@ -7,8 +7,7 @@ import java.util.Optional;
 
 /**
  * 用于描述购物记录的Domain类。
- * @author 王浩宇
- * @date 9.3
+ * @author why
  */
 public class Buy implements Serializable
 {
@@ -23,8 +22,7 @@ public class Buy implements Serializable
 
     /**
      * 默认构造函数
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public Buy()
     {
@@ -38,8 +36,7 @@ public class Buy implements Serializable
      * @param _nGoodsID in GoodsID，商品信息
      * @param _dtBuyDate in BuyDate，购买的日期时间
      * @param _nBuyCnt in BuyCount，购买该商品的数量
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public Buy(String _strUserID, String _strMngrID, int _nGoodsID, String _dtBuyDate, int _nBuyCnt)
     {
@@ -51,15 +48,6 @@ public class Buy implements Serializable
         setUserID(_strUserID);
     }
 
-    /**
-     * 加入BuyID的购物记录初始化对象
-     * @param _strUserID in UserID，顾客信息
-     * @param _strMngrID in MngrID，收银员信息
-     * @param _nGoodsID in GoodsID，商品信息
-     * @param _dtBuyDate in BuyDate，购买的日期时间
-     * @param _nBuyCnt in BuyCount，购买该商品的数量
-     * @param _nBuyID in BuyID，可选
-     */
     public Buy(String _strUserID, String _strMngrID, int _nGoodsID, String _dtBuyDate, int _nBuyCnt,int _nBuyID)
     {
         m_isEmpty = false;
@@ -74,8 +62,7 @@ public class Buy implements Serializable
     /**
      * 获取UserID
      * @return UserID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public String getUserID()
     {
@@ -85,8 +72,7 @@ public class Buy implements Serializable
     /**
      * 设置UserID
      * @param _strUserID in UserID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setUserID(String _strUserID)
     {
@@ -98,8 +84,7 @@ public class Buy implements Serializable
     /**
      * 获取MngrID
      * @return MngrID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public String getMngrID()
     {
@@ -109,8 +94,7 @@ public class Buy implements Serializable
     /**
      * 设置MngrID
      * @param _strMngrID in MngrID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setMngrID(String _strMngrID)
     {
@@ -122,8 +106,7 @@ public class Buy implements Serializable
     /**
      * 获取GoodsID
      * @return GoodsID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public int getGoodsID()
     {
@@ -133,8 +116,7 @@ public class Buy implements Serializable
     /**
      * 设置GoodsID
      * @param _nGoodsID in GoodsID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setGoodsID(int _nGoodsID)
     {
@@ -146,8 +128,7 @@ public class Buy implements Serializable
     /**
      * 获取购买日期时间
      * @return 表示购买日期时间的字符串
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public String getBuyDate()
     {
@@ -157,8 +138,7 @@ public class Buy implements Serializable
     /**
      * 设置购买的日期时间
      * @param _dtBuyDate in 购买的日期时间
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setBuyDate(String _dtBuyDate)
     {
@@ -170,8 +150,7 @@ public class Buy implements Serializable
     /**
      * 获取购买商品的数量
      * @return 商品数量
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public int getBuyCnt()
     {
@@ -181,8 +160,7 @@ public class Buy implements Serializable
     /**
      * 设置购买商品的数量
      * @param _nBuyCnt in 商品数量
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setBuyCnt(int _nBuyCnt)
     {
@@ -191,28 +169,17 @@ public class Buy implements Serializable
 //        this.m_nBuyCnt = Optional.ofNullable(m_nBuyCnt).orElseThrow();
     }
 
-    /**
-     * 判断当前对象是否被修改过
-     * @return 逻辑值
-     */
     public boolean isEmpty()
     {
         return m_isEmpty;
     }
 
-    /**
-     * 获取购物记录ID
-     * @return BuyID整型值
-     */
+
     public int getBuyID()
     {
         return m_nBuyID;
     }
 
-    /**
-     * 设置BuyID
-     * @param _nBuyID in BuyID
-     */
     public void setBuyID(int _nBuyID)
     {
         m_isEmpty = false;

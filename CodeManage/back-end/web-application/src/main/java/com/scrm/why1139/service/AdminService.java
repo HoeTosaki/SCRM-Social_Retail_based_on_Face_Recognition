@@ -16,8 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 面向Admin的Service类。
- * @author 王浩宇
- * @date 9.2
+ * @author why
  */
 @Service
 public class AdminService
@@ -31,29 +30,11 @@ public class AdminService
     @Autowired
     private MonitorService m_monitorService;
 
-    /**
-     * 向管理员提供用户购物记录的分析图
-     * @param _nCmd in 查询指令
-     * @param _nLimit in 长度限制
-     * @param _x in x坐标列表
-     * @param _y in y坐标列表
-     * @param _args in/out 额外传递参数
-     * @return 逻辑值
-     */
     public boolean getBuyListAnalyzeFigForAdmin(int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
     {
         return m_analService.getBuyListAnalyzeFigForAdmin(_nCmd, _nLimit, _x, _y, _args);
     }
 
-    /**
-     * 向管理员提供用户购物记录的分析表
-     * @param _nCmd in 查询指令
-     * @param _nOffset in 偏移量
-     * @param _nLimit in 长度限制
-     * @param _vals in val列表
-     * @param _args in 额外传递参数
-     * @return 逻辑值
-     */
     public boolean getBuyListAnalyzeValForAdmin(int _nCmd,int _nOffset, int _nLimit, List<Object> _vals,List<Object> _args)
     {
         return m_analService.getBuyListAnalyzeValForAdmin(_nCmd, _nOffset, _nLimit, _vals, _args);
@@ -63,8 +44,7 @@ public class AdminService
      * 通过MngrID获取Mngr对象
      * @param _strMngrID in 表示MngrID的字符串
      * @return Mngr对象
-     * @author 王浩宇
-     * @date 9.2
+     * @author why
      */
     public Mngr findMngrByMngrID(String _strMngrID)
     {
@@ -76,18 +56,13 @@ public class AdminService
      * @param _strMngrID in MngrID
      * @param _strPassword in Mngr密码
      * @return 标志匹配结果的boolean值
-     * @author 王浩宇
-     * @date 9.2
+     * @author why
      */
     public boolean hasMatchMngr(String _strMngrID,String _strPassword)
     {
         return m_manService.hasMatchMngr(_strMngrID, _strPassword);
     }
 
-    /**
-     * 获取所有收银员
-     * @return Mngr列表
-     */
     public List<Mngr> getMngrAllForAdmin()
     {
         return m_manService.getMngrAllForAdmin();
@@ -96,8 +71,7 @@ public class AdminService
     /**
      * 更新Mngr信息
      * @param _mngr in Mngr对象
-     * @author 王浩宇
-     * @date 9.2
+     * @author why
      */
     public void updateMngr(Mngr _mngr)
     {
@@ -107,8 +81,7 @@ public class AdminService
     /**
      * 删除当前Mngr信息
      * @param _mngr in Mngr对象
-     * @author 王浩宇
-     * @date 9.2
+     * @author why
      */
     public void delMngr(Mngr _mngr)
     {
@@ -120,8 +93,7 @@ public class AdminService
      * @param _strAccntID in AccntID
      * @param _strPassword in 密码
      * @return 创建是否成功的boolean值
-     * @author 王浩宇
-     * @date 9.2
+     * @author why
      */
     public boolean creatNewAccnt(String _strAccntID,String _strPassword)
     {
@@ -132,14 +104,12 @@ public class AdminService
      * 通过GoodsID获取Goods对象
      * @param _nGoodsID in GoodsID
      * @return Goods对象
-     * @author 王浩宇
-     * @date 9.2
+     * @author why
      */
     public Goods findGoodsByGoodsID(int _nGoodsID)
     {
         return m_goodsService.findGoodsByGoodsID(_nGoodsID);
     }
-
 
     public void updateGoods(Goods _gds)
     {

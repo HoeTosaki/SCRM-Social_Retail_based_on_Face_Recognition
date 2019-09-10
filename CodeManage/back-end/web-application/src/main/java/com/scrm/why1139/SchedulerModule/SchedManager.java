@@ -6,21 +6,12 @@ import org.quartz.impl.StdSchedulerFactory;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @deprecated  Quartz定时任务调度类
- * @author 王浩宇
- * @date 9.3
- */
 public class SchedManager
 {
     private static Scheduler s_sched;
     private static Map<String, JobDetail> m_mpJob = new ConcurrentHashMap<>();
     private static Map<String, SimpleTrigger> m_mpTrig = new ConcurrentHashMap<>();
 
-    /**
-     * 启动ETL任务
-     * @return 逻辑值
-     */
     public static boolean startETLJob()
     {
         initBaseService();
@@ -45,10 +36,6 @@ public class SchedManager
         return true;
     }
 
-    /**
-     * 初始化定时服务
-     * @return 逻辑值
-     */
     private static boolean initBaseService()
     {
         if(s_sched == null)

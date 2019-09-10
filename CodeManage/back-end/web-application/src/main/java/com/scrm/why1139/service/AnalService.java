@@ -15,11 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/**
- * 面向AnalDao的Service类。
- * @author 王浩宇
- * @date 9.5
- */
 @Service
 public class AnalService {
     @Autowired
@@ -31,31 +26,11 @@ public class AnalService {
     @Autowired
     private MngrDao m_mngrDao;
 
-    /**
-     * 向用户提供购物记录的分析图
-     * @param _strUserID in 用户ID
-     * @param _nCmd 查询指令
-     * @param _nLimit in 长度限制
-     * @param _x in x列表
-     * @param _y in y列表
-     * @param _args in 额外参数
-     * @return 逻辑值
-     */
     public boolean getAnalyzeFigForUser(String _strUserID, int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
     {
         return m_analDao.buyListAnalyzeFigForUser(_strUserID,_nCmd,_nLimit,_x,_y,_args);
     }
 
-    /**
-     * 向用户提供购物记录的分析表
-     * @param _strUserID in 用户ID
-     * @param _nCmd in 查询指令
-     * @param _nOffset in 偏移量
-     * @param _nLimit in 长度限制
-     * @param _vals in val列表
-     * @param _args in 额外传递参数
-     * @return 逻辑值
-     */
     public boolean getAnalyzeValForUser(String _strUserID,int _nCmd,int _nOffset, int _nLimit, List<Object> _vals,List<Object> _args)
     {
         List<String> valsStr = new CopyOnWriteArrayList<>();
@@ -263,29 +238,11 @@ public class AnalService {
         return ret;//true;
     }
 
-    /**
-     * 向管理员提供用户购物记录的分析图
-     * @param _nCmd in 查询指令
-     * @param _nLimit in 长度限制
-     * @param _x in x坐标列表
-     * @param _y in y坐标列表
-     * @param _args in/out 额外传递参数
-     * @return 逻辑值
-     */
     public boolean getBuyListAnalyzeFigForAdmin(int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
     {
         return m_analDao.buyListAnalyzeFigForAdmin(_nCmd,_nLimit,_x,_y,_args);
     }
 
-    /**
-     * 向管理员提供用户购物记录的分析表
-     * @param _nCmd in 查询指令
-     * @param _nOffset in 偏移量
-     * @param _nLimit in 长度限制
-     * @param _vals in val列表
-     * @param _args in 额外传递参数
-     * @return 逻辑值
-     */
     public boolean getBuyListAnalyzeValForAdmin(int _nCmd,int _nOffset, int _nLimit, List<Object> _vals,List<Object> _args)
     {
         List<String> valsStr = new CopyOnWriteArrayList<>();
@@ -493,16 +450,6 @@ public class AnalService {
         return ret;//true;
     }
 
-    /**
-     * 提供商品分析
-     * @param _gds1ID in 商品1的ID
-     * @param _gds2ID in 商品2的ID
-     * @param _relNum in 1、2商品之间的关联归一化系数
-     * @param _gdsID in 商品ID列表
-     * @param _buyCnt in 购买数量的列表
-     * @param _cntNum in 购买数量的归一化系数
-     * @return 逻辑值
-     */
     public boolean getGoodsAnalyzeForAdmin(List<Goods> _gds1,List<Goods> _gds2,List<Double> _relNum,List<Goods> _gds,List<Integer> _buyCnt,List<Double> _cntNum)
     {
         List<Integer> gds1ID = new CopyOnWriteArrayList<>();
@@ -522,12 +469,6 @@ public class AnalService {
         return true;
     }
 
-    /**
-     * 收银员业绩统计
-     * @param _mngr in 收银员ID
-     * @param _sale out 收银业绩列表
-     * @return 逻辑值
-     */
     public boolean getMngrAnalyzeFigForAdmin(List<Mngr> _mngr, List<String> _sale)
     {
         List<String> mngrID = new CopyOnWriteArrayList<>();

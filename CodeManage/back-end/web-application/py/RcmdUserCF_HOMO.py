@@ -1,14 +1,8 @@
-###
-# 执行基于用户协同过滤的建模脚本
-# @author 王浩宇
-#date：8.29
-
 import numpy as np
 import pandas as pd
 import sys
 from sklearn.metrics.pairwise import cosine_similarity
 
-#数据输入
 user_field_names = ['user_id']
 t_user = pd.read_csv(sys.argv[1] + "/py/anal_data/t_user.csv", names=user_field_names, dtype={
     "user_id": str
@@ -27,7 +21,6 @@ user_lst = t_buy["user_id"].unique()
 user_vec = np.zeros((user_lst.size, t_goods.iloc[:, 0].size + 1))
 
 print("proc gds cnt")
-
 
 buy_user = t_buy.set_index("user_id")
 for ind, user in enumerate(user_lst):
@@ -50,7 +43,6 @@ sim_user = cosine_similarity(user_vec)
 
 print("proc save")
 
-#保存用户相似矩阵
 np.save(sys.argv[1] + "/py/sim_user.npy", sim_user)
 np.save(sys.argv[1] + "/py/sim_user_lst.npy", user_lst)
 

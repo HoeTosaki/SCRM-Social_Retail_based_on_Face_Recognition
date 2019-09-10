@@ -11,11 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/**
- * 用于持久化Anal信息的Dao类。
- * @author 王浩宇
- * @date 9.2
- */
 @Repository
 public class AnalDao
 {
@@ -26,13 +21,7 @@ public class AnalDao
     @Autowired
     private DataProcessor m_dataProcessor;
 
-    /**
-     * 根据用户ID获取推荐
-     * @param _user in userid
-     * @param _nOffset in 偏移
-     * @param _nLimit in 限制长度
-     * @return Goods列表
-     */
+
     public List<Goods> getRcmdByUser(User _user,int _nOffset,int _nLimit)
     {
         List<Integer> lstGdsInd = m_rcmder.getRcmdByUser(_user.getUserID(),0,_nOffset,_nLimit,new CopyOnWriteArrayList<>());
@@ -41,14 +30,6 @@ public class AnalDao
         return ret;
     }
 
-    /**
-     * 根据用户和类型获取推荐
-     * @param _user in userid
-     * @param _strQuery in 查询类型
-     * @param _nOffset in 偏移
-     * @param _nLimit in 长度限制
-     * @return Goods列表
-     */
     public List<Goods> getRcmdByUserAndType(User _user,String _strQuery,int _nOffset,int _nLimit)
     {
         List<String> lststrQuery = new CopyOnWriteArrayList<>();
@@ -59,13 +40,6 @@ public class AnalDao
         return ret;
     }
 
-    /**
-     * 根据商品ID获取推荐
-     * @param _gds in Goods对象
-     * @param _nOffset in 偏移量
-     * @param _nLimit in 长度限制
-     * @return Goods列表
-     */
     public List<Goods> getRcmdByGds(Goods _gds,int _nOffset,int _nLimit)
     {
         List<Integer> lstGdsInd = m_rcmder.getRcmdByGoods(_gds.getGoodsID(),0,_nOffset,_nLimit,new CopyOnWriteArrayList<>());
@@ -74,15 +48,6 @@ public class AnalDao
         return ret;
     }
 
-    /**
-     * 向管理员提供用户购物记录的分析图
-     * @param _nCmd in 查询指令
-     * @param _nLimit in 长度限制
-     * @param _x in x坐标列表
-     * @param _y in y坐标列表
-     * @param _args in/out 额外传递参数
-     * @return 逻辑值
-     */
     public boolean buyListAnalyzeFigForAdmin(int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
     {
         System.out.println("DP输入[fig]:"+"\tcmd:"+_nCmd+"\tlim:"+_nLimit+"\targs:"+_args);
@@ -95,15 +60,6 @@ public class AnalDao
         return m_dataProcessor.buyListAnalyzeFigForAdmin(_nCmd,_nLimit,_x,_y,_args);
     }
 
-    /**
-     * 向管理员提供用户购物记录的分析表
-     * @param _nCmd in 查询指令
-     * @param _nOffset in 偏移量
-     * @param _nLimit in 长度限制
-     * @param _vals in val列表
-     * @param _args in 额外传递参数
-     * @return 逻辑值
-     */
     public boolean buyListAnalyzeValForAdmin(int _nCmd,int _nOffset, int _nLimit, List<String> _vals, List<Object> _args)
     {
         System.out.println("DP输入[val]:"+"\tcmd:"+_nCmd+"\toffset:"+_nOffset+"\tlim:"+_nLimit+"\targs:"+_args);
@@ -135,16 +91,6 @@ public class AnalDao
         return ret;
     }
 
-    /**
-     * 向用户提供购物记录的分析图
-     * @param _strUserID in 用户ID
-     * @param _nCmd 查询指令
-     * @param _nLimit in 长度限制
-     * @param _x in x列表
-     * @param _y in y列表
-     * @param _args in 额外参数
-     * @return 逻辑值
-     */
     public boolean buyListAnalyzeFigForUser(String _strUserID,int _nCmd, int _nLimit, List<String> _x, List<String> _y, List<Object> _args)
     {
         System.out.println("DP输入[fig]:\tUserID:"+_strUserID+"\tcmd:"+_nCmd+"\tlim:"+_nLimit+"\targs:"+_args);
@@ -157,16 +103,6 @@ public class AnalDao
         return m_dataProcessor.buyListAnalyzeFigForUser(_strUserID,_nCmd,_nLimit,_x,_y,_args);
     }
 
-    /**
-     * 向用户提供购物记录的分析表
-     * @param _strUserID in 用户ID
-     * @param _nCmd in 查询指令
-     * @param _nOffset in 偏移量
-     * @param _nLimit in 长度限制
-     * @param _vals in val列表
-     * @param _args in 额外传递参数
-     * @return 逻辑值
-     */
     public boolean buyListAnalyzeValForUser(String _strUserID,int _nCmd,int _nOffset, int _nLimit, List<String> _vals, List<Object> _args)
     {
         System.out.println("DP输入[val]:\tUserID:"+_strUserID+"\tcmd:"+_nCmd+"\toffset:"+_nOffset+"\tlim:"+_nLimit+"\targs:"+_args);
@@ -192,16 +128,6 @@ public class AnalDao
         return ret;
     }
 
-    /**
-     * 提供商品分析
-     * @param _gds1ID in 商品1的ID
-     * @param _gds2ID in 商品2的ID
-     * @param _relNum in 1、2商品之间的关联归一化系数
-     * @param _gdsID in 商品ID列表
-     * @param _buyCnt in 购买数量的列表
-     * @param _cntNum in 购买数量的归一化系数
-     * @return 逻辑值
-     */
     public boolean goodsAnalyze(List<Integer> _gds1ID,List<Integer> _gds2ID,List<Double> _relNum,List<Integer> _gdsID,List<Integer> _buyCnt,List<Double> _cntNum)
     {
 //        for(int i = 0;i < 20;++i)//edges
@@ -221,12 +147,6 @@ public class AnalDao
         return m_dataProcessor.goodsAnalyze(_gds1ID, _gds2ID, _relNum, _gdsID, _buyCnt, _cntNum);
     }
 
-    /**
-     * 收银员业绩统计
-     * @param _mngrID in 收银员ID
-     * @param _sale out 收银业绩列表
-     * @return 逻辑值
-     */
     public boolean mngrAnalyzeFig(List<String> _mngrID, List<String> _sale)
     {
         return m_dataProcessor.mngrAnalyzeFig(_mngrID, _sale);

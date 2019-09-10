@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Json转义处理类。
- * @author 王浩宇
- * @date 9.3
+ * @author why
  */
 public class JSONProc
 {
@@ -18,8 +17,7 @@ public class JSONProc
      * 解析Http协议请求数据段，获取Json对象
      * @param _req in httpReq
      * @return Json对象
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public static JSONObject parseReq(HttpServletRequest _req)
     {
@@ -30,8 +28,7 @@ public class JSONProc
      * 解析登录请求，获取User对象
      * @param _req in httpReq
      * @return User对象
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public static User parseLoginReq(HttpServletRequest _req)
     {
@@ -46,8 +43,7 @@ public class JSONProc
      * 解析注册请求，获取User对象
      * @param _req in httpReq
      * @return User对象
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public static User parseSignUpReq(HttpServletRequest _req)
     {
@@ -64,8 +60,7 @@ public class JSONProc
      * 解析注册预处理请求，获取User对象
      * @param _req in httpReq
      * @return User对象
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public static User parseSignUpPreReq(HttpServletRequest _req)
     {
@@ -79,8 +74,7 @@ public class JSONProc
      * 解析Mngr登录请求，获取Mngr对象
      * @param _req in httpReq
      * @return Mngr对象
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public static Mngr parseMngrVerifyReq(HttpServletRequest _req)
     {

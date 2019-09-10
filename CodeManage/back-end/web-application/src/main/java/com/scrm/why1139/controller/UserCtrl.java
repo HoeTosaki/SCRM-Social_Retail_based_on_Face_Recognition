@@ -24,14 +24,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/**
- * 面向用户的Controller类
- * @author 王浩宇
- *
- *
- *
- * * @date 9.1
- */
 @RestController
 public class UserCtrl {
     @Autowired
@@ -40,11 +32,7 @@ public class UserCtrl {
     /**
      * 映射到login界面的Controller方法
      * @return 页面模型
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @RequestMapping(
             value = {"/login"}
@@ -57,11 +45,7 @@ public class UserCtrl {
     /**
      * 映射到login-face界面的Controller方法
      * @return 页面模型
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @RequestMapping(
             value = {"/loginFace"}
@@ -75,11 +59,7 @@ public class UserCtrl {
     /**
      * 映射到rcmd界面的Controller方法
      * @return 页面模型
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @RequestMapping(
             value = {"/rcmd"}
@@ -93,15 +73,11 @@ public class UserCtrl {
     /**
      * 映射到loginCheck的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/loginCheck"}, method = RequestMethod.POST/*,
+            value = {"/loginCheck"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String loginCheck(HttpServletRequest _req)
@@ -127,15 +103,11 @@ public class UserCtrl {
     /**
      * 映射到loginCheckToken的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/loginCheckToken"}, method = RequestMethod.POST/*,
+            value = {"/loginCheckToken"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String loginCheckToken(HttpServletRequest _req,String token)
@@ -188,15 +160,11 @@ public class UserCtrl {
     /**
      * 映射到signUpCheck的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/signUpCheck"}, method = RequestMethod.POST/*,
+            value = {"/signUpCheck"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String signUpCheck(HttpServletRequest _req)
@@ -225,15 +193,11 @@ public class UserCtrl {
     /**
      * 映射到signUpCheckPre的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/signUpCheckPre"}, method = RequestMethod.POST/*,
+            value = {"/signUpCheckPre"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String signUpCheckPre(HttpServletRequest _req)
@@ -257,15 +221,11 @@ public class UserCtrl {
     /**
      * 映射到signUpCheckToken的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/signUpCheckToken"}, method = RequestMethod.POST/*,
+            value = {"/signUpCheckToken"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String signUpCheckToken(HttpServletRequest _req,String token)
@@ -315,17 +275,8 @@ public class UserCtrl {
         return obj.toJSONString();
     }
 
-    /**
-     * 映射到pullUserStat的Controller方法
-     * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
-     */
     @RequestMapping(
-            value = {"/pullUserStat"}, method = RequestMethod.POST
+            value = {"/pullUserStat"}
     )
     public String pullUserStat(HttpServletRequest _req)
     {
@@ -390,16 +341,12 @@ public class UserCtrl {
 
 
     /**
-     * 映射到updateUserID的Controller方法
+     * 映射到updateRecgBio的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @RequestMapping(
-            value = {"/updateUserID"}, method = RequestMethod.POST
+            value = {"/updateUserID"}
     )
     public String updateUserID(HttpServletRequest _req)
     {
@@ -421,16 +368,12 @@ public class UserCtrl {
     }
 
     /**
-     * 映射到updatePasswd的Controller方法
+     * 映射到updateRecgBio的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @RequestMapping(
-            value = {"/updatePasswd"}, method = RequestMethod.POST
+            value = {"/updatePasswd"}
     )
     public String updatePasswd(HttpServletRequest _req)
     {
@@ -452,13 +395,9 @@ public class UserCtrl {
     }
 
     /**
-     * 映射到updateRecgBio的Controller方法
+     * 映射到updatePasswdByRecgBio的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @RequestMapping(value = "/updateRecgBio", method = RequestMethod.POST)
     @ResponseBody
@@ -482,18 +421,9 @@ public class UserCtrl {
         return objRet.toJSONString();
     }
 
-    /**
-     * 映射到userValQuery的Controller方法
-     * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
-     */
     @ResponseBody
     @RequestMapping(
-            value = {"/userValQuery"}, method = RequestMethod.POST/*,
+            value = {"/userValQuery"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String userValQuery(HttpServletRequest _req)
@@ -610,18 +540,9 @@ public class UserCtrl {
         return objRet.toJSONString();
     }
 
-    /**
-     * 映射到userFigQuery的Controller方法
-     * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
-     */
     @ResponseBody
     @RequestMapping(
-            value = {"/userFigQuery"}, method = RequestMethod.POST/*,
+            value = {"/userFigQuery"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String userFigQuery(HttpServletRequest _req)
@@ -744,18 +665,9 @@ public class UserCtrl {
         return objRet.toJSONString();
     }
 
-    /**
-     * 映射到userGdsQuery的Controller方法
-     * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
-     */
     @ResponseBody
     @RequestMapping(
-            value = {"/userGdsQuery"}, method = RequestMethod.POST/*,
+            value = {"/userGdsQuery"}/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String userGdsQuery(HttpServletRequest _req)
@@ -894,19 +806,15 @@ public class UserCtrl {
     }
 
     /**
-     * 映射到userRcmd的Controller方法
+     * 映射到rcmdPull的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/userRcmd"}, method = RequestMethod.POST
+            value = {"/userRcmd"}
     )
-    public String userRcmd(HttpServletRequest _req)
+    public String rcmdPull(HttpServletRequest _req)
     {
         JSONObject objReq = JSONProc.parseReq(_req);
         System.out.println(objReq.toJSONString());
@@ -990,11 +898,7 @@ public class UserCtrl {
     /**
      * 映射到loginRecgBio的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @RequestMapping(value = "/loginRecgBio", method = RequestMethod.POST)
     @ResponseBody
@@ -1028,11 +932,7 @@ public class UserCtrl {
     /**
      * 映射到signUpRecgBio的Controller方法
      * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
+     * @author why
      */
     @RequestMapping(
             value = {"/signUpRecgBio"}, method = RequestMethod.POST
@@ -1088,17 +988,8 @@ public class UserCtrl {
         return objRet.toJSONString();
     }
 
-    /**
-     * 映射到addOrder的Controller方法
-     * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
-     */
     @RequestMapping(
-            value = {"/addOrder"}, method = RequestMethod.POST
+            value = {"/addOrder"}
     )
     public String addOrder(HttpServletRequest _req)
     {
@@ -1131,17 +1022,8 @@ public class UserCtrl {
         return objRet.toJSONString();
     }
 
-    /**
-     * 映射到pullOrderByUser的Controller方法
-     * @return 请求响应String
-     * @author 王浩宇
-     *
-     *
-     *
-     * * @date 9.1
-     */
     @RequestMapping(
-            value = {"/pullOrderByUser"}, method = RequestMethod.POST
+            value = {"/pullOrderByUser"}
     )
     public String pullOrderByUser(HttpServletRequest _req)
     {
@@ -1195,24 +1077,23 @@ public class UserCtrl {
         return objRet.toJSONString();
     }
 
-//    @Autowired
-//    private BatchLauncher m_batchLauncher;
+    @Autowired
+    private BatchLauncher m_batchLauncher;
 
-//    /**
-//     * 映射到delRecgBio的Controller方法
-//     * @return 请求响应String
-//     * @author 王浩宇
-//     * @date 9.1
-//     */
-//    @RequestMapping(
-//            value = {"/delRecgBio"}, method = RequestMethod.POST
-//    )
-//    public String delRecgBio(HttpServletRequest _req) throws Exception
-//    {
-//        System.out.println("start data extract");
-//        m_batchLauncher.testRun();
-//        System.out.println("end data extract");
-//        //TODO:删除人脸信息的控制器逻辑。
-//        return "undefined";
-//    }
+    /**
+     * 映射到delRecgBio的Controller方法
+     * @return 请求响应String
+     * @author why
+     */
+    @RequestMapping(
+            value = {"/delRecgBio"}
+    )
+    public String delRecgBio(HttpServletRequest _req) throws Exception
+    {
+        System.out.println("start data extract");
+        m_batchLauncher.testRun();
+        System.out.println("end data extract");
+        //TODO:删除人脸信息的控制器逻辑。
+        return "undefined";
+    }
 }

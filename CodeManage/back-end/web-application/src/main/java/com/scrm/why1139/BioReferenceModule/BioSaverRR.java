@@ -3,9 +3,8 @@ package com.scrm.why1139.BioReferenceModule;
 import java.util.List;
 
 /**
- * @deprecated 使用百度API的用户人脸信息的存取的边界类，现已被自行编写的人脸识别模块取代。
- * @author 王浩宇
- * @date 9.1
+ * 用户人脸信息的存取的边界类
+ * @author why
  */
 public class BioSaverRR
 {
@@ -15,7 +14,7 @@ public class BioSaverRR
      * @param _strUserid in 用户ID
      * @param _dbAcc in 人脸信息的精确度要求
      * @return 存储结果是否达到精确度要求的boolean值
-     * @author 王浩宇
+     * @author why
      */
     public static boolean saveUser(List<String> _strlstBase64,String _strUserid,double _dbAcc)
     {
@@ -34,7 +33,7 @@ public class BioSaverRR
      * 删除用户，同时删除其名下的所有存储的人脸信息
      * @param _strUserid in 用户ID
      * @return 删除成功性的boolean值
-     * @author 王浩宇
+     * @author why
      */
     public static boolean delUser(String _strUserid)
     {

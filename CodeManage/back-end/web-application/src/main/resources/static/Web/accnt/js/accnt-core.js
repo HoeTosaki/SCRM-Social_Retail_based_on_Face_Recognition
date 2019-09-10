@@ -97,13 +97,13 @@ var v_order = new Vue({
  * 页面元素的回调方法
  */
 function onOrderFinished() {
-    // alert('finish');
+    alert('finish');
     summitOrder();
     v_order.btn_chs = 'next';
 }
 
 function onOrderNext() {
-    // alert('next');
+    alert('next');
     pullOrder();
     v_order.btn_chs = 'finish';
 }
@@ -111,15 +111,11 @@ function onOrderNext() {
 function onChsUser(id, name) {
     recg.userid = id;
     recg.username = name;
-    counter.userid = id;
-    counter.username = name;
-    recommend.userid=id;
-    recommend.username=name;
     recg.stat = 'success';
 }
 
 function onClickRecg() {
-    // alert("post recgBio");
+    alert("post recgBio");
     var videoEle = document.querySelector('video');
     canvas.getContext('2d').drawImage(videoEle, 0, 0, canvas.width, canvas.height);
 
@@ -129,11 +125,11 @@ function onClickRecg() {
     recg.recgImgData = data;
     // $.post('recorder/target/sc',{'sj':data});
 
-    // alert(recg.recgImgData);
+    alert(recg.recgImgData);
     $.post("loginRecgBio", {
         imgrecg: recg.recgImgData
     }, function (result) {
-        // alert(result);
+        alert(result);
         var obj = JSON.parse(result);
         if (obj["stat"] != "success") {
             recg.hints = "人脸信息识别失败，请重试。";
@@ -153,7 +149,7 @@ function onClickRecg() {
 }
 
 function onClickSignUp() {
-    // alert("sign up");
+    alert("sign up");
     recg.signImgData = [];
     document.intervalToru = setInterval(()=>{
         if(recg.signImgData.length<3)
@@ -163,16 +159,16 @@ function onClickSignUp() {
             var imgData = document.getElementById("canvas").toDataURL("image/png");
             var data = imgData.substr(22);
             recg.signImgData.push(data);
-            // alert('pass'+recg.signImgData.length);
+            alert('pass'+recg.signImgData.length);
         }
         else
         {
             clearInterval(document.intervalToru);
-            // alert('start post');
+            alert('start post');
             $.post("signUpRecgBio", {
                 args: recg.signImgData
             }, function (result) {
-                // alert(result);
+                alert(result);
                 var obj = JSON.parse(result);
                 if (obj["stat"] == "invalid") {
                     recg.hints = "注册失败！请重新录入人脸";
@@ -185,7 +181,7 @@ function onClickSignUp() {
                 refreshCnter();
                 refreshRcmd();
             });
-            // alert('start post');
+            alert('start post');
         }
     },100);
 
@@ -195,24 +191,19 @@ function onClickSignUp() {
 
 $("#recg-input").keyup(function (e) {
     if (e.keyCode == 13) {
-        // alert("confirm userid verification.");
+        alert("confirm userid verification.");
         $.post("accntRecgMan", {
             userid: recg.inputuserid
         }, function (result) {
-            // alert(result);
+            alert(result);
             var obj = JSON.parse(result);
             if (obj["stat"] == "invalid") {
                 recg.hints = "用户id信息识别失败，请重试。";
             } else {
                 recg.hints = "用户识别完成,请核对是否正确";
-                recg.user_lst = [];
-                var objUser = new Object();
-                objUser.userid = obj.userid;
-                objUser.username = obj.username;
-                recg.user_lst.push(objUser);
-                // recg.userid = obj["userid"];
-                // recg.username = obj["username"];
-                // recg.stat = obj["stat"];
+                recg.userid = obj["userid"];
+                recg.username = obj["username"];
+                recg.stat = obj["stat"];
             }
             refreshCnter();
             refreshRcmd();
@@ -223,12 +214,8 @@ $("#recg-input").keyup(function (e) {
 
 
 $("#counter-btnPay").click(function (e) {
-    // alert("post counterPay");
-    if(counter.userid == '' || counter.userid == undefined)
-    {
-        counter.hints = "当前用户不存在，请重新验证。";
-        return;
-    }
+    alert("post counterPay");
+
     // var lstUserID = [];
     // var lstAccntID = [];
     // var lstGoodsID = [];
@@ -265,22 +252,15 @@ $("#counter-btnPay").click(function (e) {
 
 $("#counter-input").keyup(function (e) {
     if (e.keyCode == 13) {
-        // alert("confirm goodid request");
-        lst = counter.goodsidCmd.split(";");
-        if(lst.length != 2 || Number(lst[0]) == undefined || Number(lst[1]) == undefined || Number(lst[0]) < 0 ||Number(lst[1]) < 0)
-        {
-            counter.hints = "当前查询规则不合法，请重试。"
-            return;
-        }
-        alert(Number(lst[0]));
+        alert("confirm goodid request");
         $.post("accntGdsQuery", {
             goodsid: counter.goodsidCmd.split(";")[0],
             goodscnt: counter.goodsidCmd.split(";")[1]
         }, function (result) {
-            // alert(result);
+            alert(result);
             var obj = JSON.parse(result);
             if (obj["stat"] == "invalid") {
-                counter.hints = "当前商品不存在或库存不足，请重试。";
+                alert("当前商品不存在或库存不足，请重试。");
             } else {
                 var ind = counter.buylist.length + 1;
                 var newbuy = {
@@ -322,15 +302,11 @@ $("#counter-input").keyup(function (e) {
 
 
 $("#recommend-btn").click(function (e) {
-    // alert("post rcmd");
-    if(recommend.userid == "" ||recommend.userid == undefined) {
-        alert('当前用户不存在。')
-        return;
-    }
+    alert("post rcmd");
     $.post("accntRcmd", {
         userid: recommend.userid
     }, function (result) {
-        // alert(result);
+        alert(result);
         var obj = JSON.parse(result);
         if (obj["stat"] == "invalid") {
             alert("当前用户不存在或无可推荐，请重试。");
@@ -376,11 +352,11 @@ var refreshRcmd = function () {
  */
 
 function pullOrder() {
-    // alert('pullorder');
+    alert('pullorder');
     $.post("pullOrder", {
         user_id: "null"
     }, function (result) {
-        // alert(result);
+        alert(result);
         /**
          * obj:
          *      stat
@@ -396,6 +372,7 @@ function pullOrder() {
             v_order.order_lst = [];
             v_order.user_id = '';
         } else {
+
             for (var i = 0; i < obj.order_lst.length; ++i) {
                 var objOrder = new Object();
                 objOrder.img = obj.order_lst[i].gds.img;
@@ -410,23 +387,18 @@ function pullOrder() {
             };
         }
     });
-    // alert('pullorder end');
+    alert('pullorder end');
 }
 
 function summitOrder() {
-    // alert('summit order');
-    if(v_order.user_id == "" || v_order.user_id == undefined)
-    {
-        v_order.hints = "当前用户不存在，请重新拉取订单。";
-        return;
-    }
+    alert('summit order');
     for (var i = 0; i < v_order.order_lst.length; ++i) {
         $.post("summitOrder", {
             user_id: v_order.user_id,
             order_id: v_order.order_lst[i].order_id,
             mngr_id: document.mngrid
         }, function (result) {
-            // alert(result);
+            alert(result);
             /**
              * obj:
              *      stat
@@ -446,6 +418,6 @@ function summitOrder() {
     }
     v_order.order_lst = [];
     v_order.user_id = '';
-    // alert('summit order end');
+    alert('summit order end');
 
 }
