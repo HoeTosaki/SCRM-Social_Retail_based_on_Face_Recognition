@@ -8,32 +8,45 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+/**
+ * 用于执行ETL的基础控制类
+ * @author 王浩宇
+ * @date 9.5
+ */
 @Repository
 public class DAMConfig
 {
     private boolean m_isDBAccess = false;
 
+    /**
+     * 启动数据库的访问，并生成CSV数据
+     */
     public void enableDBAccess()
     {
         m_isDBAccess = true;
         moveToAnal();
     }
 
+    /**
+     * 终止访问
+     */
     public void disableDBAccess()
     {
         m_isDBAccess = false;
     }
 
+    /**
+     * 查询可访问状态
+     * @return 逻辑值
+     */
     public boolean isDBAccess()
     {
         return m_isDBAccess;
     }
 
-    public void exitCompul()
-    {
-
-    }
-
+    /**
+     * 执行CSV数据的转移
+     */
     private void moveToAnal()
     {
         Process proc = execPy("Carrier.py");
@@ -52,13 +65,13 @@ public class DAMConfig
         }
     }
 
-    public static void main(String s[])
-    {
-        DAMConfig dam = new DAMConfig();
-        dam.enableDBAccess();
 
-    }
-
+    /**
+     * 执行python脚本
+     * @param _strFilename in 文件名
+     * @param args 额外参数
+     * @return 回执Process对象
+     */
     public Process execPy(String _strFilename,String... args)
     {
         File curPathFile = new File("");
@@ -86,6 +99,10 @@ public class DAMConfig
         return proc;
     }
 
+    /**
+     * 获取当前路径
+     * @return String
+     */
     private String getCurPath()
     {
         File curPathFile = new File("");
@@ -96,6 +113,13 @@ public class DAMConfig
             e.printStackTrace();
         }
         return strCurPath;
+    }
+
+    public static void main(String s[])
+    {
+        DAMConfig dam = new DAMConfig();
+        dam.enableDBAccess();
+
     }
 
 }

@@ -1,3 +1,8 @@
+###
+# 执行基于用户协同过滤的预测脚本
+# @author 王浩宇
+#date：8.30
+
 import numpy as np
 import pandas as pd
 import sys
@@ -5,7 +10,7 @@ import warnings
 
 warnings.filterwarnings("ignore", category=Warning)
 
-
+#根据用户ID获取相思用户列表
 def get_sim_user_lst(userid):
     sim_user = np.load(sys.argv[1] + "/py/sim_user.npy", allow_pickle=True)
     sim_user_lst = np.load(sys.argv[1] + "/py/sim_user_lst.npy", allow_pickle=True)
@@ -25,6 +30,7 @@ def get_sim_user_lst(userid):
 
 #     print(user_arr_new)
 
+#根据用户ID获取商品推荐
 def get_rcmd(userid):
     user_vec = np.load(sys.argv[1] + "/py/sim_user_vec.npy", allow_pickle=True)
     userid = userid.astype(int)
@@ -56,6 +62,7 @@ def get_rcmd(userid):
 #     user_vec.sum(axis=0)
 #     goods
 
+#执行用户推荐
 def doUserRcmd(userid):
     sim_user_lst = get_sim_user_lst(userid)
     if sim_user_lst == []:
@@ -65,7 +72,7 @@ def doUserRcmd(userid):
     # print("得到推荐的商品id在列表中的位置(升序)：",ret)
     return ret
 
-
+#通过类型获取商品推荐
 def doUserRcmdByType(userid, gdstype):
     goods_field_names = ['goods_id', 'goods_type', 'goods_name', 'goods_price', 'goods_cnt']
     t_goods = pd.read_csv(sys.argv[1] + "/py/anal_data/t_goods.csv", names=goods_field_names)

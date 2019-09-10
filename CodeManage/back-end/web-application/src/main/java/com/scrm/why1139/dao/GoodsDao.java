@@ -11,7 +11,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 用于持久化商品信息的Dao类。
- * @author why
+ * @author 王浩宇
+ * @date 9.2
  */
 @Repository
 public class GoodsDao
@@ -21,7 +22,8 @@ public class GoodsDao
     /**
      * setter注入
      * @param _jdbcTemp in
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     @Autowired
     public void setJdbcTemp(JdbcTemplate _jdbcTemp)
@@ -34,7 +36,8 @@ public class GoodsDao
      * 通过GoodsID获取匹配的商品数量
      * @param _nGoodsID in 商品ID
      * @return 商品数量
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public int getMatchCountByID(int _nGoodsID)
     {
@@ -46,7 +49,8 @@ public class GoodsDao
      * 通过GoodsID获取匹配的Goods对象
      * @param _nGoodsID in 商品ID
      * @return Goods对象
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public Goods findGoodsByGoodsID(int _nGoodsID)
     {
@@ -65,6 +69,11 @@ public class GoodsDao
         return goods;
     }
 
+    /**
+     * 通过商品名查找指定商品
+     * @param _strGoodsName in 商品名
+     * @return 商品Goods对象
+     */
     public Goods findGoodsByName(String _strGoodsName)
     {
         Goods goods = new Goods();
@@ -82,6 +91,12 @@ public class GoodsDao
         return goods;
     }
 
+    /**
+     * 通过模糊匹配查找商品
+     * @param _strFuzzy in 模糊匹配字段
+     * @param _nLimit in 返回列表长度限制
+     * @return Goods列表
+     */
     public List<Goods> findGoodsByFuzzy(String _strFuzzy,int _nLimit)
     {
         System.out.println("this is fuzzy query!");
@@ -117,18 +132,20 @@ public class GoodsDao
     /**
      * 更新商品信息，新记录将以update形式更新，用于修改已有商品的信息。
      * @param _goods in 待更新的Goods对象，遵循GoodsID readonly的编程假设。
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public void updateGoods(Goods _goods)
     {
-        m_jdbcTemp.update("UPDATE t_goods SET goods_name = ? , goods_type = ? , goods_price = ? , goods_desc = ? , goods_cnt = ? , goods_pic WHERE goods_id = ? ",
-                new Object[]{_goods.getGoodsName(), _goods.getGoodsType(), _goods.getPrice(), _goods.getGoodsDesc(), _goods.getGoodsCnt(), _goods.getGoodsID(),_goods.getPic()});
+        m_jdbcTemp.update("UPDATE t_goods SET goods_name = ? , goods_type = ? , goods_price = ? , goods_desc = ? , goods_cnt = ? , goods_pic = ? WHERE goods_id = ? ",
+                new Object[]{_goods.getGoodsName(), _goods.getGoodsType(), _goods.getPrice(), _goods.getGoodsDesc(), _goods.getGoodsCnt(),_goods.getPic(),_goods.getGoodsID()});
     }
 
     /**
      * 更新商品信息，新记录将以insert形式更新，用于添加新类型的商品。
      * @param _goods in 待更新的Goods对象，遵循GoodsID unique的编程假设。
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public void insertGoods(Goods _goods)
     {
@@ -142,7 +159,8 @@ public class GoodsDao
      * 获取全部Goods的列表对象。
      * @param _nLimit in 最大可查询的记录数，当数据库内存储记录数大于该参数值时才有效。
      * @return Goods列表
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public List<Goods> getGoodsAll(int _nLimit)
     {
@@ -175,7 +193,8 @@ public class GoodsDao
      * @param _strGoodsType in 表示商品类型的字符串
      * @param _nLimit in 最大可查询的记录数，当数据库内存储记录数大于该参数值时才有效。
      * @return Goods列表
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public List<Goods> getGoodsByClass(String _strGoodsType,int _nLimit)
     {
@@ -202,6 +221,10 @@ public class GoodsDao
         return lstGds;
     }
 
+    /**
+     * 通过商品ID删除商品
+     * @param nGoodsID in 商品ID
+     */
     public void delGoodsByGoodsID(int nGoodsID)
     {
         m_jdbcTemp.update("DELETE FROM t_goods WHERE goods_id = ?",new Object[]{nGoodsID});

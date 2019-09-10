@@ -7,6 +7,7 @@ import com.scrm.why1139.domain.Mngr;
 import com.scrm.why1139.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,11 +18,22 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * 面向管理员的控制器类
+ * @author 王浩宇
+ * @date 9.1
+ */
 @RestController
 public class AdminCtrl {
     @Autowired
     private AdminService m_adminService;
 
+    /**
+     * 映射到admin界面的Controller方法
+     * @return 页面模型
+     * @author 王浩宇
+     * @date 9.1
+     */
     @RequestMapping(
             value = {"/admin"}
     )
@@ -30,9 +42,15 @@ public class AdminCtrl {
         return new ModelAndView("Web/admin/html/admin.html");
     }
 
+    /**
+     * 映射到adminValQuery的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/adminValQuery"}/*,
+            value = {"/adminValQuery"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String adminValQuery(HttpServletRequest _req)
@@ -158,9 +176,15 @@ public class AdminCtrl {
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到adminFigQuery的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/adminFigQuery"}/*,
+            value = {"/adminFigQuery"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String adminFigQuery(HttpServletRequest _req)
@@ -290,9 +314,15 @@ public class AdminCtrl {
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到goodsAnalPull的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/goodsAnalPull"}/*,
+            value = {"/goodsAnalPull"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String goodsAnalPull(HttpServletRequest _req)
@@ -348,9 +378,15 @@ public class AdminCtrl {
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到accntCntPullFig的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/accntCntPullFig"}/*,
+            value = {"/accntCntPullFig"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String accntCntPullFig(HttpServletRequest _req)
@@ -381,13 +417,14 @@ public class AdminCtrl {
     }
 
     /**
-     * 映射到mngrUpdate的Controller方法
+     * 映射到gdsUpdate的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/gdsUpdate"}/*,
+            value = {"/gdsUpdate"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String gdsUpdate(HttpServletRequest _req)
@@ -423,13 +460,14 @@ public class AdminCtrl {
     }
 
     /**
-     * 映射到mngrDel的Controller方法
+     * 映射到gdsDel的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/gdsDel"}/*,
+            value = {"/gdsDel"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String gdsDel(HttpServletRequest _req)
@@ -459,13 +497,14 @@ public class AdminCtrl {
     }
 
     /**
-     * 映射到mngrAdd的Controller方法
+     * 映射到gdsAdd的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/gdsAdd"}/*,
+            value = {"/gdsAdd"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String gdsAdd(HttpServletRequest _req)
@@ -498,9 +537,15 @@ public class AdminCtrl {
         return obj.toJSONString();
     }
 
+    /**
+     * 映射到gdsPullPre的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/gdsPullPre"}/*,
+            value = {"/gdsPullPre"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String gdsPullPre(HttpServletRequest _req)
@@ -538,11 +583,12 @@ public class AdminCtrl {
     /**
      * 映射到mngrVerify的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/mngrVerify"}/*,
+            value = {"/mngrVerify"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String mngrVerify(HttpServletRequest _req)
@@ -594,11 +640,12 @@ public class AdminCtrl {
     /**
      * 映射到mngrUpdate的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/mngrUpdate"}/*,
+            value = {"/mngrUpdate"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String mngrUpdate(HttpServletRequest _req)
@@ -635,11 +682,12 @@ public class AdminCtrl {
     /**
      * 映射到mngrDel的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/mngrDel"}/*,
+            value = {"/mngrDel"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String mngrDel(HttpServletRequest _req)
@@ -672,11 +720,12 @@ public class AdminCtrl {
     /**
      * 映射到mngrAdd的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/mngrAdd"}/*,
+            value = {"/mngrAdd"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String mngrAdd(HttpServletRequest _req)
@@ -702,9 +751,15 @@ public class AdminCtrl {
         return obj.toJSONString();
     }
 
+    /**
+     * 映射到mngrPullPre的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/mngrPullPre"}/*,
+            value = {"/mngrPullPre"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String mngrPullPre(HttpServletRequest _req)
@@ -729,9 +784,15 @@ public class AdminCtrl {
         return obj.toJSONString();
     }
 
+    /**
+     * 映射到adminUpdate的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/adminUpdate"}/*,
+            value = {"/adminUpdate"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String adminUpdate(HttpServletRequest _req)
@@ -762,9 +823,15 @@ public class AdminCtrl {
         return obj.toJSONString();
     }
 
+    /**
+     * 映射到adminDataModeling的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/adminDataModeling"}/*,
+            value = {"/adminDataModeling"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String adminDataModeling(HttpServletRequest _req)
@@ -788,9 +855,15 @@ public class AdminCtrl {
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到adminDataExtract的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/adminDataExtract"}/*,
+            value = {"/adminDataExtract"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String adminDataExtract(HttpServletRequest _req)
@@ -813,9 +886,15 @@ public class AdminCtrl {
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到adminDataTransfer的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/adminDataTransfer"}/*,
+            value = {"/adminDataTransfer"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String adminDataTransfer(HttpServletRequest _req)
@@ -838,9 +917,15 @@ public class AdminCtrl {
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到adminMonitorBaseInfo的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/adminMonitorBaseInfo"}/*,
+            value = {"/adminMonitorBaseInfo"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String adminMonitorBaseInfo(HttpServletRequest _req)
@@ -879,9 +964,15 @@ public class AdminCtrl {
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到adminMonitorMach的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/adminMonitorMach"}/*,
+            value = {"/adminMonitorMach"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String adminMonitorMach(HttpServletRequest _req)
@@ -920,9 +1011,15 @@ public class AdminCtrl {
         return objRet.toJSONString();
     }
 
+    /**
+     * 映射到adminMonitorFigy的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @ResponseBody
     @RequestMapping(
-            value = {"/adminMonitorFig"}/*,
+            value = {"/adminMonitorFig"}, method = RequestMethod.POST/*,
             produces = "application/json;charset=UTF-8"*/
     )
     public String adminMonitorFig(HttpServletRequest _req)

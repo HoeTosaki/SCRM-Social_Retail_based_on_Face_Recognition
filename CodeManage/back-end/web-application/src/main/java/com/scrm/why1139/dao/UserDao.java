@@ -10,7 +10,8 @@ import java.util.Optional;
 
 /**
  * 用于持久化User信息的Dao类。
- * @author why
+ * @author 王浩宇
+ * @date 8.29
  */
 @Repository
 public class UserDao
@@ -20,7 +21,8 @@ public class UserDao
     /**
      * setter注入
      * @param _jdbcTemp in
-     * @author why
+     * @author 王浩宇
+     * @date 8.29
      */
     @Autowired
     public void setJdbcTemp(JdbcTemplate _jdbcTemp)
@@ -34,7 +36,8 @@ public class UserDao
      * @param _strUserID in 表示UserID的字符串
      * @param _strPassword in 表示密码的字符串
      * @return 匹配的结果，匹配失败返回0
-     * @author why
+     * @author 王浩宇
+     * @date 8.29
      */
     public int getMatchCount(String _strUserID,String _strPassword)
     {
@@ -46,7 +49,8 @@ public class UserDao
      * 通过业务员ID获取User对象。
      * @param _strUserID 表示UserID的字符串
      * @return User对象
-     * @author why
+     * @author 王浩宇
+     * @date 8.29
      */
     public User findUserByUserID(String _strUserID)
     {
@@ -65,7 +69,8 @@ public class UserDao
     /**
      * 更新user信息，新记录将以update形式更新，用于修改已有用户的个人信息。
      * @param _user in 待更新的user对象，遵循userID readonly的编程假设。
-     * @author why
+     * @author 王浩宇
+     * @date 8.29
      */
     public void updateUser(User _user)
     {
@@ -73,17 +78,24 @@ public class UserDao
                 new Object[]{_user.getUserName(),_user.getPassword(),_user.getBioRef(),_user.getUserID()});
     }
 
+    /**
+     * 更新user信息，新记录将以update形式更新，用于修改已有用户的用户名。
+     * @param _user in 待更新的user对象。
+     * @param _strUserID in 新用户ID
+     * @author 王浩宇
+     * @date 8.29
+     */
     public void updateUser(User _user,String _strUserID)
     {
         m_jdbcTemp.update("UPDATE t_user SET user_name = ? , user_id = ? , password = ? , bio_ref = ? WHERE user_id = ? ",
                 new Object[]{_user.getUserName(),_strUserID,_user.getPassword(),_user.getBioRef(),_user.getUserID()});
     }
 
-
     /**
      * 更新user信息，新记录将以insert形式更新，用于添加新用户。
      * @param _user in 待更新的user对象，遵循userID unique的编程假设。
-     * @author why
+     * @author 王浩宇
+     * @date 8.29
      */
     public void insertUser(User _user)
     {

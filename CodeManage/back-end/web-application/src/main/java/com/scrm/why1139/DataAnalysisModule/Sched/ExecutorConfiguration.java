@@ -6,10 +6,15 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
  * 配置TaskExecutor
+ * @author why
  */
 @Configuration
 public class ExecutorConfiguration {
 
+    /**
+     * 执行线程池配置
+     * @return ThreadPoolTaskExecutor
+     */
     @Bean
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();

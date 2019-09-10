@@ -25,10 +25,10 @@
             </div>
             <div id="recg" class="bl-content">
                 <div class="content-title">
-                    <h2>{{hints}} 当前用户:{{userid}}</h2>
+                    <h2>{{hints}}当前用户:{{userid}}</h2>
                 </div>
                 <div class="content-interval"> </div>
-                <div class="content-left">
+                <div class="content-left" style="min-height: 117%">
                     <input id="recg-input" v-model="inputuserid" type="text" placeholder="无人脸信息?在这里手动输入用户名（ID）">
                     <!-- <p>当前用户识别状态：{{stat}}</p>
                     <p>用户真实姓名：{{username}}</p>
@@ -40,18 +40,6 @@
                                 <p>确认</p>
                             </button>
                         </li>
-                        <!-- <li>
-                            <p>用户名:{{}} 真实姓名{{}}</p>
-                            <button>
-                                <p>确认</p>
-                            </button>
-                        </li>
-                        <li>
-                            <p>用户名:{{}} 真实姓名{{}}</p>
-                            <button>
-                                <p>确认</p>
-                            </button>
-                        </li> -->
                     </ul>
                 </div>
                 <div class="content-right">
@@ -62,7 +50,7 @@
                     <button class="btn-confirm" onclick="onClickSignUp()">
                         <p>注册</p>
                     </button>
-                    <video src="" width="230" height="230"></video>
+                    <video src="" width="230" height="230" style="margin: 23% auto;"></video>
                     <canvas id="canvas" width="230" height="230"></canvas>
                     <!-- <img src="Web/accnt/img/qrcode.jpg" alt="空信息"> -->
                 </div>
@@ -79,7 +67,7 @@
                     <h2>当前客户认证身份：{{userid}} -- {{username}}</h2>
                 </div>
                 <div class="content-interval"> </div>
-                <div class="content-left">
+                <div class="content-left" style="overflow-y: scroll; height: 88%">
                     <input v-model="goodsidCmd" id="counter-input" type="text" placeholder="请输入要购买的商品（ID;个数）：">
                     <p>
                     <ul id="bl-work-items">
@@ -97,12 +85,14 @@
                 </div>
                 <div class="content-right">
                     <p>您的购物统计：</p>
-                    <button id="counter-btnSum" class="btn-confirm" @click="countSumPrc">
-                        <p>点按以结算</p>
-                    </button>
-                    <button id="counter-btnPay" class="btn-confirm">
-                        <p>完成支付</p>
-                    </button>
+                    <div style="height: 50px; margin-bottom: 15px;">
+                        <button id="counter-btnSum" class="btn-confirm" @click="countSumPrc">
+                            <p>结算</p>
+                        </button>
+                        <button id="counter-btnPay" class="btn-confirm">
+                            <p>完成支付</p>
+                        </button>
+                    </div>
                     <p>{{hints}}</p>
                     <p>当前商品总价为：{{sumprc}}</p>
                     <p>请扫描二维码付款：</p>

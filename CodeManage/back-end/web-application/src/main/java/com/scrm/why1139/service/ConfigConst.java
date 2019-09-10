@@ -2,7 +2,8 @@ package com.scrm.why1139.service;
 
 /**
  * 用于配置各类服务的公有常量类。
- * @author why
+ * @author 王浩宇
+ * @date 9.5
  */
 public class ConfigConst
 {

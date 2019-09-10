@@ -9,8 +9,10 @@ import com.scrm.why1139.domain.Mngr;
 import com.scrm.why1139.domain.Order;
 import com.scrm.why1139.domain.User;
 import com.scrm.why1139.service.AccntService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * 面向收银员的Controller类
+ * @author 王浩宇
+ * @date 9.1
+ */
 @RestController
 public class AccntCtrl {
     @Autowired
@@ -26,7 +33,8 @@ public class AccntCtrl {
     /**
      * 映射到login-mngr界面的Controller方法
      * @return 页面模型
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @RequestMapping(
             value = {"/loginMngr"}
@@ -39,7 +47,8 @@ public class AccntCtrl {
     /**
      * 映射到accnt界面的Controller方法
      * @return 页面模型
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @RequestMapping(
             value = {"/accnt"}
@@ -52,11 +61,12 @@ public class AccntCtrl {
     /**
      * 映射到accntRecgMan的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/accntRecgMan"}
+            value = {"/accntRecgMan"}, method = RequestMethod.POST
     )
     public String accntRecgMan(HttpServletRequest _req)
     {
@@ -85,11 +95,12 @@ public class AccntCtrl {
     /**
      * 映射到accntPay的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/accntPay"}
+            value = {"/accntPay"}, method = RequestMethod.POST
     )
     public String pay(HttpServletRequest _req)
     {
@@ -124,39 +135,50 @@ public class AccntCtrl {
     /**
      * 映射到accntGdsQuery的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/accntGdsQuery"}
+            value = {"/accntGdsQuery"}, method = RequestMethod.POST
     )
     public String goodsQuery(HttpServletRequest _req)
     {
         JSONObject objReq = JSONProc.parseReq(_req);
-        int nGoodsID = Integer.parseInt((String)(objReq.getJSONArray("goodsid").get(0)));
-        int nGoodsCnt = Integer.parseInt((String)(objReq.getJSONArray("goodscnt").get(0)));
-        Goods goods = m_accntService.findGoodsByGoodsID(nGoodsID);
         JSONObject objRet = new JSONObject();
-        if(goods == null ||goods.getGoodsID() == 0)
+
+        if(!StringUtils.isNumeric((String)(objReq.getJSONArray("goodsid").get(0))) || !StringUtils.isNumeric((String)(objReq.getJSONArray("goodscnt").get(0))))
         {
             objRet.put("stat","invalid");
         }
         else
         {
-            objRet.put("stat","success");
-            objRet.put("name",goods.getGoodsName());
-            objRet.put("id",goods.getGoodsID());
-            objRet.put("img",goods.getPic());
-            objRet.put("prc",goods.getPrice());
-            objRet.put("desc",goods.getGoodsDesc());
-            objRet.put("cnt",nGoodsCnt);
+            int nGoodsID = Integer.parseInt((String)(objReq.getJSONArray("goodsid").get(0)));
+            int nGoodsCnt = Integer.parseInt((String)(objReq.getJSONArray("goodscnt").get(0)));
+            Goods goods = m_accntService.findGoodsByGoodsID(nGoodsID);
+            if(goods == null ||goods.getGoodsID() == 0)
+            {
+                objRet.put("stat","invalid");
+            }
+            else
+            {
+                objRet.put("stat","success");
+                objRet.put("name",goods.getGoodsName());
+                objRet.put("id",goods.getGoodsID());
+                objRet.put("img",goods.getPic());
+                objRet.put("prc",goods.getPrice());
+                objRet.put("desc",goods.getGoodsDesc());
+                objRet.put("cnt",nGoodsCnt);
 //            objRet.put("type",goods.getGoodsType());
 //            //TODO:Oach！！ i forgot to add this in html...su ma a
+            }
+            System.out.println("recv:"+nGoodsID);
+            System.out.println("recv:"+nGoodsCnt);
+            System.out.println("recv:"+goods);
+            System.out.println("recv:"+objReq.toJSONString());
+
         }
-        System.out.println("recv:"+nGoodsID);
-        System.out.println("recv:"+nGoodsCnt);
-        System.out.println("recv:"+goods);
-        System.out.println("recv:"+objReq.toJSONString());
+
         System.out.println("send:"+objRet.toJSONString());
         return objRet.toJSONString();
     }
@@ -164,11 +186,12 @@ public class AccntCtrl {
     /**
      * 映射到accntRcmd的Controller方法
      * @return 请求响应String
-     * @author why
+     * @author 王浩宇
+     * @date 9.1
      */
     @ResponseBody
     @RequestMapping(
-            value = {"/accntRcmd"}
+            value = {"/accntRcmd"}, method = RequestMethod.POST
     )
     public String accntRcmd(HttpServletRequest _req)
     {
@@ -205,8 +228,14 @@ public class AccntCtrl {
         return arrRet.toJSONString();
     }
 
+    /**
+     * 映射到pullOrder的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @RequestMapping(
-            value = {"/pullOrder"}
+            value = {"/pullOrder"}, method = RequestMethod.POST
     )
     public String pullOrder(HttpServletRequest _req)
     {
@@ -259,8 +288,15 @@ public class AccntCtrl {
         System.out.println("控制器输出:\t"+objRet.toJSONString());
         return objRet.toJSONString();
     }
+
+    /**
+     * 映射到summitOrder的Controller方法
+     * @return 请求响应String
+     * @author 王浩宇
+     * @date 9.1
+     */
     @RequestMapping(
-            value = {"/summitOrder"}
+            value = {"/summitOrder"}, method = RequestMethod.POST
     )
     public String summitOrder(HttpServletRequest _req)
     {
@@ -288,6 +324,7 @@ public class AccntCtrl {
         {
             objRet.put("stat","success");
             m_accntService.addBuyLog(mngr.getMngrID(),user.getUserID(),order.getGoodsID(),order.getOrderCnt());
+            m_accntService.removeOrderByOrderIDForAccnt(order.getOrderID());
         }
         System.out.println("控制器输出:\t"+objRet.toJSONString());
         return objRet.toJSONString();
