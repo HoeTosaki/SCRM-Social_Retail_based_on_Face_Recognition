@@ -29,7 +29,7 @@ time_offset = dict(week=timedelta(7), month=timedelta(30))
 nCmd = int(sys.argv[2])
 
 # 数据预处理
-goods_field_names = ['goods_id', 'goods_type', 'goods_name', 'goods_price', 'goods_cnt']
+goods_field_names = ['goods_id', 'goods_type', 'goods_price', 'goods_cnt']
 all_goods_info_from_csv = pd.read_csv(sys.argv[1] + "/py/anal_data/t_goods.csv", names=goods_field_names)
 all_goods_info_from_csv = all_goods_info_from_csv.set_index('goods_id')
 
