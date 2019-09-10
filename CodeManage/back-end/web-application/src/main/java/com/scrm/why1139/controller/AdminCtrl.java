@@ -859,9 +859,9 @@ public class AdminCtrl {
             List<String> info = new CopyOnWriteArrayList<>();
             if(m_adminService.monitorBaseInfo(info))
             {
-                StringBuffer sb = new StringBuffer();
-                info.stream().map(str->"ww$"+str+"$ww").forEachOrdered(sb::append);
-                System.out.println("base:\t"+sb.toString());
+//                StringBuffer sb = new StringBuffer();
+//                info.stream().map(str->"ww$"+str+"$ww").forEachOrdered(sb::append);
+//                System.out.println("base:\t"+sb.toString());
 
                 objRet.put("stat","success");
                 objRet.put("bt_time",info.get(0));
@@ -916,7 +916,7 @@ public class AdminCtrl {
                 objRet.put("stat","invalid");
             }
         }
-        System.out.println("ret:"+objRet.toJSONString());
+//        System.out.println("ret:"+objRet.toJSONString());
         return objRet.toJSONString();
     }
 

@@ -231,28 +231,28 @@ public class DataProcessor
                 for(int i = 0; i<5; i++)
                 {
                     line = br.readLine();
-                    System.out.println(line);
+//                    System.out.println(line);
                     _info.add(line);
                 }
             else if(_nCmd == 19)
                 for(int i = 0; i<3; i++)
                 {
                     line = br.readLine();
-                    System.out.println(line);
+//                    System.out.println(line);
                     _info.add(line);
                 }
             else if(_nCmd == 20)
                 for(int i = 0; i<3; i++)
                 {
                     line = br.readLine();
-                    System.out.println(line);
+//                    System.out.println(line);
                     _info.add(line);
                 }
             else if(_nCmd == 21)
                 for(int i = 0; i<2; i++)
                 {
                     line = br.readLine();
-                    System.out.println(line);
+//                    System.out.println(line);
                     _info.add(line);
                 }
             else
