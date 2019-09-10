@@ -5,7 +5,8 @@ import java.util.Optional;
 
 /**
  * 用于描述Mngr信息的Domain类。
- * @author why
+ * @author 王浩宇
+ * @date 9.4
  */
 public class Mngr implements Serializable
 {
@@ -17,7 +18,8 @@ public class Mngr implements Serializable
 
     /**
      * Mngr的默认构造函数
-     * @author why
+     * @author 王浩宇
+     * @date 9.4
      */
     public Mngr()
     {
@@ -29,7 +31,8 @@ public class Mngr implements Serializable
      * @param _nMngrType in Mngr类型
      * @param _strMngrID in MngrID
      * @param _strPassword in Mngr密码
-     * @author why
+     * @author 王浩宇
+     * @date 9.4
      */
     public Mngr(int _nMngrType, String _strMngrID, String _strPassword)
     {
@@ -46,7 +49,8 @@ public class Mngr implements Serializable
      * 2 - 收银员
      * 3 - 无权限用户
      * @return 表示Mngr类型的int值
-     * @author why
+     * @author 王浩宇
+     * @date 9.4
      */
     public int getMngrType()
     {
@@ -60,7 +64,8 @@ public class Mngr implements Serializable
      * 2 - 收银员
      * 3 - 无权限用户
      * @param _nMngrType in 表示Mngr类型的int值
-     * @author why
+     * @author 王浩宇
+     * @date 9.4
      */
     public void setMngrType(int _nMngrType)
     {
@@ -72,7 +77,8 @@ public class Mngr implements Serializable
     /**
      * 获取MngrID
      * @return MngrID
-     * @author why
+     * @author 王浩宇
+     * @date 9.4
      */
     public String getMngrID()
     {
@@ -82,7 +88,8 @@ public class Mngr implements Serializable
     /**
      * 设置MngrID
      * @param _MngrID in MngrID
-     * @author why
+     * @author 王浩宇
+     * @date 9.4
      */
     public void setMngrID(String _MngrID)
     {
@@ -94,7 +101,8 @@ public class Mngr implements Serializable
     /**
      * 获取Mngr密码
      * @return Mngr密码
-     * @author why
+     * @author 王浩宇
+     * @date 9.4
      */
     public String getPassword()
     {
@@ -104,7 +112,8 @@ public class Mngr implements Serializable
     /**
      * 设置Mngr密码
      * @param _strPassword in Mngr密码
-     * @author why
+     * @author 王浩宇
+     * @date 9.4
      */
     public void setPassword(String _strPassword)
     {
@@ -113,6 +122,10 @@ public class Mngr implements Serializable
 //        this.m_strPassword = Optional.ofNullable(_strPassword).orElseThrow();
     }
 
+    /**
+     * 判断当前对象是否为空
+     * @return 逻辑值
+     */
     public boolean isEmpty()
     {
         return m_isEmpty;

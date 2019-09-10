@@ -8,7 +8,8 @@ import java.util.List;
 
 /**
  * 面向Mngr的Service类。
- * @author why
+ * @author 王浩宇
+ * @date 9.2
  */
 @Service
 public class AccntService
@@ -25,7 +26,8 @@ public class AccntService
      * @param _strMngrID in MngrID
      * @param _strPassword in Mngr密码
      * @return 标志匹配结果的boolean值
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public boolean hasMatchMngr(String _strMngrID,String _strPassword)
     {
@@ -36,7 +38,8 @@ public class AccntService
      * 通过MngrID获取Mngr对象
      * @param _strMngrID in 表示MngrID的字符串
      * @return Mngr对象
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public Mngr findMngrByMngrID(String _strMngrID)
     {
@@ -47,18 +50,29 @@ public class AccntService
      * 通过GoodsID获取Goods对象
      * @param _nGoodsID in GoodsID
      * @return Goods对象
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public Goods findGoodsByGoodsID(int _nGoodsID)
     {
         return m_goodsService.findGoodsByGoodsID(_nGoodsID);
     }
 
+    /**
+     * 通过商品名查询商品
+     * @param _strGoodsName in 商品名
+     * @return Goods对象
+     */
     public Goods findGoodsByGoodsName(String _strGoodsName)
     {
         return m_goodsService.findGoodsByGoodsName(_strGoodsName);
     }
 
+    /**
+     * 通过商品类型查询商品
+     * @param _strGoodsType in 商品类型
+     * @return Goods列表
+     */
     public List<Goods> findGoodsByGoodsType(String _strGoodsType)
     {
         return m_goodsService.findGoodsByGoodsType(_strGoodsType);
@@ -69,7 +83,8 @@ public class AccntService
      * @param _strUserID in UserID
      * @param _strPassword in User密码
      * @return 标志匹配结果的boolean值
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public boolean hasMatchUser(String _strUserID,String _strPassword)
     {
@@ -81,7 +96,8 @@ public class AccntService
      * used for some bad circumstances where customers failed to provide bio info.
      * @param _strUserID in 表示UserID的字符串 userid,primary key in table t_user, which can deduce a unique user.
      * @return User对象
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public User findUserByUserID(String _strUserID)
     {
@@ -92,7 +108,8 @@ public class AccntService
      * 根据生物特征信息获取User对象
      * @param _btBioRef in BioRef
      * @return User对象
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public List<User> findUserByRecgBio(String _btBioRef)
     {
@@ -103,7 +120,8 @@ public class AccntService
      * 获取购物记录的list
      * @param _user in User对象
      * @return list对象
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public List<Buy> getBuyLogByUser(User _user)
     {
@@ -117,7 +135,8 @@ public class AccntService
      * @param _strUserID in UserID
      * @param _nGoodsID in GoodsID
      * @param _nCnt in Goods购买数量
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public void addBuyLog(String _strMngrID,String _strUserID,int _nGoodsID,int _nCnt)
     {
@@ -128,7 +147,8 @@ public class AccntService
      * 根据指定Goods类型查询商品
      * @param _strType in Goods类型
      * @return Goods的list对象
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public List<Goods> goodsQuery(String _strType)
     {
@@ -142,7 +162,8 @@ public class AccntService
      * @param _strAccntID in AccntID
      * @param _strPassword in 密码
      * @return 创建是否成功的boolean值
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public boolean creatNewAccnt(String _strAccntID,String _strPassword)
     {
@@ -153,30 +174,49 @@ public class AccntService
      * 获取商品推荐
      * @param _user in 当前User对象
      * @return Goods的list对象
-     * @author why
+     * @author 王浩宇
+     * @date 9.2
      */
     public List<Goods> getGoodsRcmdForUser(User _user)
     {
         return m_goodsService.getGoodsRcmdGeneralForUser(_user,0,ConfigConst.ACCNT_RCMD_LIMIT);
     }
 
+    /**
+     * 根据用户ID获取订单
+     * @param _strUserID 用户ID
+     * @return Order列表
+     */
     public List<Order> findOrderByUserID(String _strUserID)
     {
         return m_buyService.findOrderByUserID(_strUserID);
     }
 
+    /**
+     * 通过订单号获取用户订单
+     * @param _nOrderID in 订单号
+     * @return Order对象
+     */
     public Order findOrderByOrderID(int  _nOrderID)
     {
         return m_buyService.findOrderByOrderID(_nOrderID);
     }
 
+    /**
+     * 获取订单列表
+     * @return 订单列表
+     */
     public List<Order> findOrder()
     {
         return m_buyService.findOrder();
     }
 
-    public void removeOrderByOrderID(int _nOrderID)
+    /**
+     * 根据订单号删除订单，用于管理员处理订单。
+     * @param _nOrderID 订单号
+     */
+    public void removeOrderByOrderIDForAccnt(int _nOrderID)
     {
-        m_buyService.removeOrderByOrderID(_nOrderID);
+        m_buyService.removeOrderByOrderIDForAccnt(_nOrderID);
     }
 }

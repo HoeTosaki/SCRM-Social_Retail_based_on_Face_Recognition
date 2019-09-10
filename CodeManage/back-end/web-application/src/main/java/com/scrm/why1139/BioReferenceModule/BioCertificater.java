@@ -11,7 +11,6 @@ public class BioCertificater {
 	  * @param _strBase64
 	  * @return 用户id的String
 	  */
-
     public static List<String> certificateUser(String _strBase64)
     {
 		System.out.println("start save");

@@ -21,7 +21,7 @@
 <body>
 <div class="func sidebar">
     <ul class="sidenav animated fadeInUp">
-        <li><a class="withripple" href="">
+        <li><a class="withripple" href="index">
             <i class="icon icon-home"> </i>
             <span class="sidespan">回到首页</span></a>
         </li>
@@ -1408,6 +1408,7 @@
 
     function postMngrUpd() {
         alert("post start");
+        alert('id:\t'+v_accnt_upd_core.mngr_id+"\tpasswd:\t"+v_accnt_upd_core.new_passwd);
         $.post("mngrUpdate", {
             mngrid: v_accnt_upd_core.mngr_id,
             passwd: v_accnt_upd_core.new_passwd,
@@ -1426,6 +1427,11 @@
 
     function postMngrDel() {
         alert("post start");
+        if(v_accnt_del_core.mngr_id != v_accnt_del_core.mngr_id_again)
+        {
+            v_accnt_del_core.hints = '两次输入收银员ID不一致！';
+            return;
+        }
         $.post("mngrDel", {
             mngrid: v_accnt_del_core.mngr_id,
         }, function (result) {
@@ -1500,6 +1506,17 @@
 
     function postGdsAdd() {
         alert("post start");
+        if(v_gds_add_core.gds_id == '' || v_gds_add_core.gds_id == undefined ||
+            v_gds_add_core.gds_name == '' || v_gds_add_core.gds_name == undefined ||
+            v_gds_add_core.gds_type == '' || v_gds_add_core.gds_type == undefined ||
+            v_gds_add_core.gds_prc == '' || v_gds_add_core.gds_prc == undefined ||
+            v_gds_add_core.gds_pic == '' || v_gds_add_core.gds_pic == undefined ||
+            v_gds_add_core.gds_cnt == '' || v_gds_add_core.gds_cnt == undefined ||
+            v_gds_add_core.gds_desc == '' || v_gds_add_core.gds_desc == undefined)
+        {
+            v_gds_add_core.hints = '添加商品失败！';
+            return;
+        }
         $.post("gdsAdd", {
             gds: {
                 id: v_gds_add_core.gds_id,
@@ -1523,7 +1540,7 @@
             v_gds_add_core.gds_name = '';
             v_gds_add_core.gds_type = '';
             v_gds_add_core.gds_prc = '';
-            v_gds_add_core.gds_pic = '';
+            v_gds_add_core.gds_pic = 'res/gdspic/';
             v_gds_add_core.gds_cnt = '';
             v_gds_add_core.gds_desc = '';
         });
@@ -1570,18 +1587,18 @@
             alert(result);
             var obj = JSON.parse(result);
             if (obj.stat != "success") {
-                v_gds_upd_core.hints = '删除商品失败！';
+                v_gds_del_core.hints = '删除商品失败！';
                 return;
             } else {
-                v_gds_upd_core.hints = '删除商品成功！';
+                v_gds_del_core.hints = '删除商品成功！';
             }
-            v_gds_upd_core.gds_id = -1;
-            v_gds_upd_core.gds_name = '';
-            v_gds_upd_core.gds_type = '';
-            v_gds_upd_core.gds_prc = '';
-            v_gds_upd_core.gds_pic = '';
-            v_gds_upd_core.gds_cnt = '';
-            v_gds_upd_core.gds_desc = '';
+            v_gds_del_core.gds_id = -1;
+            v_gds_del_core.gds_name = '';
+            v_gds_del_core.gds_type = '';
+            v_gds_del_core.gds_prc = '';
+            v_gds_del_core.gds_pic = '';
+            v_gds_del_core.gds_cnt = '';
+            v_gds_del_core.gds_desc = '';
         });
         alert("post end.");
     }
@@ -1602,7 +1619,7 @@
                     v_gds_upd_core.gds_name = obj.gds.name;
                     v_gds_upd_core.gds_type = obj.gds.type;
                     v_gds_upd_core.gds_prc = obj.gds.prc;
-                    v_gds_upd_core.gds_pic = obj.gds.pic;
+                    v_gds_upd_core.gds_pic = 'res/gdspic/'+obj.gds.pic;
                     v_gds_upd_core.gds_cnt = obj.gds.cnt;
                     v_gds_upd_core.gds_desc = obj.gds.desc;
                 }
@@ -1622,7 +1639,7 @@
                     v_gds_del_core.gds_name = obj.gds.name;
                     v_gds_del_core.gds_type = obj.gds.type;
                     v_gds_del_core.gds_prc = obj.gds.prc;
-                    v_gds_del_core.gds_pic = obj.gds.pic;
+                    v_gds_del_core.gds_pic = 'res/gdspic/'+obj.gds.pic;
                     v_gds_del_core.gds_cnt = obj.gds.cnt;
                     v_gds_del_core.gds_desc = obj.gds.desc;
                 }
@@ -1757,6 +1774,7 @@
         // alert('val=\t' + val);
         v_func.cls_chs = 'person';
         v_func.type_chs = val;
+
         // if (val == 'accnt-add') {
 
         // } else if (val == 'accnt-upd') {
@@ -1789,6 +1807,10 @@
         // alert('val=\t' + val);
         v_func.cls_chs = 'me';
         v_func.type_chs = val;
+        if(v_func.type_chs == 'log-out')
+        {
+            window.location.href = "index";
+        }
         // if (val == 'edit-me') {
 
         // } else if (val == 'log-out') {

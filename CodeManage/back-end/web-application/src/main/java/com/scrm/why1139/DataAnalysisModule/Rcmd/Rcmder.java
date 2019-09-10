@@ -8,13 +8,24 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * 提供用户推荐的类
+ * @author 王浩宇
+ * @date 9.3
+ */
 @Repository
 public class Rcmder
 {
     private DAMConfig m_dam = new DAMConfig();
-    /*
-    nCmd:
-        0   --  全商品推荐
+
+    /**
+     * 获取基于商品的推荐
+     * @param _nGoodsID in 商品ID
+     * @param _nCmd in 查询指令
+     * @param _offSet in 偏移量
+     * @param _nLimit in 长度限制
+     * @param _strlstArgs in 额外参数
+     * @return 商品ID的列表
      */
     public List<Integer> getRcmdByGoods(int _nGoodsID,int _nCmd, int _offSet, int _nLimit,List<String> _strlstArgs)
     {
@@ -45,6 +56,16 @@ public class Rcmder
     nCmd:
         0   --  全商品推荐
         1   --  按商品类别推荐 args[0] = type
+     */
+
+    /**
+     * 获取基于用户的商品推荐
+     * @param _strUserID in 用户ID
+     * @param _nCmd in 查询指令
+     * @param _offSet in 偏移量
+     * @param _nLimit in 长度限制
+     * @param _strlstArgs in 额外传递参数
+     * @return 商品ID的列表
      */
     public List<Integer> getRcmdByUser(String _strUserID,int _nCmd, int _offSet, int _nLimit,List<String> _strlstArgs)
     {
@@ -80,18 +101,27 @@ public class Rcmder
         return ret;
     }
 
+    /**
+     * 建模用户模型
+     */
     public void doModelingUser()
     {
         m_dam.execPy("RcmdUserCF_HOMO.py");
     }
 
+    /**
+     * 建模商品模型
+     */
     public void doModelingGds()
     {
         m_dam.execPy("RcmdGdsCF_HOMO.py");
     }
 
-
-
+    /**
+     * 获取Int型列表的实用工具
+     * @param _strLst in str列表
+     * @return int列表
+     */
     private List<Integer> listToListInt(String _strLst)
     {
         List<Integer> ret = new CopyOnWriteArrayList<>();

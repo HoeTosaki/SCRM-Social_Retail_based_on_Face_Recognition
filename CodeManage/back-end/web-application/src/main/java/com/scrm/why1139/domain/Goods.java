@@ -10,7 +10,8 @@ import java.util.Optional;
 
 /**
  * 用于描述Goods信息的Domain类。
- * @author why
+ * @author 王浩宇
+ * @date 9.3
  */
 public class Goods implements Serializable
 {
@@ -30,7 +31,8 @@ public class Goods implements Serializable
 
     /**
      * Goods存储的简易测试类。
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public static void main(String s[])
     {
@@ -44,7 +46,8 @@ public class Goods implements Serializable
 
     /**
      * Goods的默认构造函数
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public Goods()
     {
@@ -60,7 +63,8 @@ public class Goods implements Serializable
      * @param _nGoodsCnt in Goods库存数量
      * @param _strGoodsDesc in Goods描述
      * @param _pthPic in Goods图片展示
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public Goods(int _nGoodsID, String _strGoodsType, String _strGoodsName, double _dbPrice, int _nGoodsCnt, String _strGoodsDesc,String _pthPic)
     {
@@ -77,7 +81,8 @@ public class Goods implements Serializable
     /**
      * 获取GoodsID
      * @return GoodsID
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public int getGoodsID()
     {
@@ -87,7 +92,8 @@ public class Goods implements Serializable
     /**
      * 设置GoodsID
      * @param _nGoodsID in GoodsID
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public void setGoodsID(int _nGoodsID)
     {
@@ -99,7 +105,8 @@ public class Goods implements Serializable
     /**
      * 获取Goods类型
      * @return Goods类型
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public String getGoodsType()
     {
@@ -109,7 +116,8 @@ public class Goods implements Serializable
     /**
      * 设置Goods类型
      * @param _strGoodsType in Goods类型
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public void setGoodsType(String _strGoodsType)
     {
@@ -121,7 +129,8 @@ public class Goods implements Serializable
     /**
      * 获取Goods名称
      * @return Goods名称
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public String getGoodsName()
     {
@@ -131,7 +140,8 @@ public class Goods implements Serializable
     /**
      * 设置Goods名称
      * @param _strGoodsName in Goods名称
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public void setGoodsName(String _strGoodsName)
     {
@@ -143,7 +153,8 @@ public class Goods implements Serializable
     /**
      * 获取Goods价格
      * @return Goods价格
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public double getPrice()
     {
@@ -153,7 +164,8 @@ public class Goods implements Serializable
     /**
      * 设置Goods价格
      * @param _dbPrice in Goods
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public void setPrice(double _dbPrice)
     {
@@ -165,7 +177,8 @@ public class Goods implements Serializable
     /**
      * 获取Goods库存数量
      * @return Goods数量
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public int getGoodsCnt()
     {
@@ -175,7 +188,8 @@ public class Goods implements Serializable
     /**
      * 设置Goods库存数量
      * @param _nGoodsCnt in Goods库存数量
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public void setGoodsCnt(int _nGoodsCnt)
     {
@@ -187,7 +201,8 @@ public class Goods implements Serializable
     /**
      * 获取Goods描述
      * @return Goods描述
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public String getGoodsDesc()
     {
@@ -197,7 +212,8 @@ public class Goods implements Serializable
     /**
      * 设置Goods描述
      * @param _strGoodsDesc in Goods描述
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public void setGoodsDesc(String _strGoodsDesc)
     {
@@ -209,7 +225,8 @@ public class Goods implements Serializable
     /**
      * 获取Goods图片路径
      * @return Goods图片路径
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public String getPic()
     {
@@ -219,7 +236,8 @@ public class Goods implements Serializable
     /**
      * 设置Goods图片路径
      * @param _pthPic in Goods图片路径
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public void setPic(String _pthPic)
     {
@@ -230,7 +248,8 @@ public class Goods implements Serializable
     /**
      * 判断当前指定路径的图片文件是否存在。
      * @return 文件存在性的boolean值
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public boolean isPicExists()
     {
@@ -240,7 +259,8 @@ public class Goods implements Serializable
     /**
      * 加载Goods图片内容到内存
      * @return Goods图片的二进制流
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public byte[] loadPic()
     {
@@ -277,7 +297,8 @@ public class Goods implements Serializable
      * 存储内存中的图片流到硬盘
      * @param _btPic in 二进制图片流
      * @return 存储通告结果的boolean值
-     * @author why
+     * @author 王浩宇
+     * @date 9.3
      */
     public boolean savePic(byte[] _btPic)
     {
@@ -309,6 +330,10 @@ public class Goods implements Serializable
         return ret;
     }
 
+    /**
+     * 判断当前对象是否为空
+     * @return 逻辑值
+     */
     public boolean isEmpty()
     {
         return m_isEmpty;

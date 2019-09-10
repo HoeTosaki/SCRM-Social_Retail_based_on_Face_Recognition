@@ -14,14 +14,15 @@ public class publicCtrl {
     /**
      * 映射到index的Controller方法
      * @return 页面模型
-     * @author why
+     * @author 王浩宇
+     * @date 9.4
      */
     @RequestMapping(
             value = {"/","/index","/index.html"}
     )
     public ModelAndView index()
     {
-        new DaoTest().printLog();
+//        new DaoTest().printLog();
 //        BatchLauncher.testRun();
         return new ModelAndView("Web/index/html/index.html");
     }
@@ -29,7 +30,8 @@ public class publicCtrl {
     /**
      * 映射到测试页面的Controller方法
      * @return 页面模型
-     * @author why
+     * @author 王浩宇
+     * @date 9.4
      */
     @RequestMapping(
             value = {"/test"}
@@ -94,6 +96,11 @@ public class publicCtrl {
 //        return "success";
 //    }
 
+    /**
+     * 获取JSON参数
+     * @param request in HTTP的req请求
+     * @return JSONObject
+     */
     public JSONObject getJSONParam(HttpServletRequest request) {
         JSONObject jsonParam = null;
         try {

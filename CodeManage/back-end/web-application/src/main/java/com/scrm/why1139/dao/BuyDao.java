@@ -10,7 +10,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 用于持久化购物记录的Dao类。
- * @author why
+ * @author 王浩宇
+ * @date 9.5
  */
 @Repository
 public class BuyDao
@@ -20,7 +21,8 @@ public class BuyDao
     /**
      * setter注入
      * @param _jdbcTemp in
-     * @author why
+     * @author 王浩宇
+     * @date 9.5
      */
     @Autowired
     public void setJdbcTemp(JdbcTemplate _jdbcTemp)
@@ -34,7 +36,8 @@ public class BuyDao
      * @param _strUserID in UserID字符串
      * @param _nLimit in 最大可查询的记录数，当数据库内存储记录数大于该参数值时才有效。
      * @return 购物记录Buy的列表
-     * @author why
+     * @author 王浩宇
+     * @date 9.5
      */
     public List<Buy> findBuyByUserID(String _strUserID,int _nLimit)
     {
@@ -65,7 +68,8 @@ public class BuyDao
      * @param _nGoodsID in 商品ID
      * @param _nLimit in 最大可查询的记录数，当数据库内存储记录数大于该参数值时才有效。
      * @return 购物记录Buy的列表
-     * @author why
+     * @author 王浩宇
+     * @date 9.5
      */
     public List<Buy> findBuyByGoodsID(int _nGoodsID,int _nLimit)
     {
@@ -91,6 +95,11 @@ public class BuyDao
         return lstBuy;
     }
 
+    /**
+     * 通过buyID查询购物记录
+     * @param _nBuyID in buyID
+     * @return 购物记录Buy对象
+     */
     public Buy findBuyByBuyID(int _nBuyID)
     {
         Buy buy = new Buy();
@@ -110,7 +119,8 @@ public class BuyDao
     /**
      * 更新当前的购物记录。新记录将以insert形式更新。
      * @param _buy in 每个buy记录遵循时间戳unique的编程假设。
-     * @author why
+     * @author 王浩宇
+     * @date 9.5
      */
     public void updateBuy(Buy _buy)
     {

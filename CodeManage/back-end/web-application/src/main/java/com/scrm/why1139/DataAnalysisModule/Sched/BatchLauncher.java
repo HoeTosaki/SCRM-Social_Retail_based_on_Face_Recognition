@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
+/**
+ * 用于定时ETL的控制器类
+ * @author why
+ */
 @RestController
 //@EnableScheduling
 @Configuration
@@ -24,6 +28,9 @@ public class BatchLauncher
     @Autowired
     Job dataHandleJob;
 
+    /**
+     * 执行CSV文件从主程序向python分析脚本的转移
+     */
 //    @Scheduled(cron = "*/5 * *  * * * ")
     public void testRun()
     {

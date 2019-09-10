@@ -11,7 +11,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 用于持久化Mngr信息的Dao类。
- * @author why
+ * @author 王浩宇
+ * @date 8.29
  */
 @Repository
 public class MngrDao
@@ -21,7 +22,8 @@ public class MngrDao
     /**
      * setter注入
      * @param _jdbcTemp in
-     * @author why
+     * @author 王浩宇
+     * @date 8.29
      */
     @Autowired
     public void setJdbcTemp(JdbcTemplate _jdbcTemp)
@@ -35,7 +37,8 @@ public class MngrDao
      * @param _strMngrID in 表示业务员ID的字符串
      * @param _strPassword in 表示密码的字符串
      * @return 匹配的结果，匹配失败返回0
-     * @author why
+     * @author 王浩宇
+     * @date 8.29
      */
     public int getMatchCount(String _strMngrID,String _strPassword)
     {
@@ -47,7 +50,8 @@ public class MngrDao
      * 通过业务员ID获取Mngr对象。
      * @param _strMngrID 表示业务员ID的字符串
      * @return Mngr对象
-     * @author why
+     * @author 王浩宇
+     * @date 8.29
      */
     public Mngr findMngrByMngrID(String _strMngrID)
     {
@@ -65,7 +69,8 @@ public class MngrDao
     /**
      * 更新mngr信息，新记录将以update形式更新，用于修改已有用户的个人信息。
      * @param _mngr in 待更新的Mngr对象，遵循mngrID readonly的编程假设。
-     * @author why
+     * @author 王浩宇
+     * @date 8.29
      */
     public void updateMngr(Mngr _mngr)
     {
@@ -76,7 +81,8 @@ public class MngrDao
     /**
      * 更新mngr信息，新记录将以insert形式更新，用于添加新用户。
      * @param _mngr in 待更新的Mngr对象，遵循mngrID unique的编程假设。
-     * @author why
+     * @author 王浩宇
+     * @date 8.29
      */
     public void insertMngr(Mngr _mngr)
     {
@@ -84,11 +90,20 @@ public class MngrDao
                 new Object[]{_mngr.getMngrType(),_mngr.getMngrID(),_mngr.getPassword()});
     }
 
+    /**
+     * 删除业务人员
+     * @param _mngr in Mngr对象
+     */
     public void delMngr(Mngr _mngr)
     {
         m_jdbcTemp.update("DELETE FROM t_mngr WHERE mngr_id=?",new Object[]{_mngr.getMngrID()});
     }
 
+    /**
+     * 获取所有收银员
+     * @param _nLimit in 数量限制
+     * @return Mngr列表
+     */
     public List<Mngr> getMngrAll(int _nLimit)
     {
         List<Mngr> lstMngr = new CopyOnWriteArrayList<>();
