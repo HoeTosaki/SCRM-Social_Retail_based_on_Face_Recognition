@@ -21,7 +21,7 @@
 <body>
 <div class="func sidebar">
     <ul class="sidenav animated fadeInUp">
-        <li><a class="withripple" href="index">
+        <li><a class="withripple" href="">
             <i class="icon icon-home"> </i>
             <span class="sidespan">回到首页</span></a>
         </li>
@@ -179,7 +179,7 @@
             <form id="input-goods-info" class="form-inline ml20 fl" role="form">
                 <div class="col-lg-6" style="width: auto;">
                     <div class="input-group" v-show="cnt_chs != 'month' && cnt_chs != 'season'">
-                        <input v-model="sch_txt" type="text" class="form-control" placeholder="请输入商品类别/名称/id"
+                        <input v-model="sch_txt" type="text" class="form-control" placeholder="请输入商品类别/id"
                                name="refer-to">
                         <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" onclick="onFigCfmSch()">确定</button>
@@ -571,32 +571,44 @@
                 </li>
             </ul>
         </div>
-        <button @click="onDataModelUser()">
-            <h3>构建用户偏好模型</h3>
-        </button>
-        <button @click="onDataModelGds()">
-            <h3>构建商品关联模型</h3>
-        </button>
-        <button @click="onDataExtract()">
-            <h3>数据抽取</h3>
-        </button>
-        <button @click="onDataTransfer()">
-            <h3>数据转移</h3>
-        </button>
-        <button @click="onDataRefresh()">
-            <h3>刷新</h3>
-        </button>
-        <!--        adminDataTransfer-->
+<!--<<<<<<< Updated upstream-->
+<!--=======-->
+<!--    </div>-->
+<!--        <button @click="onDataModelUser()">-->
+<!--            <h3>构建用户偏好模型</h3>-->
+<!--        </button>-->
+<!--        <button @click="onDataModelGds()">-->
+<!--            <h3>构建商品关联模型</h3>-->
+<!--        </button>-->
+<!--        <button @click="onDataExtract()">-->
+<!--            <h3>数据抽取</h3>-->
+<!--        </button>-->
+<!--        <button @click="onDataTransfer()">-->
+<!--            <h3>数据转移</h3>-->
+<!--        </button>-->
+<!--        <button @click="onDataRefresh()">-->
+<!--            <h3>刷新</h3>-->
+<!--        </button>-->
+<!--&lt;!&ndash;        adminDataTransfer&ndash;&gt;-->
+<!--&gt;>>>>>> Stashed changes-->
 
+        <div id="function-box" class="container mt15 mb3">
+            <button @click="onDataModelUser()" class="btn btn-default w20">构建用户偏好模型</button>
+            <button @click="onDataModelGds()" class="btn btn-default w20">构建商品关联模型</button>
+            <button @click="onDataExtract()" class="btn btn-default w20">数据抽取</button>
+            <button @click="onDataTransfer()" class="btn btn-default w20">数据转移</button>
+            <button @click="onDataRefresh()" class="btn btn-default w18">刷新</button>
+            <!--        adminDataTransfer-->
+        </div>
     </div>
 
     <div v-show="v_func.cls_chs == 'models'"
          class="layer mt15 mb3 box-border box-background-color box-shadow model-mach-core">
         <span class="subtitle mt15 ml20">运行信息</span>
-        <div id="ybp" style="text-align: center;">
-            <div id="cpu-ybp" style="height: 300px; width: 300px; display: inline-block;"></div>
-            <div id="mem-ybp" style="height: 300px; width: 300PX;display: inline-block;"></div>
-            <div id="disk-ybp" style="height: 300px; width: 300PX;display: inline-block;"></div>
+        <div id="ybp" class="ml20 mr20 mt15">
+            <div id="cpu-ybp" class="mt15"></div>
+            <div id="mem-ybp" class="mt15"></div>
+            <div id="disk-ybp" class="mt15"></div>
         </div>
     </div>
 
@@ -911,14 +923,12 @@
     var cpuybpDom = document.getElementById("cpu-ybp");
     var cpuybpChart = echarts.init(cpuybpDom);
     cpuybpOption = {
-        title: {
-            text: 'CPU利用率'
-        },
+
         tooltip : {
             formatter : "{b} : {c}%"
         },
         series : [ {
-            name : 'CPU利用率',
+            // name : 'CPU利用率',
             type : 'gauge',
             detail : {
                 formatter : '{value}%'
@@ -937,15 +947,13 @@
     var memybpDom = document.getElementById("mem-ybp");
     var memybpChart = echarts.init(memybpDom);
     memybpOption = {
-        title: {
-            text: '内存利用率'
-        },
+
         tooltip : {
             formatter : "{b} : {c}%"
         },
 
         series : [ {
-            name : '内存利用率',
+            // name : '内存利用率',
             type : 'gauge',
             detail : {
                 formatter : '{value}%'
@@ -964,15 +972,13 @@
     var diskybpDom = document.getElementById("disk-ybp");
     var diskybpChart = echarts.init(diskybpDom);
     diskybpOption = {
-        title: {
-            text: '磁盘利用率'
-        },
+
         tooltip : {
             formatter : "{b} : {c}%"
         },
 
         series : [ {
-            name : '磁盘利用率',
+            // name : '磁盘利用率',
             type : 'gauge',
             detail : {
                 formatter : '{value}%'
@@ -1402,7 +1408,6 @@
 
     function postMngrUpd() {
         alert("post start");
-        alert('id:\t'+v_accnt_upd_core.mngr_id+"\tpasswd:\t"+v_accnt_upd_core.new_passwd);
         $.post("mngrUpdate", {
             mngrid: v_accnt_upd_core.mngr_id,
             passwd: v_accnt_upd_core.new_passwd,
@@ -1421,11 +1426,6 @@
 
     function postMngrDel() {
         alert("post start");
-        if(v_accnt_del_core.mngr_id != v_accnt_del_core.mngr_id_again)
-        {
-            v_accnt_del_core.hints = '两次输入收银员ID不一致！';
-            return;
-        }
         $.post("mngrDel", {
             mngrid: v_accnt_del_core.mngr_id,
         }, function (result) {
@@ -1500,17 +1500,6 @@
 
     function postGdsAdd() {
         alert("post start");
-        if(v_gds_add_core.gds_id == '' || v_gds_add_core.gds_id == undefined ||
-            v_gds_add_core.gds_name == '' || v_gds_add_core.gds_name == undefined ||
-            v_gds_add_core.gds_type == '' || v_gds_add_core.gds_type == undefined ||
-            v_gds_add_core.gds_prc == '' || v_gds_add_core.gds_prc == undefined ||
-            v_gds_add_core.gds_pic == '' || v_gds_add_core.gds_pic == undefined ||
-            v_gds_add_core.gds_cnt == '' || v_gds_add_core.gds_cnt == undefined ||
-            v_gds_add_core.gds_desc == '' || v_gds_add_core.gds_desc == undefined)
-        {
-            v_gds_add_core.hints = '添加商品失败！';
-            return;
-        }
         $.post("gdsAdd", {
             gds: {
                 id: v_gds_add_core.gds_id,
@@ -1534,7 +1523,7 @@
             v_gds_add_core.gds_name = '';
             v_gds_add_core.gds_type = '';
             v_gds_add_core.gds_prc = '';
-            v_gds_add_core.gds_pic = 'res/gdspic/';
+            v_gds_add_core.gds_pic = '';
             v_gds_add_core.gds_cnt = '';
             v_gds_add_core.gds_desc = '';
         });
@@ -1581,18 +1570,18 @@
             alert(result);
             var obj = JSON.parse(result);
             if (obj.stat != "success") {
-                v_gds_del_core.hints = '删除商品失败！';
+                v_gds_upd_core.hints = '删除商品失败！';
                 return;
             } else {
-                v_gds_del_core.hints = '删除商品成功！';
+                v_gds_upd_core.hints = '删除商品成功！';
             }
-            v_gds_del_core.gds_id = -1;
-            v_gds_del_core.gds_name = '';
-            v_gds_del_core.gds_type = '';
-            v_gds_del_core.gds_prc = '';
-            v_gds_del_core.gds_pic = '';
-            v_gds_del_core.gds_cnt = '';
-            v_gds_del_core.gds_desc = '';
+            v_gds_upd_core.gds_id = -1;
+            v_gds_upd_core.gds_name = '';
+            v_gds_upd_core.gds_type = '';
+            v_gds_upd_core.gds_prc = '';
+            v_gds_upd_core.gds_pic = '';
+            v_gds_upd_core.gds_cnt = '';
+            v_gds_upd_core.gds_desc = '';
         });
         alert("post end.");
     }
@@ -1613,7 +1602,7 @@
                     v_gds_upd_core.gds_name = obj.gds.name;
                     v_gds_upd_core.gds_type = obj.gds.type;
                     v_gds_upd_core.gds_prc = obj.gds.prc;
-                    v_gds_upd_core.gds_pic = 'res/gdspic/'+obj.gds.pic;
+                    v_gds_upd_core.gds_pic = obj.gds.pic;
                     v_gds_upd_core.gds_cnt = obj.gds.cnt;
                     v_gds_upd_core.gds_desc = obj.gds.desc;
                 }
@@ -1633,7 +1622,7 @@
                     v_gds_del_core.gds_name = obj.gds.name;
                     v_gds_del_core.gds_type = obj.gds.type;
                     v_gds_del_core.gds_prc = obj.gds.prc;
-                    v_gds_del_core.gds_pic = 'res/gdspic/'+obj.gds.pic;
+                    v_gds_del_core.gds_pic = obj.gds.pic;
                     v_gds_del_core.gds_cnt = obj.gds.cnt;
                     v_gds_del_core.gds_desc = obj.gds.desc;
                 }
@@ -1768,7 +1757,6 @@
         // alert('val=\t' + val);
         v_func.cls_chs = 'person';
         v_func.type_chs = val;
-
         // if (val == 'accnt-add') {
 
         // } else if (val == 'accnt-upd') {
@@ -1801,10 +1789,6 @@
         // alert('val=\t' + val);
         v_func.cls_chs = 'me';
         v_func.type_chs = val;
-        if(v_func.type_chs == 'log-out')
-        {
-            window.location.href = "index";
-        }
         // if (val == 'edit-me') {
 
         // } else if (val == 'log-out') {

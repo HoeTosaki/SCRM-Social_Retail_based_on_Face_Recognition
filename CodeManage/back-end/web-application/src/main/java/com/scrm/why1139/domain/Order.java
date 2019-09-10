@@ -1,10 +1,5 @@
 package com.scrm.why1139.domain;
 
-/**
- * 用于描述Order信息的Domain类。
- * @author 王浩宇
- * @date 9.3
- */
 public class Order {
 
     private String m_strUserID;
@@ -17,8 +12,7 @@ public class Order {
 
     /**
      * 默认构造函数
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public Order()
     {
@@ -26,13 +20,12 @@ public class Order {
     }
 
     /**
-     * 完整Order初始化对象
+     * 完整购物记录初始化对象
      * @param _strUserID in UserID，顾客信息
      * @param _nGoodsID in GoodsID，商品信息
      * @param _dtOrderDate in OrderDate，购买的日期时间
      * @param _nOrderCnt in OrderCount，购买该商品的数量
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public Order(String _strUserID, int _nGoodsID, String _dtOrderDate, int _nOrderCnt)
     {
@@ -43,14 +36,6 @@ public class Order {
         setUserID(_strUserID);
     }
 
-    /**
-     * 补充OrderID的初始化对象
-     * @param _strUserID in UserID，顾客信息
-     * @param _nGoodsID in GoodsID，商品信息
-     * @param _dtOrderDate in OrderDate，购买的日期时间
-     * @param _nOrderCnt in OrderCount，购买该商品的数量
-     * @param _nOrderID in 订单号
-     */
     public Order(String _strUserID, int _nGoodsID, String _dtOrderDate, int _nOrderCnt,int _nOrderID)
     {
         m_isEmpty = false;
@@ -64,8 +49,7 @@ public class Order {
     /**
      * 获取UserID
      * @return UserID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public String getUserID()
     {
@@ -75,8 +59,7 @@ public class Order {
     /**
      * 设置UserID
      * @param _strUserID in UserID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setUserID(String _strUserID)
     {
@@ -88,8 +71,7 @@ public class Order {
     /**
      * 获取GoodsID
      * @return GoodsID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public int getGoodsID()
     {
@@ -99,8 +81,7 @@ public class Order {
     /**
      * 设置GoodsID
      * @param _nGoodsID in GoodsID
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setGoodsID(int _nGoodsID)
     {
@@ -110,10 +91,9 @@ public class Order {
     }
 
     /**
-     * 获取预约日期时间
-     * @return 表示预约日期时间的字符串
-     * @author 王浩宇
-     * @date 9.3
+     * 获取购买日期时间
+     * @return 表示购买日期时间的字符串
+     * @author why
      */
     public String getOrderDate()
     {
@@ -121,10 +101,9 @@ public class Order {
     }
 
     /**
-     * 设置预约的日期时间
-     * @param _dtOrderDate in 预约的日期时间
-     * @author 王浩宇
-     * @date 9.3
+     * 设置购买的日期时间
+     * @param _dtOrderDate in 购买的日期时间
+     * @author why
      */
     public void setOrderDate(String _dtOrderDate)
     {
@@ -134,10 +113,9 @@ public class Order {
     }
 
     /**
-     * 获取预约商品的数量
+     * 获取购买商品的数量
      * @return 商品数量
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public int getOrderCnt()
     {
@@ -145,10 +123,9 @@ public class Order {
     }
 
     /**
-     * 设置预约商品的数量
+     * 设置购买商品的数量
      * @param _nOrderCnt in 商品数量
-     * @author 王浩宇
-     * @date 9.3
+     * @author why
      */
     public void setOrderCnt(int _nOrderCnt)
     {
@@ -157,29 +134,17 @@ public class Order {
 //        this.m_nOrderCnt = Optional.ofNullable(m_nOrderCnt).orElseThrow();
     }
 
-    /**
-     * 判断当前对象是否为空
-     * @return 逻辑值
-     */
-
     public boolean isEmpty()
     {
         return m_isEmpty;
     }
 
-    /**
-     * 获取订单号
-     * @return 订单号
-     */
+
     public int getOrderID()
     {
         return m_nOrderID;
     }
 
-    /**
-     * 设置订单号
-     * @param _nOrderID in 订单号
-     */
     public void setOrderID(int _nOrderID)
     {
         m_isEmpty = false;

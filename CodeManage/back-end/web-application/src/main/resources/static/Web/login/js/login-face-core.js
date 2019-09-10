@@ -118,18 +118,11 @@ function postLoginRecgBio() {
             document.loginReq = -1;
             window.jumpTarget = "loginFace";
         } else {
-            if(obj.user_lst.length == 0)
-            {
-                login.hints = "没有识别到您的人脸信息，请注册。";
-            }
-            else
-            {
-                login.hints = "用户识别完成,请核对是否正确";
-                login.userid = obj.user_lst[0].userid;
-                login.stat = obj["stat"];
-                document.loginReq = 1;
-                window.jumpTarget = "rcmd?" + login.userid;
-            }
+            login.hints = "用户识别完成,请核对是否正确";
+            login.userid = obj["userid"];
+            login.stat = obj["stat"];
+            document.loginReq = 1;
+            window.jumpTarget = "rcmd?" + login.userid;
         }
     });
     login.hints = "人脸信息识别中，请稍候...";

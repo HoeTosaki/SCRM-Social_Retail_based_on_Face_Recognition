@@ -26,8 +26,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 //import javax.persistence.EntityManagerFactory;
 
 /**
- * EnableBatchProcessing提供用于构建批处理作业的基本配置
- * @author why
+ * Created by EalenXie on 2018/9/10 14:50.
+ * :@EnableBatchProcessing提供用于构建批处理作业的基本配置
  */
 @Configuration
 @EnableBatchProcessing
@@ -48,7 +48,6 @@ public class DataBatchConfiguration {
 
     /**
      * 一个简单基础的Job通常由一个或者多个Step组成
-     * @return Job对象
      */
     @Bean
     public Job dataHandleJob() {
@@ -67,7 +66,6 @@ public class DataBatchConfiguration {
      * ItemReader : 用于读取数据
      * ItemProcessor : 用于处理数据
      * ItemWriter : 用于写数据
-     * @return Step对象
      */
     @Bean
     public Step handleUserDataStep() {
@@ -80,10 +78,6 @@ public class DataBatchConfiguration {
                 build();
     }
 
-    /**
-     * 获取用户数据的Reader
-     * @return ItemReader
-     */
     @Bean
     public ItemReader<? extends User> getUserDataReader() {
         //读取数据,这里可以用JPA,JDBC,JMS 等方式 读入数据
@@ -107,10 +101,6 @@ public class DataBatchConfiguration {
         return reader;
     }
 
-    /**
-     * 执行用户数据处理
-     * @return ItemProcessor
-     */
     @Bean
     public ItemProcessor<User, User> getUserDataProcessor() {
         return new ItemProcessor<User, User>() {
@@ -127,10 +117,6 @@ public class DataBatchConfiguration {
 //        };
     }
 
-    /**
-     * 用户数据Writer
-     * @return ItemWriter
-     */
     @Bean
     public ItemWriter<User> getUserDataWriter() {
         return list -> {
@@ -149,7 +135,6 @@ public class DataBatchConfiguration {
      * ItemReader : 用于读取数据
      * ItemProcessor : 用于处理数据
      * ItemWriter : 用于写数据
-     * @return Step对象
      */
     @Bean
     public Step handleGoodsDataStep() {
@@ -162,10 +147,6 @@ public class DataBatchConfiguration {
                 build();
     }
 
-    /**
-     *  商品数据Reader
-     * @return ItemReader
-     */
     @Bean
     public ItemReader<? extends Goods> getGoodsDataReader() {
         //读取数据,这里可以用JPA,JDBC,JMS 等方式 读入数据
@@ -189,10 +170,6 @@ public class DataBatchConfiguration {
         return reader;
     }
 
-    /**
-     * 商品数据Processor
-     * @return ItemProcessor
-     */
     @Bean
     public ItemProcessor<Goods, Goods> getGoodsDataProcessor() {
         return new ItemProcessor<Goods, Goods>() {
@@ -209,10 +186,6 @@ public class DataBatchConfiguration {
 //        };
     }
 
-    /**
-     * 商品数据Writer
-     * @return ItemWriter
-     */
     @Bean
     public ItemWriter<Goods> getGoodsDataWriter() {
         return list -> {
@@ -231,7 +204,6 @@ public class DataBatchConfiguration {
      * ItemReader : 用于读取数据
      * ItemProcessor : 用于处理数据
      * ItemWriter : 用于写数据
-     * @return Step对象
      */
     @Bean
     public Step handleBuyDataStep() {
@@ -244,10 +216,6 @@ public class DataBatchConfiguration {
                 build();
     }
 
-    /**
-     * 购物数据Reader
-     * @return ItemReader
-     */
     @Bean
     public ItemReader<? extends Buy> getBuyDataReader() {
         //读取数据,这里可以用JPA,JDBC,JMS 等方式 读入数据
@@ -271,10 +239,6 @@ public class DataBatchConfiguration {
         return reader;
     }
 
-    /**
-     * 购物记录Processor
-     * @return ItemProcessor
-     */
     @Bean
     public ItemProcessor<Buy, Buy> getBuyDataProcessor() {
         return new ItemProcessor<Buy, Buy>() {
@@ -291,10 +255,6 @@ public class DataBatchConfiguration {
 //        };
     }
 
-    /**
-     * 购物记录Writer
-     * @return ItemWriter
-     */
     @Bean
     public ItemWriter<Buy> getBuyDataWriter() {
         return list -> {

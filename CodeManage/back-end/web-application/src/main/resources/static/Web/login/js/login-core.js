@@ -217,10 +217,7 @@ function postSignUp(username, userid, passwd) {
 
 function postSignUpPre() {
     if (signup.userid == "")
-    {
-        signup.hints = "\n请输入用户名";
         return;
-    }
     $.post("signUpCheckPre", {
         userid: signup.userid,
     }, function (result) {

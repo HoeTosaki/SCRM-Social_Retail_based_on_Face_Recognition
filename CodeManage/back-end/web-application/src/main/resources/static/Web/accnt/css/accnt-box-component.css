@@ -207,7 +207,7 @@ div.bl-panel-items>div>div {
 .bl-content h2 {
 	font-size: 3em;
 	font-weight: 300;
-	margin: 0;
+	margin: 0 0 20px 0;
 }
 
 .bl-content ul {

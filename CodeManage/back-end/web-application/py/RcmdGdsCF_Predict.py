@@ -1,14 +1,8 @@
-###
-# 执行基于商品协同过滤的预测脚本
-# @author 王浩宇
-#date：8.29
-
-
 import numpy as np
 import pandas as pd
 import sys
 
-#根据商品ID获取商品推荐
+
 def get_rcmd(goodsid):
     #     print(gds_lst)
     buy_list_field_name = ['buy_id', 'user_id', 'mngr_id', 'goods_id', 'buy_date', 'buy_cnt']

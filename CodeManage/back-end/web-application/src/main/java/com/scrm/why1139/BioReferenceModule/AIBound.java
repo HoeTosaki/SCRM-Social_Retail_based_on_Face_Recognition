@@ -12,8 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 用于向百度API请求人脸识别功能的类
- * @author 王浩宇
- * @date 9.1
+ * @author why
  */
 public class AIBound
 {
@@ -26,7 +25,7 @@ public class AIBound
 
     /**
      * 服务初始化函数
-     * @author 王浩宇
+     * @author why
      */
     public static void initService()
     {
@@ -60,7 +59,7 @@ public class AIBound
      * 获取人脸识别客户端对象，如果当前没有初始化，则自动进行初始化。
      * 该方法始终保持Client的单例性。
      * @return AipFace
-     * @author 王浩宇
+     * @author why
      */
     private static AipFace getFaceClient()
     {
@@ -77,7 +76,7 @@ public class AIBound
      * 验证当前用户组是否可用，如果用户组不存在，则新建一个用户组
      * @param _strGroupID in 用户组ID
      * @return 可用性boolean值
-     * @author 王浩宇
+     * @author why
      */
     public static boolean verifyUserGroup(String _strGroupID)
     {
@@ -122,7 +121,7 @@ public class AIBound
      * @param _strUserID in 用户ID
      * @param _strBase64 in 用户人脸信息
      * @return boolean
-     * @author 王浩宇
+     * @author why
      */
     public static boolean updateUserFace(String _strUserID,String _strBase64)
     {
@@ -132,7 +131,8 @@ public class AIBound
         options.put("quality_control", "NORMAL");
         options.put("liveness_control", "NONE");//TODO:当前人脸信息不支持活体检测
         options.put("action_type", "REPLACE");// 该方法保证只存一张人脸
-        // 后期请用APPEND，以实现多张人脸存储。
+        //TODO: 后期请用APPEND，以实现多张人脸存储。
+
         String image = _strBase64;
         String imageType = "BASE64";
         String groupId = "user";
@@ -164,7 +164,7 @@ public class AIBound
      * @param _strUserID in 用户ID
      * @param _strBase64 in 用户人脸信息
      * @return boolean
-     * @author 王浩宇
+     * @author why
      */
     public static boolean addUserFace(String _strUserID,String _strBase64)
     {
@@ -192,7 +192,7 @@ public class AIBound
      * TODO:后期应对score进行限定。
      * @param _strBase64 in 用户人脸信息
      * @return 用户ID的list
-     * @author 王浩宇
+     * @author why
      */
     public static List<String> FaceQuery(String _strBase64)
     {
@@ -256,7 +256,7 @@ public class AIBound
      * 删除用户，包括其前期更新的全部人脸信息。
      * @param _strUserID in 用户ID
      * @return 删除成功性的boolean值
-     * @author 王浩宇
+     * @author why
      */
     public static boolean delUser(String _strUserID)
     {
@@ -276,5 +276,8 @@ public class AIBound
 //orgin:
     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
 //
+    public static void main(String s[])
+    {
+    }
 }
 
