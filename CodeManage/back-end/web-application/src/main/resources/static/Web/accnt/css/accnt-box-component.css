@@ -47,10 +47,6 @@ a:hover {
 	color: #fff;
 }
 
-ul{
-	list-style: none;
-}
-
 .container {
 	height: 100%;
 }
@@ -199,7 +195,7 @@ div.bl-panel-items>div>div {
 
 .bl-content p {
 	margin: 0 auto;
-	margin: 8px 0;
+	padding-bottom: 15px;
 	font-size: 1.7em;
 	line-height: 1.8;
 }
@@ -212,18 +208,19 @@ div.bl-panel-items>div>div {
 
 .bl-content ul {
 	margin: 0 auto;
+	padding-bottom: 15px;
 	font-size: 1.7em;
 	line-height: 1.8;
 }
 
 .bl-content li {
-	margin: 15px;
+	margin: inherit;
+	padding-bottom: inherit;
 	font-size: inherit;
 	line-height: inherit;
 	border-width: 1px;
-	border-color: #f0f0f0;
+	border-color: #333;
 	border-style: solid;
-	border-radius: 10px;
 }
 
 
@@ -505,8 +502,7 @@ section.bl-expand .bl-icon-close {
 
 .content-title {
 	width: 100%;
-	text-align: center;
-	/*height: 10%;*/
+	height: 10%;
 	font-size: 100%;
 	border-radius: 1em;
 }
@@ -531,23 +527,18 @@ section.bl-expand .bl-icon-close {
 	top: 10%;
 	left: 5%;
 	border-radius: 100%;
-	vertical-align: middle;
-	margin: 15px;
 }
 
 .content-right p {
 	width: 100%;
 	float: none;
-
-	font-size: 18px;
-	text-align: center;
 }
 
 .content-right img {
 	width: 10em;
 	height: 10em;
-	display: block;
-	margin: 20% auto;
+	float: left;
+	clear: both;
 }
 
 .content-left input[type="text"] {
@@ -581,9 +572,7 @@ section.bl-expand .bl-icon-close {
 }
 
 .btn-confirm {
-	width: 45%;
-	border-radius: 10px;
-	margin-left: 8px;
+	width: 50%;
 	border-width: 1.5px;
 	float: left;
 	opacity: 0.3;

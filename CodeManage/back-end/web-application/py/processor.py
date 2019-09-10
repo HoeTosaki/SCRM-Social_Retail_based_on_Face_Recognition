@@ -35,7 +35,7 @@ all_goods_info_from_csv = all_goods_info_from_csv.set_index('goods_id')
 
 buy_list_field_name = ['buy_id', 'user_id', 'mngr_id', 'goods_id', 'buy_date', 'buy_cnt']
 all_user_buy_list_from_csv = pd.read_csv(sys.argv[1] + "/py/anal_data/t_buy.csv", names=buy_list_field_name,
-                                         # usecols=['user_id', 'mngr_id', 'goods_id', 'buy_cnt', 'buy_date', 'buy_id'],
+                                         usecols=['user_id', 'mngr_id', 'goods_id', 'buy_cnt', 'buy_date', 'buy_id'],
                                          parse_dates=['buy_date'])
 
 all_user_buy_list_raw = pd.merge(all_user_buy_list_from_csv, all_goods_info_from_csv, on='goods_id')
@@ -59,12 +59,12 @@ one_month_hot_goods_list = one_month_hot_goods_list.to_period('D')
 
 
 def cmd_0_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
+    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[4])]
     date = today_date - time_offset[sys.argv[5]] + timedelta(1)
     some_user_one_week_or_month_buy_list = some_user_buy_list[today_date: date]
     some_user_one_week_or_month_buy_list = some_user_one_week_or_month_buy_list.resample('D').sum()
     some_user_one_week_or_month_buy_list = some_user_one_week_or_month_buy_list.reset_index()
-    some_user_one_week_or_month_buy_list.drop(['buy_cnt', 'goods_price'], axis=1, inplace=True)
+    some_user_one_week_or_month_buy_list.drop(['user_id', 'buy_cnt', 'goods_price'], axis=1, inplace=True)
     some_user_one_week_or_month_buy_list.rename(columns={'total_pay': 'cost'}, inplace=True)
 
     date_index = pd.date_range(start=date, end=today_date, name='buy_date')
@@ -79,13 +79,13 @@ def cmd_0_function():
 
 
 def cmd_1_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
+    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[4])]
     start_date = time.strftime(sys.argv[5])
     end_date = time.strftime(sys.argv[6])
     some_user_specific_time_list = some_user_buy_list[end_date: start_date]
     some_user_specific_time_list = some_user_specific_time_list.resample('D').sum()
     some_user_specific_time_list = some_user_specific_time_list.reset_index()
-    some_user_specific_time_list.drop(['buy_cnt', 'goods_price'], axis=1, inplace=True)
+    some_user_specific_time_list.drop(['user_id', 'buy_cnt', 'goods_price'], axis=1, inplace=True)
     some_user_specific_time_list.rename(columns={'total_pay': 'cost'}, inplace=True)
     date_index = pd.date_range(start=start_date, end=end_date, name='buy_date')
     some_user_specific_time_cost = pd.DataFrame(index=date_index)
@@ -99,11 +99,11 @@ def cmd_1_function():
 
 
 def cmd_2_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
+    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[4])]
     some_user_monthly_buy_list = some_user_buy_list.resample('M').sum()
     some_user_monthly_buy_list = some_user_monthly_buy_list.to_period('M')
     some_user_monthly_buy_list = some_user_monthly_buy_list.reset_index()
-    some_user_monthly_buy_list.drop(['buy_cnt', 'goods_price'], axis=1, inplace=True)
+    some_user_monthly_buy_list.drop(['user_id', 'buy_cnt', 'goods_price'], axis=1, inplace=True)
     some_user_monthly_buy_list.rename(columns={'buy_date': 'month', 'total_pay': 'cost'}, inplace=True)
     some_user_monthly_buy_list = some_user_monthly_buy_list.tail(12)
     start_date = today_date - timedelta(365)
@@ -121,11 +121,11 @@ def cmd_2_function():
 
 
 def cmd_3_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
+    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[4])]
     some_user_seasonly_buy_list = some_user_buy_list.resample('Q').sum()
     some_user_seasonly_buy_list = some_user_seasonly_buy_list.to_period('Q')
     some_user_seasonly_buy_list = some_user_seasonly_buy_list.reset_index()
-    some_user_seasonly_buy_list.drop(['buy_cnt', 'goods_price'], axis=1, inplace=True)
+    some_user_seasonly_buy_list.drop(['user_id', 'buy_cnt', 'goods_price'], axis=1, inplace=True)
     some_user_seasonly_buy_list.rename(columns={'buy_date': 'season', 'total_pay': 'cost'}, inplace=True)
     some_user_seasonly_buy_list = some_user_seasonly_buy_list.tail(4)
     start_date = today_date - timedelta(365)
@@ -144,7 +144,7 @@ def cmd_3_function():
 
 
 def cmd_4_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[4]]
+    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[4])]
     some_user_goods_type_cost = some_user_buy_list.groupby('goods_type')
     some_user_goods_type_cost = some_user_goods_type_cost['total_pay'].agg(np.sum)
     some_user_goods_type_cost_dict = {'goods_type': some_user_goods_type_cost.index,
@@ -157,7 +157,7 @@ def cmd_4_function():
 
 
 def cmd_5_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[5]]
+    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[5])]
     this_year_buy_list = some_user_buy_list.resample('Y').sum()
     this_year_buy_list = this_year_buy_list.tail(1)
     this_year_buy_list = this_year_buy_list.reset_index()
@@ -166,7 +166,7 @@ def cmd_5_function():
     this_month_some_user_buy_list = this_month_some_user_buy_list.tail(1)
     this_month_some_user_buy_list = this_month_some_user_buy_list.reset_index()
     print(this_month_some_user_buy_list.at[0, 'total_pay'])
-    today_some_user_buy_list = today_all_user_buy_list.loc[today_all_user_buy_list['user_id'] == sys.argv[5]]
+    today_some_user_buy_list = today_all_user_buy_list.loc[today_all_user_buy_list['user_id'] == int(sys.argv[5])]
     print(today_some_user_buy_list['total_pay'].sum())
     print("today_some_user_buy_list")
     today_some_user_buy_list = today_some_user_buy_list.loc[int(sys.argv[3]): int(sys.argv[3]) + int(sys.argv[4])]
@@ -175,7 +175,7 @@ def cmd_5_function():
 
 
 def cmd_6_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[5]]
+    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[5])]
     date = today_date - time_offset[sys.argv[6]]
     one_week_or_month_some_user_buy_list = some_user_buy_list[today_date:date]
     one_week_or_month_some_user_buy_list = one_week_or_month_some_user_buy_list.reset_index()
@@ -183,7 +183,7 @@ def cmd_6_function():
     one_week_or_month_some_user_buy_list = one_week_or_month_some_user_buy_list.set_index('buy_date')
     one_week_or_month_some_user_buy_list = one_week_or_month_some_user_buy_list.reset_index()
     one_week_or_month_some_user_buy_list = one_week_or_month_some_user_buy_list.loc[int(sys.argv[3]): int(sys.argv[3])
-                                                                                                      + int(sys.argv[4])]
+                                                                                    + int(sys.argv[4])]
     one_week_or_month_some_user_buy_list_group = one_week_or_month_some_user_buy_list.groupby('buy_date')
     index_array = []
     offset = 0
@@ -199,7 +199,7 @@ def cmd_6_function():
 
 
 def cmd_7_function():
-    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == sys.argv[5]]
+    some_user_buy_list = all_user_buy_list.loc[all_user_buy_list['user_id'] == int(sys.argv[5])]
     start_date = time.strftime(sys.argv[6])
     end_date = time.strftime(sys.argv[7])
     specific_time_some_user_buy_list = some_user_buy_list[end_date:start_date]
@@ -208,7 +208,7 @@ def cmd_7_function():
     specific_time_some_user_buy_list = specific_time_some_user_buy_list.set_index('buy_date')
     specific_time_some_user_buy_list = specific_time_some_user_buy_list.reset_index()
     specific_time_some_user_buy_list = specific_time_some_user_buy_list.loc[int(sys.argv[3]): int(sys.argv[3])
-                                                                                              + int(sys.argv[4])]
+                                                                            + int(sys.argv[4])]
     specific_time_some_user_buy_list_group = specific_time_some_user_buy_list.groupby('buy_date')
     index_array = []
     offset = 0
@@ -229,7 +229,7 @@ def cmd_8_function():
     monthly_sale_list = monthly_sale_list.to_period('M')
     monthly_sale_list = monthly_sale_list[start_date:end_date]
     monthly_sale_list = monthly_sale_list.reset_index()
-    monthly_sale_list.drop(['buy_cnt', 'goods_price'], axis=1, inplace=True)
+    monthly_sale_list.drop(['user_id', 'buy_cnt', 'goods_price'], axis=1, inplace=True)
     monthly_sale_list.rename(columns={'buy_date': 'month', 'total_pay': 'sale'}, inplace=True)
 
     date_index = pd.date_range(start=start_date, end=end_date, name='month')
@@ -249,7 +249,7 @@ def cmd_9_function():
     seansonly_sale_list = all_user_buy_list.resample('Q').sum()
     seansonly_sale_list = seansonly_sale_list.to_period('Q')
     seansonly_sale_list = seansonly_sale_list.reset_index()
-    seansonly_sale_list.drop(['buy_cnt', 'goods_price'], axis=1, inplace=True)
+    seansonly_sale_list.drop(['user_id', 'buy_cnt', 'goods_price'], axis=1, inplace=True)
     seansonly_sale_list.rename(columns={'buy_date': 'season', 'total_pay': 'sale'}, inplace=True)
     seansonly_sale_list = seansonly_sale_list.tail(4)
 
@@ -276,11 +276,11 @@ def cmd_10_function():
     some_type_monthly_sale_list = some_type_monthly_sale_list.to_period('M')
     some_type_monthly_sale_list = some_type_monthly_sale_list[start_date:end_date]
     some_type_monthly_sale_list = some_type_monthly_sale_list.reset_index()
-    some_type_monthly_sale_list.drop(['goods_price'], axis=1, inplace=True)
+    some_type_monthly_sale_list.drop(['user_id', 'goods_price'], axis=1, inplace=True)
     if sys.argv[5] == 'sale':
         some_type_monthly_sale_list.drop(['buy_cnt'], axis=1, inplace=True)
         some_type_monthly_sale_list.rename(columns={'buy_date': 'month',
-                                                    'total_pay': 'sale'}, inplace=True)
+                                                                                  'total_pay': 'sale'}, inplace=True)
     elif sys.argv[5] == 'cnt':
         some_type_monthly_sale_list.drop(['total_pay'], axis=1, inplace=True)
         some_type_monthly_sale_list.rename(columns={'buy_date': 'month', 'buy_cnt': 'cnt'}, inplace=True)
@@ -306,7 +306,7 @@ def cmd_11_function():
     goods_by_name_monthly_sale_list = goods_by_name_monthly_sale_list.to_period('M')
     goods_by_name_monthly_sale_list = goods_by_name_monthly_sale_list[start_date:end_date]
     goods_by_name_monthly_sale_list = goods_by_name_monthly_sale_list.reset_index()
-    goods_by_name_monthly_sale_list.drop(['goods_price'], axis=1, inplace=True)
+    goods_by_name_monthly_sale_list.drop(['user_id', 'goods_price'], axis=1, inplace=True)
 
     if sys.argv[5] == 'sale':
         goods_by_name_monthly_sale_list.drop(['buy_cnt'], axis=1, inplace=True)
@@ -337,7 +337,7 @@ def cmd_12_function():
     goods_by_id_monthly_sale_list = goods_by_id_monthly_sale_list.to_period('M')
     goods_by_id_monthly_sale_list = goods_by_id_monthly_sale_list[start_date:end_date]
     goods_by_id_monthly_sale_list = goods_by_id_monthly_sale_list.reset_index()
-    goods_by_id_monthly_sale_list.drop(['goods_price', 'goods_id'],
+    goods_by_id_monthly_sale_list.drop(['user_id', 'goods_price', 'goods_id'],
                                        axis=1, inplace=True)
 
     if sys.argv[5] == 'sale':
@@ -395,7 +395,7 @@ def cmd_14_function():
     one_week_or_month_all_user_buy_list = all_user_buy_list[today_date:date]
     one_week_or_month_all_user_buy_list = one_week_or_month_all_user_buy_list.reset_index()
     one_week_or_month_all_user_buy_list = one_week_or_month_all_user_buy_list.loc[int(sys.argv[3]): int(sys.argv[3])
-                                                                                                    + int(sys.argv[4])]
+                                                                                  + int(sys.argv[4])]
     print("one_week_or_month_all_user_buy_list")
     for index, row in one_week_or_month_all_user_buy_list.iterrows():
         print(row['buy_id'])
@@ -407,7 +407,7 @@ def cmd_15_function():
     specific_time_all_buy_list = all_user_buy_list[end_date:start_date]
     specific_time_all_buy_list = specific_time_all_buy_list.reset_index()
     specific_time_all_buy_list = specific_time_all_buy_list.loc[int(sys.argv[3]): int(sys.argv[3])
-                                                                                  + int(sys.argv[4])]
+                                                                + int(sys.argv[4])]
     print("specific_time_all_buy_list")
     for index, row in specific_time_all_buy_list.iterrows():
         print(row['buy_id'])
@@ -434,7 +434,7 @@ def cmd_16_function():
         j = i + 1
         while j < len(one_month_top_30_goods_id):
             rel_num = gds_similar_scaled[one_month_top_30_goods_id[i], one_month_top_30_goods_id[j]]
-            if rel_num > 2:
+            if rel_num > 1:
                 print("{},{},{}".format(one_month_top_30_goods_id[i], one_month_top_30_goods_id[j], rel_num))
             j += 1
 

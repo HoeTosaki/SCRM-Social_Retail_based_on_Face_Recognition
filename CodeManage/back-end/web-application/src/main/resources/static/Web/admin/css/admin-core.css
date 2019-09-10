@@ -197,7 +197,7 @@ body {
 }
 
 #sys-info-box{
-    height: 50px;
+    height: 100px;
 }
 
 #sys-info-box > ul{
@@ -212,32 +212,6 @@ body {
 #sys-info-box > ul > li > span.prop-val {
     font-size: 16px;
     color: #f40;
-}
-
-#function-box{
-    width: 100%;
-    text-align: center;
-}
-
-#function-box > button.w20{
-    width: 20%;
-}
-
-#function-box > button.w18{
-    width: 18%;
-}
-
-#ybp{
-    border-top: 1px solid #D1D1D1;
-    text-align: center;
-}
-
-#ybp > #cpu-ybp,
-#ybp > #mem-ybp,
-#ybp > #disk-ybp{
-    height: 300px;
-    width: 300px;
-    display: inline-block;
 }
 
 #real-time-graph{

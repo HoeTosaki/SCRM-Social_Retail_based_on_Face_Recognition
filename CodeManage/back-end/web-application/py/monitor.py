@@ -17,8 +17,8 @@ def get_basic_info():
     print(datetime.fromtimestamp(pt.boot_time()).strftime("%Y-%m-%d %H:%M:%S"))  # 获取最近开机时间
     print(pt.cpu_count())  # 获取CPU逻辑数量
     print(pt.cpu_count(logical=False))  # 获取CPU物理核心数量
-    print(round(pt.virtual_memory().total/1024/1024/1024, 2))  # 获取内存容量，单位：G
-    print(round(pt.disk_usage('/').total/1024/1024/1024, 2))  # 获取磁盘总量信息
+    print(pt.virtual_memory().total/1024/1024/1024)  # 获取内存容量，单位：G
+    print(pt.disk_usage('/').total/1024/1024/1024)  # 获取磁盘总量信息
 
 
 def get_real_time_hardware_info():
@@ -41,8 +41,8 @@ def get_real_time_disk_rate_info():
     time_offset = time_end - time_start
 
     print(now)
-    print(round((read_end - read_start)/1024/time_offset, 2))
-    print(round((write_end - write_start)/1024/time_offset, 2))
+    print((read_end - read_start)/1024/time_offset)
+    print((write_end - write_start)/1024/time_offset)
 
 
 def get_real_time_net_rate_info():
@@ -55,7 +55,7 @@ def get_real_time_net_rate_info():
     send_time_offset = time_send_end - time_send_start
 
     print(now)
-    print(round((send_end - send_start) / 1024 / send_time_offset, 2))
+    print((send_end - send_start) / 1024 / send_time_offset)
 
 
 monitor = {

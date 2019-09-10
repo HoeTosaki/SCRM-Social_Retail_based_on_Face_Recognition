@@ -67,7 +67,7 @@ def doUserRcmd(userid):
 
 
 def doUserRcmdByType(userid, gdstype):
-    goods_field_names = ['goods_id', 'goods_type', 'goods_price', 'goods_cnt']
+    goods_field_names = ['goods_id', 'goods_type', 'goods_name', 'goods_price', 'goods_cnt']
     t_goods = pd.read_csv(sys.argv[1] + "/py/anal_data/t_goods.csv", names=goods_field_names)
     gds_lst = doUserRcmd(userid)
     # print("gds_lst.size = ",gds_lst.size)

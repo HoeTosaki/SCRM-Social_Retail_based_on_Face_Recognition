@@ -179,7 +179,7 @@
             <form id="input-goods-info" class="form-inline ml20 fl" role="form">
                 <div class="col-lg-6" style="width: auto;">
                     <div class="input-group" v-show="cnt_chs != 'month' && cnt_chs != 'season'">
-                        <input v-model="sch_txt" type="text" class="form-control" placeholder="请输入商品类别/id"
+                        <input v-model="sch_txt" type="text" class="form-control" placeholder="请输入商品类别/名称/id"
                                name="refer-to">
                         <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" onclick="onFigCfmSch()">确定</button>
@@ -571,24 +571,32 @@
                 </li>
             </ul>
         </div>
+        <button @click="onDataModelUser()">
+            <h3>构建用户偏好模型</h3>
+        </button>
+        <button @click="onDataModelGds()">
+            <h3>构建商品关联模型</h3>
+        </button>
+        <button @click="onDataExtract()">
+            <h3>数据抽取</h3>
+        </button>
+        <button @click="onDataTransfer()">
+            <h3>数据转移</h3>
+        </button>
+        <button @click="onDataRefresh()">
+            <h3>刷新</h3>
+        </button>
+        <!--        adminDataTransfer-->
 
-        <div id="function-box" class="container mt15 mb3">
-            <button @click="onDataModelUser()" class="btn btn-default w20">构建用户偏好模型</button>
-            <button @click="onDataModelGds()" class="btn btn-default w20">构建商品关联模型</button>
-            <button @click="onDataExtract()" class="btn btn-default w20">数据抽取</button>
-            <button @click="onDataTransfer()" class="btn btn-default w20">数据转移</button>
-            <button @click="onDataRefresh()" class="btn btn-default w18">刷新</button>
-            <!--        adminDataTransfer-->
-        </div>
     </div>
 
     <div v-show="v_func.cls_chs == 'models'"
          class="layer mt15 mb3 box-border box-background-color box-shadow model-mach-core">
         <span class="subtitle mt15 ml20">运行信息</span>
-        <div id="ybp" class="ml20 mr20 mt15">
-            <div id="cpu-ybp" class="mt15"></div>
-            <div id="mem-ybp" class="mt15"></div>
-            <div id="disk-ybp" class="mt15"></div>
+        <div id="ybp" style="text-align: center;">
+            <div id="cpu-ybp" style="height: 300px; width: 300px; display: inline-block;"></div>
+            <div id="mem-ybp" style="height: 300px; width: 300PX;display: inline-block;"></div>
+            <div id="disk-ybp" style="height: 300px; width: 300PX;display: inline-block;"></div>
         </div>
     </div>
 
@@ -903,12 +911,14 @@
     var cpuybpDom = document.getElementById("cpu-ybp");
     var cpuybpChart = echarts.init(cpuybpDom);
     cpuybpOption = {
-
+        title: {
+            text: 'CPU利用率'
+        },
         tooltip : {
             formatter : "{b} : {c}%"
         },
         series : [ {
-            // name : 'CPU利用率',
+            name : 'CPU利用率',
             type : 'gauge',
             detail : {
                 formatter : '{value}%'
@@ -927,13 +937,15 @@
     var memybpDom = document.getElementById("mem-ybp");
     var memybpChart = echarts.init(memybpDom);
     memybpOption = {
-
+        title: {
+            text: '内存利用率'
+        },
         tooltip : {
             formatter : "{b} : {c}%"
         },
 
         series : [ {
-            // name : '内存利用率',
+            name : '内存利用率',
             type : 'gauge',
             detail : {
                 formatter : '{value}%'
@@ -952,13 +964,15 @@
     var diskybpDom = document.getElementById("disk-ybp");
     var diskybpChart = echarts.init(diskybpDom);
     diskybpOption = {
-
+        title: {
+            text: '磁盘利用率'
+        },
         tooltip : {
             formatter : "{b} : {c}%"
         },
 
         series : [ {
-            // name : '磁盘利用率',
+            name : '磁盘利用率',
             type : 'gauge',
             detail : {
                 formatter : '{value}%'
